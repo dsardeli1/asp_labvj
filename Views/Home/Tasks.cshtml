@@ -4,28 +4,30 @@
     ViewData["Title"] = "Task Dashboard";
 }
 
+<section class="tasks-dashboard-page">
 <div class="dashboard-container">
     <!-- Header -->
-    <div class="dashboard-header">
+    <div class="dashboard-header tasks-hero">
+        <p class="tasks-hero-kicker">Workflow Board</p>
         <h1>Task Dashboard</h1>
         <p class="subtitle">Organize and track your work</p>
     </div>
 
     <!-- Filter and Stats Bar -->
     <div class="dashboard-stats">
-        <div class="stat-card">
+        <div class="stat-card tone-total">
             <span class="stat-number">@Model.Count</span>
             <span class="stat-label">Total Tasks</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-card tone-pending">
             <span class="stat-number">@Model.Count(t => !t.IsCompleted)</span>
             <span class="stat-label">Pending</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-card tone-completed">
             <span class="stat-number">@Model.Count(t => t.IsCompleted)</span>
             <span class="stat-label">Completed</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-card tone-overdue">
             <span class="stat-number">@Model.Count(t => !t.IsCompleted && t.DueDate < DateTime.Now)</span>
             <span class="stat-label">Overdue</span>
         </div>
@@ -103,3 +105,4 @@
         </div>
     }
 </div>
+</section>
