@@ -4,27 +4,31 @@
     ViewData["Title"] = "Category Details";
 }
 
-<h2>Category #@Model.Id</h2>
-<p class="text-muted">Read-only single-record view.</p>
+<section class="data-entity-page data-entity-page-detail">
+    <header class="data-entity-header">
+        <h2>Category #@Model.Id</h2>
+        <p class="text-muted">Read-only single-record view.</p>
+    </header>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <h4 class="card-title">@Model.Name</h4>
-        <p class="card-text">@Model.Description</p>
-        <dl class="row mb-0">
-            <dt class="col-sm-3">Color</dt>
-            <dd class="col-sm-9">
-                <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:@Model.Color;border:1px solid #999;margin-right:6px;"></span>
-                @Model.Color
-            </dd>
-            <dt class="col-sm-3">Created</dt>
-            <dd class="col-sm-9">@Model.CreatedDate.ToString("yyyy-MM-dd")</dd>
-            <dt class="col-sm-3">Is Active</dt>
-            <dd class="col-sm-9">@(Model.IsActive ? "Yes" : "No")</dd>
-            <dt class="col-sm-3">Task Count</dt>
-            <dd class="col-sm-9">@(Model.Tasks?.Count ?? 0)</dd>
-        </dl>
+    <div class="card mb-3 data-detail-card">
+        <div class="card-body data-detail-card-body">
+            <h4 class="card-title">@Model.Name</h4>
+            <p class="card-text">@Model.Description</p>
+            <dl class="row mb-0 data-detail-grid">
+                <dt class="col-sm-3 data-detail-term">Color</dt>
+                <dd class="col-sm-9 data-detail-desc">
+                    <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:@Model.Color;border:1px solid #999;margin-right:6px;"></span>
+                    @Model.Color
+                </dd>
+                <dt class="col-sm-3 data-detail-term">Created</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.CreatedDate.ToString("yyyy-MM-dd")</dd>
+                <dt class="col-sm-3 data-detail-term">Is Active</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.IsActive ? "Yes" : "No")</dd>
+                <dt class="col-sm-3 data-detail-term">Task Count</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.Tasks?.Count ?? 0)</dd>
+            </dl>
+        </div>
     </div>
-</div>
 
-<a asp-controller="Data" asp-action="Categories" class="btn btn-outline-secondary">Back to Categories</a>
+    <a asp-controller="Data" asp-action="Categories" class="btn btn-outline-secondary data-entity-back-link">Back to Categories</a>
+</section>

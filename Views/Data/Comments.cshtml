@@ -4,33 +4,37 @@
     ViewData["Title"] = "Comments";
 }
 
-<h2>Comments</h2>
-<p class="text-muted">Read-only detail view of comment records.</p>
+<section class="data-entity-page data-entity-page-list">
+    <header class="data-entity-header">
+        <h2>Comments</h2>
+        <p class="text-muted">Read-only detail view of comment records.</p>
+    </header>
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>Task</th>
-                <th>User</th>
-                <th>Created</th>
-                <th>Edited</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var comment in Model)
-            {
+    <div class="table-responsive data-entity-table-wrap">
+        <table class="table table-striped table-hover align-middle data-entity-table">
+            <thead>
                 <tr>
-                    <td><a asp-controller="Data" asp-action="CommentDetails" asp-route-id="@comment.Id">@comment.Id</a></td>
-                    <td>@comment.Content</td>
-                    <td>#@comment.TaskItemId - @comment.TaskItem?.Title</td>
-                    <td>@comment.User?.Username</td>
-                    <td>@comment.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
-                    <td>@(comment.IsEdited ? "Yes" : "No")</td>
+                    <th>Id</th>
+                    <th>Content</th>
+                    <th>Task</th>
+                    <th>User</th>
+                    <th>Created</th>
+                    <th>Edited</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model)
+                {
+                    <tr>
+                        <td><a asp-controller="Data" asp-action="CommentDetails" asp-route-id="@comment.Id">@comment.Id</a></td>
+                        <td>@comment.Content</td>
+                        <td>#@comment.TaskItemId - @comment.TaskItem?.Title</td>
+                        <td>@comment.User?.Username</td>
+                        <td>@comment.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@(comment.IsEdited ? "Yes" : "No")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

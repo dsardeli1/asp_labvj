@@ -4,25 +4,29 @@
     ViewData["Title"] = "User Details";
 }
 
-<h2>User #@Model.Id</h2>
-<p class="text-muted">Read-only single-record view.</p>
+<section class="data-entity-page data-entity-page-detail">
+    <header class="data-entity-header">
+        <h2>User #@Model.Id</h2>
+        <p class="text-muted">Read-only single-record view.</p>
+    </header>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <h4 class="card-title">@Model.FirstName @Model.LastName</h4>
-        <dl class="row mb-0">
-            <dt class="col-sm-3">Username</dt>
-            <dd class="col-sm-9">@Model.Username</dd>
-            <dt class="col-sm-3">Email</dt>
-            <dd class="col-sm-9">@Model.Email</dd>
-            <dt class="col-sm-3">Created At</dt>
-            <dd class="col-sm-9">@Model.CreatedAt.ToString("yyyy-MM-dd")</dd>
-            <dt class="col-sm-3">Task Count</dt>
-            <dd class="col-sm-9">@(Model.Tasks?.Count ?? 0)</dd>
-            <dt class="col-sm-3">Comment Count</dt>
-            <dd class="col-sm-9">@(Model.Comments?.Count ?? 0)</dd>
-        </dl>
+    <div class="card mb-3 data-detail-card">
+        <div class="card-body data-detail-card-body">
+            <h4 class="card-title">@Model.FirstName @Model.LastName</h4>
+            <dl class="row mb-0 data-detail-grid">
+                <dt class="col-sm-3 data-detail-term">Username</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.Username</dd>
+                <dt class="col-sm-3 data-detail-term">Email</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.Email</dd>
+                <dt class="col-sm-3 data-detail-term">Created At</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.CreatedAt.ToString("yyyy-MM-dd")</dd>
+                <dt class="col-sm-3 data-detail-term">Task Count</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.Tasks?.Count ?? 0)</dd>
+                <dt class="col-sm-3 data-detail-term">Comment Count</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.Comments?.Count ?? 0)</dd>
+            </dl>
+        </div>
     </div>
-</div>
 
-<a asp-controller="Data" asp-action="Users" class="btn btn-outline-secondary">Back to Users</a>
+    <a asp-controller="Data" asp-action="Users" class="btn btn-outline-secondary data-entity-back-link">Back to Users</a>
+</section>

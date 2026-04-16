@@ -4,20 +4,24 @@
     ViewData["Title"] = "History Details";
 }
 
-<h2>History Entry #@Model.Id</h2>
-<p class="text-muted">Read-only single-record view.</p>
+<section class="data-entity-page data-entity-page-detail">
+    <header class="data-entity-header">
+        <h2>History Entry #@Model.Id</h2>
+        <p class="text-muted">Read-only single-record view.</p>
+    </header>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <dl class="row mb-0">
-            <dt class="col-sm-3">Task</dt>
-            <dd class="col-sm-9">#@Model.TaskItemId - @Model.TaskItem?.Title</dd>
-            <dt class="col-sm-3">Action</dt>
-            <dd class="col-sm-9">@Model.Action</dd>
-            <dt class="col-sm-3">Action Date</dt>
-            <dd class="col-sm-9">@Model.ActionDate.ToString("yyyy-MM-dd HH:mm")</dd>
-        </dl>
+    <div class="card mb-3 data-detail-card">
+        <div class="card-body data-detail-card-body">
+            <dl class="row mb-0 data-detail-grid">
+                <dt class="col-sm-3 data-detail-term">Task</dt>
+                <dd class="col-sm-9 data-detail-desc">#@Model.TaskItemId - @Model.TaskItem?.Title</dd>
+                <dt class="col-sm-3 data-detail-term">Action</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.Action</dd>
+                <dt class="col-sm-3 data-detail-term">Action Date</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.ActionDate.ToString("yyyy-MM-dd HH:mm")</dd>
+            </dl>
+        </div>
     </div>
-</div>
 
-<a asp-controller="Data" asp-action="Histories" class="btn btn-outline-secondary">Back to Histories</a>
+    <a asp-controller="Data" asp-action="Histories" class="btn btn-outline-secondary data-entity-back-link">Back to Histories</a>
+</section>

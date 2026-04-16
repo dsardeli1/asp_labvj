@@ -716,6 +716,368 @@ body {
     outline-offset: 2px;
 }
 
+[data-theme="dark"] .tasks-dashboard-page::before {
+    background:
+        radial-gradient(circle at 12% 12%, rgba(96, 165, 250, 0.2), transparent 46%),
+        radial-gradient(circle at 88% 24%, rgba(74, 222, 128, 0.14), transparent 44%),
+        linear-gradient(180deg, rgba(8, 15, 28, 0.92), rgba(8, 15, 28, 0.45));
+}
+
+[data-theme="dark"] .tasks-dashboard-page .tasks-hero {
+    border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border) 70%);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(17, 34, 56, 0.82));
+    box-shadow: 0 14px 34px -24px rgba(2, 8, 20, 0.95);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .tasks-hero-kicker {
+    color: color-mix(in srgb, var(--color-primary) 78%, var(--color-text) 22%);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .stat-card {
+    border-color: color-mix(in srgb, var(--color-border) 84%, var(--color-primary) 16%);
+    background: linear-gradient(160deg, rgba(15, 23, 42, 0.94), rgba(19, 35, 57, 0.9));
+}
+
+[data-theme="dark"] .tasks-dashboard-page .task-card {
+    border-color: color-mix(in srgb, var(--color-border) 82%, var(--color-primary) 18%);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 29, 48, 0.92));
+    box-shadow: 0 12px 28px -22px rgba(2, 8, 20, 0.95);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .task-card:hover {
+    box-shadow: 0 22px 38px -28px rgba(2, 8, 20, 0.98);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .task-card.completed {
+    opacity: 0.88;
+    background: linear-gradient(180deg, rgba(19, 30, 47, 0.95), rgba(20, 35, 56, 0.9));
+}
+
+[data-theme="dark"] .tasks-dashboard-page .task-description {
+    background: color-mix(in srgb, var(--color-surface) 72%, var(--color-primary) 28%);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .task-meta {
+    border-top-color: color-mix(in srgb, var(--color-border) 80%, var(--color-primary) 20%);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .meta-item {
+    border-color: color-mix(in srgb, var(--color-border) 82%, var(--color-primary) 18%);
+    background: color-mix(in srgb, var(--color-surface) 78%, var(--color-primary) 22%);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .empty-state {
+    border-color: color-mix(in srgb, var(--color-border) 72%, var(--color-primary) 28%);
+    background: linear-gradient(150deg, rgba(15, 23, 42, 0.92), rgba(18, 33, 52, 0.82));
+    box-shadow: 0 12px 28px -24px rgba(2, 8, 20, 0.98);
+}
+
+[data-theme="dark"] .tasks-dashboard-page .badge.priority-high {
+    background-color: rgba(248, 113, 113, 0.2);
+    color: #fecaca;
+}
+
+[data-theme="dark"] .tasks-dashboard-page .badge.priority-medium {
+    background-color: rgba(250, 204, 21, 0.2);
+    color: #fef08a;
+}
+
+[data-theme="dark"] .tasks-dashboard-page .badge.priority-low {
+    background-color: rgba(96, 165, 250, 0.22);
+    color: #bfdbfe;
+}
+
+[data-theme="dark"] .tasks-dashboard-page .badge.overdue-badge {
+    background-color: rgba(248, 113, 113, 0.26);
+    color: #fecaca;
+}
+
+[data-theme="dark"] .tasks-dashboard-page .badge.due-soon-badge {
+    background-color: rgba(250, 204, 21, 0.24);
+    color: #fef08a;
+}
+
+[data-theme="dark"] .data-browser-page::before {
+    background:
+        linear-gradient(165deg, rgba(12, 21, 35, 0.94), rgba(13, 24, 40, 0.9) 40%),
+        repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.08) 0 2px, transparent 2px 14px);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-card {
+    border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-secondary) 20%);
+    background: linear-gradient(160deg, rgba(15, 23, 42, 0.95), rgba(18, 34, 54, 0.9));
+    box-shadow: 0 10px 24px -20px rgba(2, 8, 20, 0.95);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-badge {
+    border-color: color-mix(in srgb, var(--color-border) 74%, var(--color-primary) 26%);
+    background: color-mix(in srgb, var(--color-surface) 66%, var(--color-primary) 34%);
+    color: color-mix(in srgb, var(--color-text) 70%, var(--color-primary) 30%);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-arrow {
+    background-color: color-mix(in srgb, var(--color-surface) 58%, var(--color-primary) 42%);
+    color: #dbeafe;
+}
+
+[data-theme="dark"] .data-browser-page .task-description {
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted) 12%);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-meta {
+    color: color-mix(in srgb, var(--color-text-muted) 86%, var(--color-text) 14%);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-card:hover {
+    box-shadow: 0 20px 36px -30px rgba(2, 8, 20, 0.98);
+    border-color: color-mix(in srgb, var(--color-border) 44%, var(--color-primary) 56%);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-card:hover .data-nav-arrow,
+[data-theme="dark"] .data-browser-page .data-nav-card:focus-visible .data-nav-arrow {
+    background-color: color-mix(in srgb, var(--color-surface) 50%, var(--color-primary) 50%);
+}
+
+[data-theme="dark"] .data-browser-page .data-nav-card:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 78%, var(--color-text) 22%);
+}
+
+/* Data Browser Entity Subpages */
+.data-entity-page {
+    position: relative;
+    isolation: isolate;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: clamp(0.8rem, 2vw, 1.5rem);
+}
+
+.data-entity-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 1rem;
+    background:
+        linear-gradient(165deg, rgba(248, 250, 252, 0.94), rgba(241, 245, 249, 0.7)),
+        repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.08) 0 2px, transparent 2px 14px);
+}
+
+.data-entity-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.data-entity-header h2 {
+    margin: 0;
+    font-size: clamp(1.55rem, 2.4vw, 2rem);
+    letter-spacing: 0.01em;
+    color: var(--color-text);
+}
+
+.data-entity-header .text-muted,
+.data-entity-page .text-muted {
+    color: color-mix(in srgb, var(--color-text-muted) 88%, var(--color-text) 12%) !important;
+}
+
+.data-entity-page a {
+    color: color-mix(in srgb, var(--color-primary) 72%, var(--color-text) 28%);
+    text-underline-offset: 0.12em;
+    transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.data-entity-page a:hover {
+    color: var(--color-primary-dark);
+}
+
+.data-entity-page a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 70%, white 30%);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+}
+
+.data-entity-page-list .data-entity-table-wrap {
+    border: 1px solid color-mix(in srgb, var(--color-border) 78%, var(--color-primary) 22%);
+    border-radius: 0.95rem;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.9));
+    box-shadow: 0 10px 24px -22px rgba(15, 23, 42, 0.9);
+}
+
+.data-entity-page-list .data-entity-table {
+    margin-bottom: 0;
+    color: var(--color-text);
+}
+
+.data-entity-page-list .data-entity-table thead th {
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) 74%, var(--color-primary) 26%);
+    border-top: 0;
+    background: color-mix(in srgb, var(--color-surface) 82%, var(--color-primary) 18%);
+    color: color-mix(in srgb, var(--color-text) 80%, var(--color-primary) 20%);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
+.data-entity-page-list .data-entity-table tbody td {
+    border-color: color-mix(in srgb, var(--color-border) 90%, var(--color-primary) 10%);
+    background: transparent;
+}
+
+.data-entity-page-list .data-entity-table tbody tr:nth-child(odd) td {
+    background: color-mix(in srgb, var(--color-surface) 92%, var(--color-primary) 8%);
+}
+
+.data-entity-page-list .data-entity-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--color-surface) 78%, var(--color-primary) 22%);
+}
+
+.data-entity-page-list .data-entity-table tbody tr:hover a {
+    color: var(--color-primary-dark);
+}
+
+.data-entity-page-detail .data-detail-card {
+    border: 1px solid color-mix(in srgb, var(--color-border) 74%, var(--color-primary) 26%);
+    border-radius: 0.95rem;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.88));
+    box-shadow: 0 12px 28px -24px rgba(15, 23, 42, 0.95);
+}
+
+.data-entity-page-detail .data-detail-card-body {
+    padding: clamp(1rem, 1.8vw, 1.4rem);
+}
+
+.data-entity-page-detail .card-title {
+    margin-bottom: 0.75rem;
+    color: var(--color-text);
+}
+
+.data-entity-page-detail .card-text {
+    color: color-mix(in srgb, var(--color-text) 84%, var(--color-text-muted) 16%);
+}
+
+.data-entity-page-detail .data-detail-grid {
+    margin-top: 0.6rem;
+}
+
+.data-entity-page-detail .data-detail-term,
+.data-entity-page-detail .data-detail-desc {
+    padding-top: 0.48rem;
+    padding-bottom: 0.48rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) 88%, var(--color-primary) 12%);
+}
+
+.data-entity-page-detail .data-detail-term {
+    font-size: 0.78rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-text-muted) 82%, var(--color-text) 18%);
+}
+
+.data-entity-page-detail .data-detail-desc {
+    color: var(--color-text);
+}
+
+.data-entity-page-detail .data-detail-grid dt:last-of-type,
+.data-entity-page-detail .data-detail-grid dd:last-of-type {
+    border-bottom: 0;
+}
+
+.data-entity-page-detail .data-entity-back-link {
+    border-color: color-mix(in srgb, var(--color-border) 70%, var(--color-primary) 30%);
+    color: color-mix(in srgb, var(--color-text) 74%, var(--color-primary) 26%);
+    background-color: color-mix(in srgb, var(--color-surface) 86%, var(--color-primary) 14%);
+}
+
+.data-entity-page-detail .data-entity-back-link:hover {
+    border-color: color-mix(in srgb, var(--color-border) 45%, var(--color-primary) 55%);
+    background-color: color-mix(in srgb, var(--color-surface) 70%, var(--color-primary) 30%);
+    color: var(--color-primary-dark);
+}
+
+[data-theme="dark"] .data-entity-page::before {
+    background:
+        linear-gradient(165deg, rgba(12, 21, 35, 0.95), rgba(13, 24, 40, 0.88)),
+        repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.08) 0 2px, transparent 2px 14px);
+}
+
+[data-theme="dark"] .data-entity-header .text-muted,
+[data-theme="dark"] .data-entity-page .text-muted {
+    color: color-mix(in srgb, var(--color-text-muted) 92%, var(--color-text) 8%) !important;
+}
+
+[data-theme="dark"] .data-entity-page a {
+    color: color-mix(in srgb, var(--color-primary) 78%, #dbeafe 22%);
+}
+
+[data-theme="dark"] .data-entity-page a:hover {
+    color: #bfdbfe;
+}
+
+[data-theme="dark"] .data-entity-page a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 76%, var(--color-text) 24%);
+}
+
+[data-theme="dark"] .data-entity-page-list .data-entity-table-wrap {
+    border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-primary) 20%);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 31, 49, 0.9));
+    box-shadow: 0 14px 28px -22px rgba(2, 8, 20, 0.98);
+}
+
+[data-theme="dark"] .data-entity-page-list .data-entity-table thead th {
+    border-bottom-color: color-mix(in srgb, var(--color-border) 72%, var(--color-primary) 28%);
+    background: color-mix(in srgb, var(--color-surface) 78%, var(--color-primary) 22%);
+    color: color-mix(in srgb, var(--color-text) 86%, var(--color-primary) 14%);
+}
+
+[data-theme="dark"] .data-entity-page-list .data-entity-table tbody td {
+    border-color: color-mix(in srgb, var(--color-border) 82%, var(--color-primary) 18%);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .data-entity-page-list .data-entity-table tbody tr:nth-child(odd) td {
+    background: color-mix(in srgb, var(--color-surface) 92%, var(--color-primary) 8%);
+}
+
+[data-theme="dark"] .data-entity-page-list .data-entity-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--color-surface) 74%, var(--color-primary) 26%);
+}
+
+[data-theme="dark"] .data-entity-page-list .data-entity-table tbody tr:hover a {
+    color: #dbeafe;
+}
+
+[data-theme="dark"] .data-entity-page-detail .data-detail-card {
+    border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-primary) 20%);
+    background: linear-gradient(165deg, rgba(15, 23, 42, 0.96), rgba(18, 33, 52, 0.9));
+    box-shadow: 0 14px 32px -24px rgba(2, 8, 20, 0.98);
+}
+
+[data-theme="dark"] .data-entity-page-detail .card-text {
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted) 12%);
+}
+
+[data-theme="dark"] .data-entity-page-detail .data-detail-term,
+[data-theme="dark"] .data-entity-page-detail .data-detail-desc {
+    border-bottom-color: color-mix(in srgb, var(--color-border) 82%, var(--color-primary) 18%);
+}
+
+[data-theme="dark"] .data-entity-page-detail .data-detail-term {
+    color: color-mix(in srgb, var(--color-text-muted) 84%, var(--color-text) 16%);
+}
+
+[data-theme="dark"] .data-entity-page-detail .data-entity-back-link {
+    border-color: color-mix(in srgb, var(--color-border) 76%, var(--color-primary) 24%);
+    background-color: color-mix(in srgb, var(--color-surface) 76%, var(--color-primary) 24%);
+    color: color-mix(in srgb, var(--color-text) 78%, var(--color-primary) 22%);
+}
+
+[data-theme="dark"] .data-entity-page-detail .data-entity-back-link:hover {
+    border-color: color-mix(in srgb, var(--color-border) 56%, var(--color-primary) 44%);
+    background-color: color-mix(in srgb, var(--color-surface) 64%, var(--color-primary) 36%);
+    color: #dbeafe;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .dashboard-container {
@@ -766,6 +1128,21 @@ body {
 
     .data-browser-page .task-card {
         padding: 0.95rem;
+    }
+
+    .data-entity-page {
+        padding: var(--spacing-sm);
+    }
+
+    .data-entity-page-detail .data-detail-term,
+    .data-entity-page-detail .data-detail-desc {
+        border-bottom: 0;
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
+    }
+
+    .data-entity-page-detail .data-detail-term {
+        margin-top: 0.35rem;
     }
 }
 

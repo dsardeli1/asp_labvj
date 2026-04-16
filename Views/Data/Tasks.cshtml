@@ -4,39 +4,43 @@
     ViewData["Title"] = "Task Items";
 }
 
-<h2>Task Items</h2>
-<p class="text-muted">Read-only detail view of task records.</p>
+<section class="data-entity-page data-entity-page-list">
+    <header class="data-entity-header">
+        <h2>Task Items</h2>
+        <p class="text-muted">Read-only detail view of task records.</p>
+    </header>
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Priority</th>
-                <th>Assigned User</th>
-                <th>Category</th>
-                <th>Comments</th>
-                <th>Created</th>
-                <th>Due</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive data-entity-table-wrap">
+        <table class="table table-striped table-hover align-middle data-entity-table">
+            <thead>
                 <tr>
-                    <td><a asp-controller="Data" asp-action="TaskDetails" asp-route-id="@item.Id">@item.Id</a></td>
-                    <td>@item.Title</td>
-                    <td>@((Priority)item.PriorityId)</td>
-                    <td>@(item.User?.FirstName) @(item.User?.LastName)</td>
-                    <td>@item.Category?.Name</td>
-                    <td>@(item.Comments?.Count ?? 0)</td>
-                    <td>@item.CreatedDate.ToString("yyyy-MM-dd")</td>
-                    <td>@item.DueDate.ToString("yyyy-MM-dd")</td>
-                    <td>@(item.IsCompleted ? "Completed" : "Open")</td>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Priority</th>
+                    <th>Assigned User</th>
+                    <th>Category</th>
+                    <th>Comments</th>
+                    <th>Created</th>
+                    <th>Due</th>
+                    <th>Status</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><a asp-controller="Data" asp-action="TaskDetails" asp-route-id="@item.Id">@item.Id</a></td>
+                        <td>@item.Title</td>
+                        <td>@((Priority)item.PriorityId)</td>
+                        <td>@(item.User?.FirstName) @(item.User?.LastName)</td>
+                        <td>@item.Category?.Name</td>
+                        <td>@(item.Comments?.Count ?? 0)</td>
+                        <td>@item.CreatedDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.DueDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(item.IsCompleted ? "Completed" : "Open")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

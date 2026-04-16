@@ -4,38 +4,42 @@
     ViewData["Title"] = "Categories";
 }
 
-<h2>Categories</h2>
-<p class="text-muted">Read-only detail view of category records.</p>
+<section class="data-entity-page data-entity-page-list">
+    <header class="data-entity-header">
+        <h2>Categories</h2>
+        <p class="text-muted">Read-only detail view of category records.</p>
+    </header>
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Color</th>
-                <th>Created</th>
-                <th>Active</th>
-                <th>Task Count</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var category in Model)
-            {
+    <div class="table-responsive data-entity-table-wrap">
+        <table class="table table-striped table-hover align-middle data-entity-table">
+            <thead>
                 <tr>
-                    <td><a asp-controller="Data" asp-action="CategoryDetails" asp-route-id="@category.Id">@category.Id</a></td>
-                    <td>@category.Name</td>
-                    <td>@category.Description</td>
-                    <td>
-                        <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:@category.Color;border:1px solid #999;margin-right:6px;"></span>
-                        @category.Color
-                    </td>
-                    <td>@category.CreatedDate.ToString("yyyy-MM-dd")</td>
-                    <td>@(category.IsActive ? "Yes" : "No")</td>
-                    <td>@(category.Tasks?.Count ?? 0)</td>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Color</th>
+                    <th>Created</th>
+                    <th>Active</th>
+                    <th>Task Count</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td><a asp-controller="Data" asp-action="CategoryDetails" asp-route-id="@category.Id">@category.Id</a></td>
+                        <td>@category.Name</td>
+                        <td>@category.Description</td>
+                        <td>
+                            <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:@category.Color;border:1px solid #999;margin-right:6px;"></span>
+                            @category.Color
+                        </td>
+                        <td>@category.CreatedDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(category.IsActive ? "Yes" : "No")</td>
+                        <td>@(category.Tasks?.Count ?? 0)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

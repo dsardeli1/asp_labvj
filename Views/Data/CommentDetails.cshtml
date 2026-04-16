@@ -4,23 +4,27 @@
     ViewData["Title"] = "Comment Details";
 }
 
-<h2>Comment #@Model.Id</h2>
-<p class="text-muted">Read-only single-record view.</p>
+<section class="data-entity-page data-entity-page-detail">
+    <header class="data-entity-header">
+        <h2>Comment #@Model.Id</h2>
+        <p class="text-muted">Read-only single-record view.</p>
+    </header>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <p class="card-text">@Model.Content</p>
-        <dl class="row mb-0">
-            <dt class="col-sm-3">Task</dt>
-            <dd class="col-sm-9">#@Model.TaskItemId - @Model.TaskItem?.Title</dd>
-            <dt class="col-sm-3">User</dt>
-            <dd class="col-sm-9">@Model.User?.Username</dd>
-            <dt class="col-sm-3">Created</dt>
-            <dd class="col-sm-9">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</dd>
-            <dt class="col-sm-3">Edited</dt>
-            <dd class="col-sm-9">@(Model.IsEdited ? "Yes" : "No")</dd>
-        </dl>
+    <div class="card mb-3 data-detail-card">
+        <div class="card-body data-detail-card-body">
+            <p class="card-text">@Model.Content</p>
+            <dl class="row mb-0 data-detail-grid">
+                <dt class="col-sm-3 data-detail-term">Task</dt>
+                <dd class="col-sm-9 data-detail-desc">#@Model.TaskItemId - @Model.TaskItem?.Title</dd>
+                <dt class="col-sm-3 data-detail-term">User</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.User?.Username</dd>
+                <dt class="col-sm-3 data-detail-term">Created</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</dd>
+                <dt class="col-sm-3 data-detail-term">Edited</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.IsEdited ? "Yes" : "No")</dd>
+            </dl>
+        </div>
     </div>
-</div>
 
-<a asp-controller="Data" asp-action="Comments" class="btn btn-outline-secondary">Back to Comments</a>
+    <a asp-controller="Data" asp-action="Comments" class="btn btn-outline-secondary data-entity-back-link">Back to Comments</a>
+</section>
