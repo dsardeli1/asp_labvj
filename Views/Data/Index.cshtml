@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Data Browser";
+}
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Data Browser</h1>
+        <p class="subtitle">Read-only pages for mock repository entities.</p>
+    </div>
+
+    <div class="tasks-grid">
+        <a class="task-card" asp-controller="Data" asp-action="Tasks">
+            <h3 class="task-title">Task Items</h3>
+            <p class="task-description">Browse task details, priority, due dates, and linked owner/category.</p>
+        </a>
+        <a class="task-card" asp-controller="Data" asp-action="Users">
+            <h3 class="task-title">Users</h3>
+            <p class="task-description">Inspect user profile data and relation counts.</p>
+        </a>
+        <a class="task-card" asp-controller="Data" asp-action="Categories">
+            <h3 class="task-title">Categories</h3>
+            <p class="task-description">See category metadata, color tags, and task totals.</p>
+        </a>
+        <a class="task-card" asp-controller="Data" asp-action="Comments">
+            <h3 class="task-title">Comments</h3>
+            <p class="task-description">Review task comments with author and edited status.</p>
+        </a>
+        <a class="task-card" asp-controller="Data" asp-action="Attachments">
+            <h3 class="task-title">Task Attachments</h3>
+            <p class="task-description">View placeholder attachment records for tasks.</p>
+        </a>
+        <a class="task-card" asp-controller="Data" asp-action="Histories">
+            <h3 class="task-title">Task Histories</h3>
+            <p class="task-description">Track task action log entries from mock data.</p>
+        </a>
+    </div>
+</div>

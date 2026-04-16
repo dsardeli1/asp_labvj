@@ -1,0 +1,23 @@
+@model TaskManageApp.Models.TaskHistory
+
+@{
+    ViewData["Title"] = "History Details";
+}
+
+<h2>History Entry #@Model.Id</h2>
+<p class="text-muted">Read-only single-record view.</p>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Task</dt>
+            <dd class="col-sm-9">#@Model.TaskItemId - @Model.TaskItem?.Title</dd>
+            <dt class="col-sm-3">Action</dt>
+            <dd class="col-sm-9">@Model.Action</dd>
+            <dt class="col-sm-3">Action Date</dt>
+            <dd class="col-sm-9">@Model.ActionDate.ToString("yyyy-MM-dd HH:mm")</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-controller="Data" asp-action="Histories" class="btn btn-outline-secondary">Back to Histories</a>

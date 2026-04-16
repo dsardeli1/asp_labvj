@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\davor\\Desktop\\github_projekti\\TaskManageApp\\TaskManageApp.csproj",
+      "projectUniqueName": "C:\\Users\\davor\\Documents\\GitHub\\asp_labvj\\TaskManageApp.csproj",
       "projectName": "TaskManageApp",
-      "projectPath": "C:\\Users\\davor\\Desktop\\github_projekti\\TaskManageApp\\TaskManageApp.csproj",
+      "projectPath": "C:\\Users\\davor\\Documents\\GitHub\\asp_labvj\\TaskManageApp.csproj",
       "packagesPath": "C:\\Users\\davor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\davor\\Desktop\\github_projekti\\TaskManageApp\\obj\\",
+      "outputPath": "C:\\Users\\davor\\Documents\\GitHub\\asp_labvj\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

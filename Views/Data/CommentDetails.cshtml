@@ -1,0 +1,26 @@
+@model TaskManageApp.Models.Comment
+
+@{
+    ViewData["Title"] = "Comment Details";
+}
+
+<h2>Comment #@Model.Id</h2>
+<p class="text-muted">Read-only single-record view.</p>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p class="card-text">@Model.Content</p>
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Task</dt>
+            <dd class="col-sm-9">#@Model.TaskItemId - @Model.TaskItem?.Title</dd>
+            <dt class="col-sm-3">User</dt>
+            <dd class="col-sm-9">@Model.User?.Username</dd>
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</dd>
+            <dt class="col-sm-3">Edited</dt>
+            <dd class="col-sm-9">@(Model.IsEdited ? "Yes" : "No")</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-controller="Data" asp-action="Comments" class="btn btn-outline-secondary">Back to Comments</a>

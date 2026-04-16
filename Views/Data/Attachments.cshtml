@@ -1,0 +1,32 @@
+@model List<TaskManageApp.Models.TaskAttachment>
+
+@{
+    ViewData["Title"] = "Task Attachments";
+}
+
+<h2>Task Attachments</h2>
+<p class="text-muted">Read-only detail view of placeholder attachment records.</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>File Name</th>
+                <th>File Path</th>
+                <th>Task</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attachment in Model)
+            {
+                <tr>
+                    <td><a asp-controller="Data" asp-action="AttachmentDetails" asp-route-id="@attachment.Id">@attachment.Id</a></td>
+                    <td>@attachment.FileName</td>
+                    <td>@attachment.FilePath</td>
+                    <td>#@attachment.TaskItemId - @attachment.TaskItem?.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

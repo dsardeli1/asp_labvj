@@ -1,0 +1,32 @@
+@model List<TaskManageApp.Models.TaskHistory>
+
+@{
+    ViewData["Title"] = "Task Histories";
+}
+
+<h2>Task Histories</h2>
+<p class="text-muted">Read-only detail view of task history records.</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Task</th>
+                <th>Action</th>
+                <th>Action Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var history in Model)
+            {
+                <tr>
+                    <td><a asp-controller="Data" asp-action="HistoryDetails" asp-route-id="@history.Id">@history.Id</a></td>
+                    <td>#@history.TaskItemId - @history.TaskItem?.Title</td>
+                    <td>@history.Action</td>
+                    <td>@history.ActionDate.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

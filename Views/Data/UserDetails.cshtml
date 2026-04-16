@@ -1,0 +1,28 @@
+@model TaskManageApp.Models.User
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h2>User #@Model.Id</h2>
+<p class="text-muted">Read-only single-record view.</p>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h4 class="card-title">@Model.FirstName @Model.LastName</h4>
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Username</dt>
+            <dd class="col-sm-9">@Model.Username</dd>
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("yyyy-MM-dd")</dd>
+            <dt class="col-sm-3">Task Count</dt>
+            <dd class="col-sm-9">@(Model.Tasks?.Count ?? 0)</dd>
+            <dt class="col-sm-3">Comment Count</dt>
+            <dd class="col-sm-9">@(Model.Comments?.Count ?? 0)</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-controller="Data" asp-action="Users" class="btn btn-outline-secondary">Back to Users</a>

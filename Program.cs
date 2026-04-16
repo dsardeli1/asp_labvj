@@ -3,6 +3,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Register mock repository for UI development
+builder.Services.AddScoped<TaskManageApp.Repositories.ITaskRepository, TaskManageApp.Repositories.MockTaskRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
