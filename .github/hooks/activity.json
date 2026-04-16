@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File 'c:\\Users\\davor\\Documents\\GitHub\\asp_labvj\\hook-log.ps1'"
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File 'c:\\Users\\davor\\Documents\\GitHub\\asp_labvj\\hook-log.ps1'"
+      }
+    ]
+  }
+}
