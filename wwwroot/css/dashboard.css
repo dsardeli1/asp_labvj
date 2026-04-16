@@ -82,6 +82,89 @@ body {
     color: var(--color-text);
 }
 
+/* Home Landing */
+.home-landing {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: clamp(1rem, 1.8vw, 2rem);
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.home-kicker {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-landing h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.05;
+    color: var(--color-text);
+}
+
+.home-subtitle {
+    margin: 0;
+    max-width: 64ch;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+}
+
+.home-local-time {
+    background: linear-gradient(120deg, var(--color-surface), color-mix(in srgb, var(--color-primary) 10%, var(--color-surface) 90%));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-xl);
+}
+
+.time-label {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.time-value {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+}
+
+.date-value {
+    margin: var(--spacing-sm) 0 0 0;
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+}
+
+.home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.home-actions .btn {
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius-md);
+}
+
+.home-actions .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.home-actions .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+}
+
 /* Dashboard Container */
 .dashboard-container {
     max-width: 1200px;
@@ -349,6 +432,14 @@ body {
         padding: var(--spacing-lg);
     }
 
+    .home-local-time {
+        padding: var(--spacing-lg);
+    }
+
+    .date-value {
+        font-size: var(--font-size-base);
+    }
+
     .dashboard-header h1 {
         font-size: var(--font-size-xl);
     }
@@ -377,6 +468,10 @@ body {
 }
 
 @media (max-width: 480px) {
+    .home-landing {
+        gap: var(--spacing-md);
+    }
+
     .dashboard-stats {
         grid-template-columns: 1fr;
     }

@@ -15,7 +15,12 @@ namespace TaskManageApp.Controllers
             _taskRepository = taskRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Tasks()
         {
             var tasks = await _taskRepository.GetAllTasksAsync();
             return View(tasks);

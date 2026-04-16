@@ -1,105 +1,55 @@
-﻿@model List<TaskManageApp.Models.TaskItem>
-
-@{
-    ViewData["Title"] = "Task Dashboard";
+﻿@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="dashboard-container">
-    <!-- Header -->
-    <div class="dashboard-header">
-        <h1>Task Dashboard</h1>
-        <p class="subtitle">Organize and track your work</p>
+<section class="home-landing" aria-labelledby="home-heading">
+    <p class="home-kicker">TaskManageApp</p>
+    <h1 id="home-heading">Welcome back</h1>
+    <p class="home-subtitle">Your workspace is ready. Jump into Tasks to view your dashboard and active items.</p>
+
+    <div class="home-local-time" aria-live="polite">
+        <p class="time-label">Local time</p>
+        <p class="time-value" id="local-time-value">--:--:--</p>
+        <p class="date-value" id="local-date-value">Loading date...</p>
     </div>
 
-    <!-- Filter and Stats Bar -->
-    <div class="dashboard-stats">
-        <div class="stat-card">
-            <span class="stat-number">@Model.Count</span>
-            <span class="stat-label">Total Tasks</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-number">@Model.Count(t => !t.IsCompleted)</span>
-            <span class="stat-label">Pending</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-number">@Model.Count(t => t.IsCompleted)</span>
-            <span class="stat-label">Completed</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-number">@Model.Count(t => !t.IsCompleted && t.DueDate < DateTime.Now)</span>
-            <span class="stat-label">Overdue</span>
-        </div>
+    <div class="home-actions">
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Tasks">Open Tasks</a>
+        <a class="btn btn-outline-secondary" asp-controller="Data" asp-action="Index">Open Data Browser</a>
     </div>
+</section>
 
-    <!-- Task List -->
-    @if (Model.Count == 0)
-    {
-        <div class="empty-state">
-            <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor">
-                <circle cx="32" cy="32" r="30" stroke-width="2"/>
-                <path d="M20 32h24M32 20v24" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <p>No tasks yet. Create one to get started!</p>
-        </div>
-    }
-    else
-    {
-        <div class="tasks-grid">
-            @foreach (var task in Model.OrderBy(t => t.DueDate).ThenByDescending(t => t.PriorityId))
-            {
-                var daysUntilDue = (task.DueDate - DateTime.Now).TotalDays;
-                var isOverdue = daysUntilDue < 0 && !task.IsCompleted;
-                var isDueSoon = daysUntilDue >= 0 && daysUntilDue <= 3 && !task.IsCompleted;
-                var priorityLabel = ((TaskManageApp.Models.Priority)task.PriorityId).ToString();
-                var dueDateClass = isOverdue ? "overdue" : (isDueSoon ? "due-soon" : "");
+@section Scripts {
+    <script>
+        (function () {
+            var timeNode = document.getElementById("local-time-value");
+            var dateNode = document.getElementById("local-date-value");
 
-                <div class="task-card @(task.IsCompleted ? "completed" : "") @dueDateClass" data-task-id="@task.Id">
-                    <div class="task-header">
-                        <div class="task-title-section">
-                            <input type="checkbox" class="task-checkbox" @(task.IsCompleted ? "checked" : "") />
-                            <h3 class="task-title">@task.Title</h3>
-                        </div>
-                        <div class="task-badges">
-                            <span class="badge priority-@priorityLabel.ToLower()">@priorityLabel</span>
-                            @if (isOverdue)
-                            {
-                                <span class="badge overdue-badge">Overdue</span>
-                            }
-                            else if (isDueSoon)
-                            {
-                                <span class="badge due-soon-badge">Due Soon</span>
-                            }
-                        </div>
-                    </div>
-
-                    <p class="task-description">@task.Description</p>
-
-                    <div class="task-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Due:</span>
-                            <span class="meta-value @(isOverdue ? "text-danger" : (isDueSoon ? "text-warning" : ""))">
-                                @task.DueDate.ToString("MMM dd, yyyy")
-                                @if (daysUntilDue >= 0 && Math.Abs(daysUntilDue) < 1)
-                                {
-                                    <span class="meta-hint">Today</span>
-                                }
-                                else if (isOverdue)
-                                {
-                                    <span class="meta-hint">@Math.Abs((int)daysUntilDue) day(s) ago</span>
-                                }
-                                else if (isDueSoon)
-                                {
-                                    <span class="meta-hint">in @Math.Abs((int)daysUntilDue) day(s)</span>
-                                }
-                            </span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Created:</span>
-                            <span class="meta-value">@task.CreatedDate.ToString("MMM dd")</span>
-                        </div>
-                    </div>
-                </div>
+            if (!timeNode || !dateNode) {
+                return;
             }
-        </div>
-    }
-</div>
+
+            var timeFormatter = new Intl.DateTimeFormat(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
+
+            var dateFormatter = new Intl.DateTimeFormat(undefined, {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+
+            var updateClock = function () {
+                var now = new Date();
+                timeNode.textContent = timeFormatter.format(now);
+                dateNode.textContent = dateFormatter.format(now);
+            };
+
+            updateClock();
+            window.setInterval(updateClock, 1000);
+        })();
+    </script>
+}

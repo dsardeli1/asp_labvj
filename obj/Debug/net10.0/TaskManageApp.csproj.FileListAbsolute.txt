@@ -290,7 +290,7 @@ C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskManageApp.pdb
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskManageApp.genruntimeconfig.cache
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\ref\TaskManageApp.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\4192ldujn3-{0}-4mfhztavfq-4mfhztavfq.gz
-C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\fqco8gxv2a-{0}-en9svaknbz-en9svaknbz.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\1kbgi3pqlr-{0}-lp3grrl6xz-lp3grrl6xz.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\isnuaildbe-{0}-m2jvklyb2m-m2jvklyb2m.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\0amqff0opo-{0}-m2jvklyb2m-m2jvklyb2m.gz
+C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\fqco8gxv2a-{0}-viyevjqo30-viyevjqo30.gz
