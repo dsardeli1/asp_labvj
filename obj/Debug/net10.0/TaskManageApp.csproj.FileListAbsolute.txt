@@ -283,7 +283,6 @@ C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.buil
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskManageApp.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\refint\TaskManageApp.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskManageApp.pdb
@@ -293,4 +292,5 @@ C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\4192ldujn
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\1kbgi3pqlr-{0}-lp3grrl6xz-lp3grrl6xz.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\isnuaildbe-{0}-m2jvklyb2m-m2jvklyb2m.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\0amqff0opo-{0}-m2jvklyb2m-m2jvklyb2m.gz
-C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\fqco8gxv2a-{0}-1gpf6o91yf-1gpf6o91yf.gz
+C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\fqco8gxv2a-{0}-473m24j87p-473m24j87p.gz
+C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -28,7 +28,7 @@
                 @foreach (var user in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Data" asp-action="UserDetails" asp-route-id="@user.Id">@user.Id</a></td>
+                        <td><a asp-controller="DataUsers" asp-action="UserDetails" asp-route-id="@user.Id">@user.Id</a></td>
                         <td>@user.Username</td>
                         <td>@user.Email</td>
                         <td>@user.FirstName</td>

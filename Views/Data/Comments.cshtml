@@ -26,7 +26,7 @@
                 @foreach (var comment in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Data" asp-action="CommentDetails" asp-route-id="@comment.Id">@comment.Id</a></td>
+                        <td><a asp-controller="DataComments" asp-action="CommentDetails" asp-route-id="@comment.Id">@comment.Id</a></td>
                         <td>@comment.Content</td>
                         <td>#@comment.TaskItemId - @comment.TaskItem?.Title</td>
                         <td>@comment.User?.Username</td>

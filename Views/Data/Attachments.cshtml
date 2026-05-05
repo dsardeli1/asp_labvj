@@ -24,7 +24,7 @@
                 @foreach (var attachment in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Data" asp-action="AttachmentDetails" asp-route-id="@attachment.Id">@attachment.Id</a></td>
+                        <td><a asp-controller="DataAttachments" asp-action="AttachmentDetails" asp-route-id="@attachment.Id">@attachment.Id</a></td>
                         <td>@attachment.FileName</td>
                         <td>@attachment.FilePath</td>
                         <td>#@attachment.TaskItemId - @attachment.TaskItem?.Title</td>

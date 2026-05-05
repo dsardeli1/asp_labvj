@@ -24,7 +24,7 @@
                 @foreach (var history in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Data" asp-action="HistoryDetails" asp-route-id="@history.Id">@history.Id</a></td>
+                        <td><a asp-controller="DataHistories" asp-action="HistoryDetails" asp-route-id="@history.Id">@history.Id</a></td>
                         <td>#@history.TaskItemId - @history.TaskItem?.Title</td>
                         <td>@history.Action</td>
                         <td>@history.ActionDate.ToString("yyyy-MM-dd HH:mm")</td>

@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Task Dashboard";
+    var selectedPrioritySort = ViewBag.PrioritySort as string ?? "none";
+    var selectedDueDateSort = ViewBag.DueDateSort as string ?? "none";
+    var showCompleted = ViewBag.ShowCompleted != null && (bool)ViewBag.ShowCompleted;
 }
 
 <section class="tasks-dashboard-page">
@@ -12,6 +15,39 @@
         <h1>Task Dashboard</h1>
         <p class="subtitle">Organize and track your work</p>
     </div>
+
+    <form method="get" asp-controller="Home" asp-action="Tasks" class="tasks-filter-form" aria-label="Task filters and sorting">
+        <div class="tasks-filter-grid">
+            <div class="tasks-filter-field">
+                <label for="prioritySort">Sort Priority</label>
+                <select id="prioritySort" name="prioritySort">
+                    <option value="none" selected="@(selectedPrioritySort == "none")">Default</option>
+                    <option value="high" selected="@(selectedPrioritySort == "high")">High to Low</option>
+                    <option value="low" selected="@(selectedPrioritySort == "low")">Low to High</option>
+                </select>
+            </div>
+
+            <div class="tasks-filter-field">
+                <label for="dueDateSort">Sort Due Date</label>
+                <select id="dueDateSort" name="dueDateSort">
+                    <option value="none" selected="@(selectedDueDateSort == "none")">Default</option>
+                    <option value="soonest" selected="@(selectedDueDateSort == "soonest")">Soonest First</option>
+                    <option value="latest" selected="@(selectedDueDateSort == "latest")">Latest First</option>
+                </select>
+            </div>
+
+            <div class="tasks-filter-field tasks-filter-toggle">
+                <input type="checkbox" id="showCompleted" name="showCompleted" value="true" checked="@showCompleted" />
+                <input type="hidden" name="showCompleted" value="false" />
+                <label for="showCompleted">Show Completed</label>
+            </div>
+        </div>
+
+        <div class="tasks-filter-actions">
+            <button type="submit" class="tasks-filter-apply">Apply</button>
+            <a asp-controller="Home" asp-action="Tasks" class="tasks-filter-reset">Reset</a>
+        </div>
+    </form>
 
     <!-- Filter and Stats Bar -->
     <div class="dashboard-stats">
@@ -47,7 +83,7 @@
     else
     {
         <div class="tasks-grid">
-            @foreach (var task in Model.OrderBy(t => t.DueDate).ThenByDescending(t => t.PriorityId))
+            @foreach (var task in Model)
             {
                 var daysUntilDue = (task.DueDate - DateTime.Now).TotalDays;
                 var isOverdue = daysUntilDue < 0 && !task.IsCompleted;

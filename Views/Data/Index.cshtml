@@ -11,7 +11,7 @@
     </div>
 
     <div class="tasks-grid">
-        <a class="task-card data-nav-card" asp-controller="Data" asp-action="Tasks">
+        <a class="task-card data-nav-card" asp-controller="DataTasks" asp-action="Tasks">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Core</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
@@ -20,7 +20,7 @@
             <p class="task-description">Browse task details, priority, due dates, and linked owner/category.</p>
             <span class="data-nav-meta">Actions, ownership, schedule</span>
         </a>
-        <a class="task-card data-nav-card" asp-controller="Data" asp-action="Users">
+        <a class="task-card data-nav-card" asp-controller="DataUsers" asp-action="Users">
             <div class="data-nav-head">
                 <span class="data-nav-badge">People</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
@@ -29,7 +29,7 @@
             <p class="task-description">Inspect user profile data and relation counts.</p>
             <span class="data-nav-meta">Profiles, roles, ownership</span>
         </a>
-        <a class="task-card data-nav-card" asp-controller="Data" asp-action="Categories">
+        <a class="task-card data-nav-card" asp-controller="DataCategories" asp-action="Categories">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Taxonomy</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
@@ -38,7 +38,7 @@
             <p class="task-description">See category metadata, color tags, and task totals.</p>
             <span class="data-nav-meta">Labels, grouping, totals</span>
         </a>
-        <a class="task-card data-nav-card" asp-controller="Data" asp-action="Comments">
+        <a class="task-card data-nav-card" asp-controller="DataComments" asp-action="Comments">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Content</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
@@ -47,7 +47,7 @@
             <p class="task-description">Review task comments with author and edited status.</p>
             <span class="data-nav-meta">Threaded notes, edits</span>
         </a>
-        <a class="task-card data-nav-card" asp-controller="Data" asp-action="Attachments">
+        <a class="task-card data-nav-card" asp-controller="DataAttachments" asp-action="Attachments">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Files</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
@@ -56,7 +56,7 @@
             <p class="task-description">View placeholder attachment records for tasks.</p>
             <span class="data-nav-meta">Document links, metadata</span>
         </a>
-        <a class="task-card data-nav-card" asp-controller="Data" asp-action="Histories">
+        <a class="task-card data-nav-card" asp-controller="DataHistories" asp-action="Histories">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Audit</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>

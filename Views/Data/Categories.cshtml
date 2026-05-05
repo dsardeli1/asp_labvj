@@ -27,7 +27,7 @@
                 @foreach (var category in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Data" asp-action="CategoryDetails" asp-route-id="@category.Id">@category.Id</a></td>
+                        <td><a asp-controller="DataCategories" asp-action="CategoryDetails" asp-route-id="@category.Id">@category.Id</a></td>
                         <td>@category.Name</td>
                         <td>@category.Description</td>
                         <td>

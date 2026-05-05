@@ -29,7 +29,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Data" asp-action="TaskDetails" asp-route-id="@item.Id">@item.Id</a></td>
+                        <td><a asp-controller="DataTasks" asp-action="TaskDetails" asp-route-id="@item.Id">@item.Id</a></td>
                         <td>@item.Title</td>
                         <td>@((Priority)item.PriorityId)</td>
                         <td>@(item.User?.FirstName) @(item.User?.LastName)</td>
