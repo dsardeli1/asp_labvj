@@ -1,0 +1,869 @@
+{
+  "routing": {
+    "name": "TaskManageApp",
+    "description": "Complete URL routing model with controllers, actions, and views",
+    "routingConfiguration": {
+      "defaultRoute": "{controller=Home}/{action=Index}/{id?}",
+      "attributeRouting": true,
+      "frameworkVersion": ".NET 10.0"
+    },
+    "routes": [
+      {
+        "routeId": "R001",
+        "url": "/",
+        "httpMethod": "GET",
+        "controller": "HomeController",
+        "action": "Index",
+        "viewPath": "~/Views/Home/Index.cshtml",
+        "viewName": "Index",
+        "description": "Home page - landing page of the application",
+        "parameters": [],
+        "routeAttribute": "[Route(\"\")]"
+      },
+      {
+        "routeId": "R002",
+        "url": "/tasks",
+        "httpMethod": "GET",
+        "controller": "HomeController",
+        "action": "Tasks",
+        "viewPath": "~/Views/Home/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "View all tasks with sorting options (priority, due date, completion status)",
+        "parameters": [
+          {
+            "name": "prioritySort",
+            "type": "string",
+            "defaultValue": "none",
+            "description": "Sort by priority: 'high', 'low', or 'none'"
+          },
+          {
+            "name": "dueDateSort",
+            "type": "string",
+            "defaultValue": "none",
+            "description": "Sort by due date: 'soonest', 'latest', or 'none'"
+          },
+          {
+            "name": "showCompleted",
+            "type": "bool",
+            "defaultValue": "true",
+            "description": "Whether to show completed tasks"
+          }
+        ],
+        "routeAttribute": "[HttpGet(\"tasks\")]"
+      },
+      {
+        "routeId": "R003",
+        "url": "/incomplete-tasks",
+        "httpMethod": "GET",
+        "controller": "HomeController",
+        "action": "IncompleteTasks",
+        "viewPath": "~/Views/Home/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "View only incomplete/pending tasks with sorting options",
+        "parameters": [
+          {
+            "name": "prioritySort",
+            "type": "string",
+            "defaultValue": "none",
+            "description": "Sort by priority: 'high', 'low', or 'none'"
+          },
+          {
+            "name": "dueDateSort",
+            "type": "string",
+            "defaultValue": "none",
+            "description": "Sort by due date: 'soonest', 'latest', or 'none'"
+          }
+        ],
+        "routeAttribute": "[HttpGet(\"incomplete-tasks\")]"
+      },
+      {
+        "routeId": "R004",
+        "url": "/privacy",
+        "httpMethod": "GET",
+        "controller": "HomeController",
+        "action": "Privacy",
+        "viewPath": "~/Views/Home/Privacy.cshtml",
+        "viewName": "Privacy",
+        "description": "Privacy policy page",
+        "parameters": [],
+        "routeAttribute": "[HttpGet - Convention based]"
+      },
+      {
+        "routeId": "R005",
+        "url": "/error",
+        "httpMethod": "GET",
+        "controller": "HomeController",
+        "action": "Error",
+        "viewPath": "~/Views/Home/Error.cshtml",
+        "viewName": "Error",
+        "description": "Error page for displaying error information",
+        "parameters": [],
+        "routeAttribute": "[HttpGet - Convention based]",
+        "notes": "Also routed from: /Home/Error (exception handler)"
+      },
+      {
+        "routeId": "R006",
+        "url": "/data/tasks",
+        "httpMethod": "GET",
+        "controller": "DataTasksController",
+        "action": "Tasks",
+        "viewPath": "~/Views/Data/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "List all tasks in data view (ordered by ID)",
+        "parameters": [],
+        "routeAttribute": "[Route(\"data/tasks\")][HttpGet(\"\")]"
+      },
+      {
+        "routeId": "R007",
+        "url": "/data/tasks/{id}",
+        "httpMethod": "GET",
+        "controller": "DataTasksController",
+        "action": "TaskDetails",
+        "viewPath": "~/Views/Data/TaskDetails.cshtml",
+        "viewName": "TaskDetails",
+        "description": "Display detailed information for a specific task",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "required": true,
+            "description": "Task ID"
+          }
+        ],
+        "routeAttribute": "[Route(\"data/tasks\")][HttpGet(\"{id:int}\")]"
+      },
+      {
+        "routeId": "R008",
+        "url": "/data/tasks/completed",
+        "httpMethod": "GET",
+        "controller": "DataTasksController",
+        "action": "CompletedTasks",
+        "viewPath": "~/Views/Data/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "List all completed tasks",
+        "parameters": [],
+        "routeAttribute": "[Route(\"data/tasks\")][HttpGet(\"completed\")]"
+      },
+      {
+        "routeId": "R009",
+        "url": "/data/tasks/pending",
+        "httpMethod": "GET",
+        "controller": "DataTasksController",
+        "action": "PendingTasks",
+        "viewPath": "~/Views/Data/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "List all pending/incomplete tasks",
+        "parameters": [],
+        "routeAttribute": "[Route(\"data/tasks\")][HttpGet(\"pending\")]"
+      },
+      {
+        "routeId": "R010",
+        "url": "/data/tasks/category/{categoryId}",
+        "httpMethod": "GET",
+        "controller": "DataTasksController",
+        "action": "TasksByCategory",
+        "viewPath": "~/Views/Data/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "List all tasks in a specific category",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "type": "int",
+            "required": true,
+            "description": "Category ID"
+          }
+        ],
+        "routeAttribute": "[Route(\"data/tasks\")][HttpGet(\"category/{categoryId:int}\")]"
+      },
+      {
+        "routeId": "R011",
+        "url": "/data/tasks/user/{userId}",
+        "httpMethod": "GET",
+        "controller": "DataTasksController",
+        "action": "TasksByUser",
+        "viewPath": "~/Views/Data/Tasks.cshtml",
+        "viewName": "Tasks",
+        "description": "List all tasks assigned to a specific user",
+        "parameters": [
+          {
+            "name": "userId",
+            "type": "int",
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "routeAttribute": "[Route(\"data/tasks\")][HttpGet(\"user/{userId:int}\")]"
+      },
+      {
+        "routeId": "R012",
+        "url": "/data/users",
+        "httpMethod": "GET",
+        "controller": "DataUsersController",
+        "action": "Users",
+        "viewPath": "~/Views/Data/Users.cshtml",
+        "viewName": "Users",
+        "description": "List all users in the system",
+        "parameters": [],
+        "routeAttribute": "[Route(\"data/users\")][HttpGet(\"\")]"
+      },
+      {
+        "routeId": "R013",
+        "url": "/data/users/{id}",
+        "httpMethod": "GET",
+        "controller": "DataUsersController",
+        "action": "UserDetails",
+        "viewPath": "~/Views/Data/UserDetails.cshtml",
+        "viewName": "UserDetails",
+        "description": "Display detailed information for a specific user",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "routeAttribute": "[Route(\"data/users\")][HttpGet(\"{id:int}\")]"
+      },
+      {
+        "routeId": "R014",
+        "url": "/data/users/with-tasks",
+        "httpMethod": "GET",
+        "controller": "DataUsersController",
+        "action": "UsersWithTasks",
+        "viewPath": "~/Views/Data/Users.cshtml",
+        "viewName": "Users",
+        "description": "List users who have at least one task assigned",
+        "parameters": [],
+        "routeAttribute": "[Route(\"data/users\")][HttpGet(\"with-tasks\")]"
+      },
+      {
+        "routeId": "R015",
+        "url": "/data/users/without-tasks",
+        "httpMethod": "GET",
+        "controller": "DataUsersController",
+        "action": "UsersWithoutTasks",
+        "viewPath": "~/Views/Data/Users.cshtml",
+        "viewName": "Users",
+        "description": "List users who have no tasks assigned",
+        "parameters": [],
+        "routeAttribute": "[Route(\"data/users\")][HttpGet(\"without-tasks\")]"
+      },
+      {
+        "routeId": "R016",
+        "url": "/data-categories/categories",
+        "httpMethod": "GET",
+        "controller": "DataCategoriesController",
+        "action": "Categories",
+        "viewPath": "~/Views/Data/Categories.cshtml",
+        "viewName": "Categories",
+        "description": "List all task categories",
+        "parameters": [],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R017",
+        "url": "/data-categories/category-details/{id}",
+        "httpMethod": "GET",
+        "controller": "DataCategoriesController",
+        "action": "CategoryDetails",
+        "viewPath": "~/Views/Data/CategoryDetails.cshtml",
+        "viewName": "CategoryDetails",
+        "description": "Display detailed information for a specific category",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "required": true,
+            "description": "Category ID"
+          }
+        ],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R018",
+        "url": "/data-comments/comments",
+        "httpMethod": "GET",
+        "controller": "DataCommentsController",
+        "action": "Comments",
+        "viewPath": "~/Views/Data/Comments.cshtml",
+        "viewName": "Comments",
+        "description": "List all comments in the system",
+        "parameters": [],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R019",
+        "url": "/data-comments/comment-details/{id}",
+        "httpMethod": "GET",
+        "controller": "DataCommentsController",
+        "action": "CommentDetails",
+        "viewPath": "~/Views/Data/CommentDetails.cshtml",
+        "viewName": "CommentDetails",
+        "description": "Display detailed information for a specific comment",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "required": true,
+            "description": "Comment ID"
+          }
+        ],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R020",
+        "url": "/data-attachments/attachments",
+        "httpMethod": "GET",
+        "controller": "DataAttachmentsController",
+        "action": "Attachments",
+        "viewPath": "~/Views/Data/Attachments.cshtml",
+        "viewName": "Attachments",
+        "description": "List all file attachments in the system",
+        "parameters": [],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R021",
+        "url": "/data-attachments/attachment-details/{id}",
+        "httpMethod": "GET",
+        "controller": "DataAttachmentsController",
+        "action": "AttachmentDetails",
+        "viewPath": "~/Views/Data/AttachmentDetails.cshtml",
+        "viewName": "AttachmentDetails",
+        "description": "Display detailed information for a specific attachment",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "required": true,
+            "description": "Attachment ID"
+          }
+        ],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R022",
+        "url": "/data-histories/histories",
+        "httpMethod": "GET",
+        "controller": "DataHistoriesController",
+        "action": "Histories",
+        "viewPath": "~/Views/Data/Histories.cshtml",
+        "viewName": "Histories",
+        "description": "List all task history records (audit trail)",
+        "parameters": [],
+        "routeAttribute": "Convention-based (no route attribute)"
+      },
+      {
+        "routeId": "R023",
+        "url": "/data-histories/history-details/{id}",
+        "httpMethod": "GET",
+        "controller": "DataHistoriesController",
+        "action": "HistoryDetails",
+        "viewPath": "~/Views/Data/HistoryDetails.cshtml",
+        "viewName": "HistoryDetails",
+        "description": "Display detailed information for a specific history record",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "required": true,
+            "description": "History record ID"
+          }
+        ],
+        "routeAttribute": "Convention-based (no route attribute)"
+      }
+    ],
+    "controllers": [
+      {
+        "controllerId": "C001",
+        "name": "HomeController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "[Route(\"\")][Route(\"[controller]\")]",
+        "description": "Primary navigation controller - handles home page and main task views",
+        "actions": [
+          {
+            "actionId": "A001",
+            "name": "Index",
+            "httpMethod": "GET",
+            "returnType": "IActionResult",
+            "viewPath": "~/Views/Home/Index.cshtml",
+            "url": "/"
+          },
+          {
+            "actionId": "A002",
+            "name": "Tasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Home/Tasks.cshtml",
+            "url": "/tasks"
+          },
+          {
+            "actionId": "A003",
+            "name": "IncompleteTasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Home/Tasks.cshtml",
+            "url": "/incomplete-tasks"
+          },
+          {
+            "actionId": "A004",
+            "name": "Privacy",
+            "httpMethod": "GET",
+            "returnType": "IActionResult",
+            "viewPath": "~/Views/Home/Privacy.cshtml",
+            "url": "/privacy"
+          },
+          {
+            "actionId": "A005",
+            "name": "Error",
+            "httpMethod": "GET",
+            "returnType": "IActionResult",
+            "viewPath": "~/Views/Home/Error.cshtml",
+            "url": "/error"
+          }
+        ]
+      },
+      {
+        "controllerId": "C002",
+        "name": "DataTasksController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "[Route(\"data/tasks\")]",
+        "description": "Data-focused API controller for task operations",
+        "actions": [
+          {
+            "actionId": "A006",
+            "name": "Tasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Tasks.cshtml",
+            "url": "/data/tasks"
+          },
+          {
+            "actionId": "A007",
+            "name": "TaskDetails",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/TaskDetails.cshtml",
+            "url": "/data/tasks/{id}"
+          },
+          {
+            "actionId": "A008",
+            "name": "CompletedTasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Tasks.cshtml",
+            "url": "/data/tasks/completed"
+          },
+          {
+            "actionId": "A009",
+            "name": "PendingTasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Tasks.cshtml",
+            "url": "/data/tasks/pending"
+          },
+          {
+            "actionId": "A010",
+            "name": "TasksByCategory",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Tasks.cshtml",
+            "url": "/data/tasks/category/{categoryId}"
+          },
+          {
+            "actionId": "A011",
+            "name": "TasksByUser",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Tasks.cshtml",
+            "url": "/data/tasks/user/{userId}"
+          }
+        ]
+      },
+      {
+        "controllerId": "C003",
+        "name": "DataUsersController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "[Route(\"data/users\")]",
+        "description": "Data-focused API controller for user operations",
+        "actions": [
+          {
+            "actionId": "A012",
+            "name": "Users",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Users.cshtml",
+            "url": "/data/users"
+          },
+          {
+            "actionId": "A013",
+            "name": "UserDetails",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/UserDetails.cshtml",
+            "url": "/data/users/{id}"
+          },
+          {
+            "actionId": "A014",
+            "name": "UsersWithTasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Users.cshtml",
+            "url": "/data/users/with-tasks"
+          },
+          {
+            "actionId": "A015",
+            "name": "UsersWithoutTasks",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Users.cshtml",
+            "url": "/data/users/without-tasks"
+          }
+        ]
+      },
+      {
+        "controllerId": "C004",
+        "name": "DataCategoriesController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "None (Convention-based)",
+        "description": "Data-focused controller for category operations",
+        "actions": [
+          {
+            "actionId": "A016",
+            "name": "Categories",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Categories.cshtml",
+            "url": "/data-categories/categories"
+          },
+          {
+            "actionId": "A017",
+            "name": "CategoryDetails",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/CategoryDetails.cshtml",
+            "url": "/data-categories/category-details/{id}"
+          }
+        ]
+      },
+      {
+        "controllerId": "C005",
+        "name": "DataCommentsController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "None (Convention-based)",
+        "description": "Data-focused controller for comment operations",
+        "actions": [
+          {
+            "actionId": "A018",
+            "name": "Comments",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Comments.cshtml",
+            "url": "/data-comments/comments"
+          },
+          {
+            "actionId": "A019",
+            "name": "CommentDetails",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/CommentDetails.cshtml",
+            "url": "/data-comments/comment-details/{id}"
+          }
+        ]
+      },
+      {
+        "controllerId": "C006",
+        "name": "DataAttachmentsController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "None (Convention-based)",
+        "description": "Data-focused controller for file attachment operations",
+        "actions": [
+          {
+            "actionId": "A020",
+            "name": "Attachments",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Attachments.cshtml",
+            "url": "/data-attachments/attachments"
+          },
+          {
+            "actionId": "A021",
+            "name": "AttachmentDetails",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/AttachmentDetails.cshtml",
+            "url": "/data-attachments/attachment-details/{id}"
+          }
+        ]
+      },
+      {
+        "controllerId": "C007",
+        "name": "DataHistoriesController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "None (Convention-based)",
+        "description": "Data-focused controller for task history/audit trail operations",
+        "actions": [
+          {
+            "actionId": "A022",
+            "name": "Histories",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/Histories.cshtml",
+            "url": "/data-histories/histories"
+          },
+          {
+            "actionId": "A023",
+            "name": "HistoryDetails",
+            "httpMethod": "GET",
+            "returnType": "Task<IActionResult>",
+            "viewPath": "~/Views/Data/HistoryDetails.cshtml",
+            "url": "/data-histories/history-details/{id}"
+          }
+        ]
+      },
+      {
+        "controllerId": "C008",
+        "name": "DataController",
+        "namespace": "TaskManageApp.Controllers",
+        "routeAttribute": "None (Convention-based)",
+        "description": "Hub/gateway controller for data operations",
+        "actions": [
+          {
+            "actionId": "A024",
+            "name": "Index",
+            "httpMethod": "GET",
+            "returnType": "IActionResult",
+            "viewPath": "~/Views/Data/Index.cshtml",
+            "url": "/data/index"
+          }
+        ]
+      }
+    ],
+    "views": [
+      {
+        "viewId": "V001",
+        "path": "~/Views/Home/Index.cshtml",
+        "name": "Index",
+        "folder": "Home",
+        "usedBy": [
+          "HomeController.Index"
+        ]
+      },
+      {
+        "viewId": "V002",
+        "path": "~/Views/Home/Tasks.cshtml",
+        "name": "Tasks",
+        "folder": "Home",
+        "usedBy": [
+          "HomeController.Tasks",
+          "HomeController.IncompleteTasks"
+        ]
+      },
+      {
+        "viewId": "V003",
+        "path": "~/Views/Home/Privacy.cshtml",
+        "name": "Privacy",
+        "folder": "Home",
+        "usedBy": [
+          "HomeController.Privacy"
+        ]
+      },
+      {
+        "viewId": "V004",
+        "path": "~/Views/Home/Error.cshtml",
+        "name": "Error",
+        "folder": "Home",
+        "usedBy": [
+          "HomeController.Error"
+        ]
+      },
+      {
+        "viewId": "V005",
+        "path": "~/Views/Data/Index.cshtml",
+        "name": "Index",
+        "folder": "Data",
+        "usedBy": [
+          "DataController.Index"
+        ]
+      },
+      {
+        "viewId": "V006",
+        "path": "~/Views/Data/Tasks.cshtml",
+        "name": "Tasks",
+        "folder": "Data",
+        "usedBy": [
+          "DataTasksController.Tasks",
+          "DataTasksController.CompletedTasks",
+          "DataTasksController.PendingTasks",
+          "DataTasksController.TasksByCategory",
+          "DataTasksController.TasksByUser"
+        ]
+      },
+      {
+        "viewId": "V007",
+        "path": "~/Views/Data/TaskDetails.cshtml",
+        "name": "TaskDetails",
+        "folder": "Data",
+        "usedBy": [
+          "DataTasksController.TaskDetails"
+        ]
+      },
+      {
+        "viewId": "V008",
+        "path": "~/Views/Data/Users.cshtml",
+        "name": "Users",
+        "folder": "Data",
+        "usedBy": [
+          "DataUsersController.Users",
+          "DataUsersController.UsersWithTasks",
+          "DataUsersController.UsersWithoutTasks"
+        ]
+      },
+      {
+        "viewId": "V009",
+        "path": "~/Views/Data/UserDetails.cshtml",
+        "name": "UserDetails",
+        "folder": "Data",
+        "usedBy": [
+          "DataUsersController.UserDetails"
+        ]
+      },
+      {
+        "viewId": "V010",
+        "path": "~/Views/Data/Categories.cshtml",
+        "name": "Categories",
+        "folder": "Data",
+        "usedBy": [
+          "DataCategoriesController.Categories"
+        ]
+      },
+      {
+        "viewId": "V011",
+        "path": "~/Views/Data/CategoryDetails.cshtml",
+        "name": "CategoryDetails",
+        "folder": "Data",
+        "usedBy": [
+          "DataCategoriesController.CategoryDetails"
+        ]
+      },
+      {
+        "viewId": "V012",
+        "path": "~/Views/Data/Comments.cshtml",
+        "name": "Comments",
+        "folder": "Data",
+        "usedBy": [
+          "DataCommentsController.Comments"
+        ]
+      },
+      {
+        "viewId": "V013",
+        "path": "~/Views/Data/CommentDetails.cshtml",
+        "name": "CommentDetails",
+        "folder": "Data",
+        "usedBy": [
+          "DataCommentsController.CommentDetails"
+        ]
+      },
+      {
+        "viewId": "V014",
+        "path": "~/Views/Data/Attachments.cshtml",
+        "name": "Attachments",
+        "folder": "Data",
+        "usedBy": [
+          "DataAttachmentsController.Attachments"
+        ]
+      },
+      {
+        "viewId": "V015",
+        "path": "~/Views/Data/AttachmentDetails.cshtml",
+        "name": "AttachmentDetails",
+        "folder": "Data",
+        "usedBy": [
+          "DataAttachmentsController.AttachmentDetails"
+        ]
+      },
+      {
+        "viewId": "V016",
+        "path": "~/Views/Data/Histories.cshtml",
+        "name": "Histories",
+        "folder": "Data",
+        "usedBy": [
+          "DataHistoriesController.Histories"
+        ]
+      },
+      {
+        "viewId": "V017",
+        "path": "~/Views/Data/HistoryDetails.cshtml",
+        "name": "HistoryDetails",
+        "folder": "Data",
+        "usedBy": [
+          "DataHistoriesController.HistoryDetails"
+        ]
+      },
+      {
+        "viewId": "V018",
+        "path": "~/Views/Shared/_Layout.cshtml",
+        "name": "_Layout",
+        "folder": "Shared",
+        "type": "Layout",
+        "usedBy": [
+          "All pages (via _ViewStart.cshtml)"
+        ]
+      },
+      {
+        "viewId": "V019",
+        "path": "~/Views/Shared/_ValidationScriptsPartial.cshtml",
+        "name": "_ValidationScriptsPartial",
+        "folder": "Shared",
+        "type": "Partial",
+        "usedBy": [
+          "Forms/validation"
+        ]
+      },
+      {
+        "viewId": "V020",
+        "path": "~/Views/Shared/Error.cshtml",
+        "name": "Error",
+        "folder": "Shared",
+        "type": "Shared Layout",
+        "usedBy": [
+          "Error handling"
+        ]
+      }
+    ],
+    "routingSummary": {
+      "totalRoutes": 23,
+      "totalControllers": 8,
+      "totalActions": 24,
+      "totalViews": 20,
+      "routingPatterns": {
+        "attributeRouted": [
+          "HomeController (2 route attributes)",
+          "DataTasksController (1 route attribute)",
+          "DataUsersController (1 route attribute)"
+        ],
+        "conventionBased": [
+          "DataCategoriesController",
+          "DataCommentsController",
+          "DataAttachmentsController",
+          "DataHistoriesController",
+          "DataController"
+        ]
+      },
+      "httpMethods": {
+        "GET": 23,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0
+      }
+    },
+    "metadata": {
+      "createdDate": "2026-05-07",
+      "version": "1.0",
+      "lastModified": "2026-05-07",
+      "aspNetVersion": ".NET 10.0",
+      "routingStyle": "Mixed (Attribute + Convention-based)"
+    }
+  }
+}

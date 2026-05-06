@@ -1,0 +1,520 @@
+{
+  "database": {
+    "name": "TaskManageApp",
+    "description": "Task Management Application Database Model",
+    "tables": [
+      {
+        "id": "T001",
+        "name": "Users",
+        "displayName": "User",
+        "description": "Stores user account information and credentials",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "int",
+            "required": true,
+            "isPrimaryKey": true,
+            "description": "Unique identifier for the user"
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "required": true,
+            "maxLength": null,
+            "description": "Unique username for login"
+          },
+          {
+            "name": "Email",
+            "type": "string",
+            "required": true,
+            "maxLength": null,
+            "description": "Email address of the user"
+          },
+          {
+            "name": "PasswordHash",
+            "type": "string",
+            "required": true,
+            "description": "Hashed password for security"
+          },
+          {
+            "name": "FirstName",
+            "type": "string",
+            "required": true,
+            "description": "User's first name"
+          },
+          {
+            "name": "LastName",
+            "type": "string",
+            "required": true,
+            "description": "User's last name"
+          },
+          {
+            "name": "CreatedAt",
+            "type": "datetime",
+            "required": true,
+            "description": "Account creation timestamp"
+          }
+        ],
+        "relationships": [
+          {
+            "relationshipId": "R001",
+            "relatedTable": "Tasks",
+            "relationshipType": "One-to-Many",
+            "description": "A user can have multiple tasks assigned",
+            "foreignKeyField": "UserId",
+            "onDelete": "NoAction"
+          },
+          {
+            "relationshipId": "R002",
+            "relatedTable": "Comments",
+            "relationshipType": "One-to-Many",
+            "description": "A user can write multiple comments",
+            "foreignKeyField": "UserId",
+            "onDelete": "NoAction"
+          }
+        ]
+      },
+      {
+        "id": "T002",
+        "name": "Tasks",
+        "displayName": "TaskItem",
+        "description": "Stores task items with details and metadata",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "int",
+            "required": true,
+            "isPrimaryKey": true,
+            "description": "Unique identifier for the task"
+          },
+          {
+            "name": "Title",
+            "type": "string",
+            "required": true,
+            "description": "Task title or name"
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "required": false,
+            "description": "Detailed description of the task"
+          },
+          {
+            "name": "CreatedDate",
+            "type": "datetime",
+            "required": true,
+            "description": "Timestamp when task was created"
+          },
+          {
+            "name": "DueDate",
+            "type": "datetime",
+            "required": true,
+            "description": "Target completion date for the task"
+          },
+          {
+            "name": "IsCompleted",
+            "type": "bool",
+            "required": true,
+            "defaultValue": false,
+            "description": "Flag indicating if task is completed"
+          },
+          {
+            "name": "PriorityId",
+            "type": "int",
+            "required": true,
+            "description": "Priority level (0=Low, 1=Medium, 2=High)",
+            "referencesEnum": "Priority"
+          },
+          {
+            "name": "UserId",
+            "type": "int",
+            "required": true,
+            "isForeignKey": true,
+            "referencesTable": "Users",
+            "description": "ID of the user assigned to this task"
+          },
+          {
+            "name": "CategoryId",
+            "type": "int",
+            "required": true,
+            "isForeignKey": true,
+            "referencesTable": "Categories",
+            "description": "ID of the category this task belongs to"
+          }
+        ],
+        "relationships": [
+          {
+            "relationshipId": "R003",
+            "relatedTable": "Users",
+            "relationshipType": "Many-to-One",
+            "description": "Each task is assigned to one user",
+            "foreignKeyField": "UserId",
+            "onDelete": "NoAction"
+          },
+          {
+            "relationshipId": "R004",
+            "relatedTable": "Categories",
+            "relationshipType": "Many-to-One",
+            "description": "Each task belongs to one category",
+            "foreignKeyField": "CategoryId",
+            "onDelete": "NoAction"
+          },
+          {
+            "relationshipId": "R005",
+            "relatedTable": "Comments",
+            "relationshipType": "One-to-Many",
+            "description": "A task can have multiple comments",
+            "foreignKeyField": "TaskItemId",
+            "onDelete": "Cascade"
+          },
+          {
+            "relationshipId": "R006",
+            "relatedTable": "TaskHistories",
+            "relationshipType": "One-to-Many",
+            "description": "A task has multiple history records tracking changes",
+            "foreignKeyField": "TaskItemId",
+            "onDelete": "Cascade"
+          },
+          {
+            "relationshipId": "R007",
+            "relatedTable": "TaskAttachments",
+            "relationshipType": "One-to-Many",
+            "description": "A task can have multiple file attachments",
+            "foreignKeyField": "TaskItemId",
+            "onDelete": "Cascade"
+          }
+        ]
+      },
+      {
+        "id": "T003",
+        "name": "Categories",
+        "displayName": "Category",
+        "description": "Stores task categories for organizing and filtering tasks",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "int",
+            "required": true,
+            "isPrimaryKey": true,
+            "description": "Unique identifier for the category"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "required": true,
+            "description": "Category name (e.g., Planning, Development, Operations)"
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "required": false,
+            "description": "Detailed description of the category"
+          },
+          {
+            "name": "Color",
+            "type": "string",
+            "required": false,
+            "description": "Hex color code for UI representation"
+          },
+          {
+            "name": "CreatedDate",
+            "type": "datetime",
+            "required": true,
+            "description": "Timestamp when category was created"
+          },
+          {
+            "name": "IsActive",
+            "type": "bool",
+            "required": true,
+            "defaultValue": true,
+            "description": "Flag to indicate if category is active"
+          }
+        ],
+        "relationships": [
+          {
+            "relationshipId": "R008",
+            "relatedTable": "Tasks",
+            "relationshipType": "One-to-Many",
+            "description": "A category can contain multiple tasks",
+            "foreignKeyField": "CategoryId",
+            "onDelete": "NoAction"
+          }
+        ]
+      },
+      {
+        "id": "T004",
+        "name": "Comments",
+        "displayName": "Comment",
+        "description": "Stores comments/notes attached to tasks",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "int",
+            "required": true,
+            "isPrimaryKey": true,
+            "description": "Unique identifier for the comment"
+          },
+          {
+            "name": "Content",
+            "type": "string",
+            "required": true,
+            "description": "Text content of the comment"
+          },
+          {
+            "name": "CreatedDate",
+            "type": "datetime",
+            "required": true,
+            "description": "Timestamp when comment was created"
+          },
+          {
+            "name": "IsEdited",
+            "type": "bool",
+            "required": true,
+            "defaultValue": false,
+            "description": "Flag indicating if comment has been edited"
+          },
+          {
+            "name": "TaskItemId",
+            "type": "int",
+            "required": true,
+            "isForeignKey": true,
+            "referencesTable": "Tasks",
+            "description": "ID of the task this comment belongs to"
+          },
+          {
+            "name": "UserId",
+            "type": "int",
+            "required": true,
+            "isForeignKey": true,
+            "referencesTable": "Users",
+            "description": "ID of the user who wrote this comment"
+          }
+        ],
+        "relationships": [
+          {
+            "relationshipId": "R009",
+            "relatedTable": "Tasks",
+            "relationshipType": "Many-to-One",
+            "description": "Each comment belongs to one task",
+            "foreignKeyField": "TaskItemId",
+            "onDelete": "Cascade"
+          },
+          {
+            "relationshipId": "R010",
+            "relatedTable": "Users",
+            "relationshipType": "Many-to-One",
+            "description": "Each comment is written by one user",
+            "foreignKeyField": "UserId",
+            "onDelete": "NoAction"
+          }
+        ]
+      },
+      {
+        "id": "T005",
+        "name": "TaskAttachments",
+        "displayName": "TaskAttachment",
+        "description": "Stores file attachments associated with tasks",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "int",
+            "required": true,
+            "isPrimaryKey": true,
+            "description": "Unique identifier for the attachment"
+          },
+          {
+            "name": "FileName",
+            "type": "string",
+            "required": true,
+            "description": "Original filename of the attachment"
+          },
+          {
+            "name": "FilePath",
+            "type": "string",
+            "required": true,
+            "description": "Storage path where the file is located"
+          },
+          {
+            "name": "TaskItemId",
+            "type": "int",
+            "required": true,
+            "isForeignKey": true,
+            "referencesTable": "Tasks",
+            "description": "ID of the task this attachment belongs to"
+          }
+        ],
+        "relationships": [
+          {
+            "relationshipId": "R011",
+            "relatedTable": "Tasks",
+            "relationshipType": "Many-to-One",
+            "description": "Each attachment belongs to one task",
+            "foreignKeyField": "TaskItemId",
+            "onDelete": "Cascade"
+          }
+        ]
+      },
+      {
+        "id": "T006",
+        "name": "TaskHistories",
+        "displayName": "TaskHistory",
+        "description": "Stores audit trail of changes made to tasks",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "int",
+            "required": true,
+            "isPrimaryKey": true,
+            "description": "Unique identifier for the history record"
+          },
+          {
+            "name": "Action",
+            "type": "string",
+            "required": true,
+            "description": "Description of the action performed (e.g., 'Created', 'Updated Status', 'Reassigned')"
+          },
+          {
+            "name": "ActionDate",
+            "type": "datetime",
+            "required": true,
+            "description": "Timestamp when the action occurred"
+          },
+          {
+            "name": "TaskItemId",
+            "type": "int",
+            "required": true,
+            "isForeignKey": true,
+            "referencesTable": "Tasks",
+            "description": "ID of the task this history record refers to"
+          }
+        ],
+        "relationships": [
+          {
+            "relationshipId": "R012",
+            "relatedTable": "Tasks",
+            "relationshipType": "Many-to-One",
+            "description": "Each history record belongs to one task",
+            "foreignKeyField": "TaskItemId",
+            "onDelete": "Cascade"
+          }
+        ]
+      }
+    ],
+    "enums": [
+      {
+        "name": "Priority",
+        "description": "Task priority levels",
+        "values": [
+          {
+            "name": "Low",
+            "value": 0,
+            "description": "Low priority task"
+          },
+          {
+            "name": "Medium",
+            "value": 1,
+            "description": "Medium priority task"
+          },
+          {
+            "name": "High",
+            "value": 2,
+            "description": "High priority task"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "relationshipId": "R001",
+        "source": "Users",
+        "target": "Tasks",
+        "cardinality": "1:N",
+        "description": "One user can have many tasks"
+      },
+      {
+        "relationshipId": "R002",
+        "source": "Users",
+        "target": "Comments",
+        "cardinality": "1:N",
+        "description": "One user can write many comments"
+      },
+      {
+        "relationshipId": "R003",
+        "source": "Tasks",
+        "target": "Users",
+        "cardinality": "N:1",
+        "description": "Many tasks assigned to one user"
+      },
+      {
+        "relationshipId": "R004",
+        "source": "Tasks",
+        "target": "Categories",
+        "cardinality": "N:1",
+        "description": "Many tasks in one category"
+      },
+      {
+        "relationshipId": "R005",
+        "source": "Tasks",
+        "target": "Comments",
+        "cardinality": "1:N",
+        "description": "One task can have many comments"
+      },
+      {
+        "relationshipId": "R006",
+        "source": "Tasks",
+        "target": "TaskHistories",
+        "cardinality": "1:N",
+        "description": "One task has many history records"
+      },
+      {
+        "relationshipId": "R007",
+        "source": "Tasks",
+        "target": "TaskAttachments",
+        "cardinality": "1:N",
+        "description": "One task can have many attachments"
+      },
+      {
+        "relationshipId": "R008",
+        "source": "Categories",
+        "target": "Tasks",
+        "cardinality": "1:N",
+        "description": "One category contains many tasks"
+      },
+      {
+        "relationshipId": "R009",
+        "source": "Comments",
+        "target": "Tasks",
+        "cardinality": "N:1",
+        "description": "Many comments belong to one task"
+      },
+      {
+        "relationshipId": "R010",
+        "source": "Comments",
+        "target": "Users",
+        "cardinality": "N:1",
+        "description": "Many comments written by one user"
+      },
+      {
+        "relationshipId": "R011",
+        "source": "TaskAttachments",
+        "target": "Tasks",
+        "cardinality": "N:1",
+        "description": "Many attachments belong to one task"
+      },
+      {
+        "relationshipId": "R012",
+        "source": "TaskHistories",
+        "target": "Tasks",
+        "cardinality": "N:1",
+        "description": "Many history records for one task"
+      }
+    ],
+    "metadata": {
+      "createdDate": "2026-05-07",
+      "version": "1.0",
+      "lastModified": "2026-05-07",
+      "dbProvider": "EntityFrameworkCore",
+      "targetFramework": ".NET 10.0"
+    }
+  }
+}
