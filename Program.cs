@@ -1,10 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManageApp.DAL;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    WebRootPath = "Web/wwwroot"
+});
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorOptions(options =>
+    {
+        options.ViewLocationFormats.Insert(0, "/Web/Views/Shared/{0}.cshtml");
+        options.ViewLocationFormats.Insert(0, "/Web/Views/{1}/{0}.cshtml");
+    });
 
 // Register EF-backed repository for database access
 builder.Services.AddScoped<TaskManageApp.Repositories.ITaskRepository, TaskManageApp.Repositories.EFTaskRepository>();

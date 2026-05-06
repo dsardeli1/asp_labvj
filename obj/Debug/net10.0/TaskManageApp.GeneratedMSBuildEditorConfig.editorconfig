@@ -30,86 +30,86 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/AttachmentDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxBdHRhY2htZW50RGV0YWlscy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/AttachmentDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQXR0YWNobWVudERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Attachments.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxBdHRhY2htZW50cy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Attachments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQXR0YWNobWVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Categories.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxDYXRlZ29yaWVzLmNzaHRtbA==
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Categories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcmllcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/CategoryDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxDYXRlZ29yeURldGFpbHMuY3NodG1s
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CategoryDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcnlEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/CommentDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxDb21tZW50RGV0YWlscy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CommentDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ29tbWVudERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Comments.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxDb21tZW50cy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Comments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ29tbWVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Histories.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxIaXN0b3JpZXMuY3NodG1s
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Histories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/HistoryDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxIaXN0b3J5RGV0YWlscy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/HistoryDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yeURldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxJbmRleC5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/TaskDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxUYXNrRGV0YWlscy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/TaskDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza0RldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Tasks.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxUYXNrcy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Tasks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/UserDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxVc2VyRGV0YWlscy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/UserDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVXNlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Data/Users.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVxVc2Vycy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Users.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXEhvbWVcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Home/Tasks.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUYXNrcy5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Home/Tasks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXEhvbWVcVGFza3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxfVmFsaWRhdGlvblNjcmlwdHNQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/davor/Documents/GitHub/asp_labvj/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-p8yd31k8uw
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxfTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-d1bjgqsml8

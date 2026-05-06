@@ -511,7 +511,7 @@
     ],
     "metadata": {
       "createdDate": "2026-05-07",
-      "version": "1.0",
+      "version": "1.1",
       "lastModified": "2026-05-07",
       "dbProvider": "EntityFrameworkCore",
       "targetFramework": ".NET 10.0"
