@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TaskManageApp.Models
 {
     public class User
     {
+        [Key]
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
@@ -11,8 +14,8 @@ namespace TaskManageApp.Models
         public DateTime CreatedAt { get; set; }
 
         // Navigation property for related tasks
-        public ICollection<TaskItem> Tasks { get; set; }
+        public virtual ICollection<TaskItem> Tasks { get; set; }
         // Navigation property for related comments
-        public ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

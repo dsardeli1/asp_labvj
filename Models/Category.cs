@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TaskManageApp.Models
 {
     public class Category
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -10,6 +13,6 @@ namespace TaskManageApp.Models
         public bool IsActive { get; set; }
 
         // Navigation property for related tasks
-        public ICollection<TaskItem> Tasks { get; set; }
+        public virtual ICollection<TaskItem> Tasks { get; set; }
     }
 }

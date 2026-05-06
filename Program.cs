@@ -1,10 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using TaskManageApp.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Register mock repository for UI development
-builder.Services.AddScoped<TaskManageApp.Repositories.ITaskRepository, TaskManageApp.Repositories.MockTaskRepository>();
+// Register EF-backed repository for database access
+builder.Services.AddScoped<TaskManageApp.Repositories.ITaskRepository, TaskManageApp.Repositories.EFTaskRepository>();
+
+// Register ApplicationDbContext (update connection string in appsettings.json)
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("TaskManageApp")));
 
 var app = builder.Build();
 

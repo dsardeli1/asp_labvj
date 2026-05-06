@@ -64,7 +64,7 @@ wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\css\site.css
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\favicon.ico
-C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\js\site.js
+C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\css\dashboard.css
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -124,4 +124,4 @@ C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\jquery\dist\jquery.slim.js
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\lib\jquery\LICENSE.txt
-C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\css\dashboard.css
+C:\Users\davor\Documents\GitHub\asp_labvj\wwwroot\js\site.js
