@@ -292,7 +292,6 @@ C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\4192ldujn
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\1kbgi3pqlr-{0}-lp3grrl6xz-lp3grrl6xz.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\isnuaildbe-{0}-m2jvklyb2m-m2jvklyb2m.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\0amqff0opo-{0}-m2jvklyb2m-m2jvklyb2m.gz
-C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\fqco8gxv2a-{0}-473m24j87p-473m24j87p.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\Azure.Core.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\Azure.Identity.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\Humanizer.dll
@@ -420,4 +419,5 @@ C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\runtimes\win-x64\nat
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskManageApp.csproj.AssemblyReference.cache
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskMana.3119C42F.Up2Date
+C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\fqco8gxv2a-{0}-lw8g759zen-lw8g759zen.gz
 C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -11,24 +11,34 @@
     </div>
 
     <div class="tasks-grid">
-        <a class="task-card data-nav-card" asp-controller="DataTasks" asp-action="Tasks">
+        <div class="task-card data-nav-card">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Core</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Task Items</h3>
             <p class="task-description">Browse task details, priority, due dates, and linked owner/category.</p>
+            <div class="data-nav-links">
+                <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary btn-sm">All tasks</a>
+                <a asp-controller="DataTasks" asp-action="PendingTasks" class="btn btn-outline-secondary btn-sm">Pending</a>
+                <a asp-controller="DataTasks" asp-action="CompletedTasks" class="btn btn-outline-secondary btn-sm">Completed</a>
+            </div>
             <span class="data-nav-meta">Actions, ownership, schedule</span>
-        </a>
-        <a class="task-card data-nav-card" asp-controller="DataUsers" asp-action="Users">
+        </div>
+        <div class="task-card data-nav-card">
             <div class="data-nav-head">
                 <span class="data-nav-badge">People</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Users</h3>
             <p class="task-description">Inspect user profile data and relation counts.</p>
+            <div class="data-nav-links">
+                <a asp-controller="DataUsers" asp-action="Users" class="btn btn-outline-secondary btn-sm">All users</a>
+                <a asp-controller="DataUsers" asp-action="UsersWithTasks" class="btn btn-outline-secondary btn-sm">With tasks</a>
+                <a asp-controller="DataUsers" asp-action="UsersWithoutTasks" class="btn btn-outline-secondary btn-sm">Without tasks</a>
+            </div>
             <span class="data-nav-meta">Profiles, roles, ownership</span>
-        </a>
+        </div>
         <a class="task-card data-nav-card" asp-controller="DataCategories" asp-action="Categories">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Taxonomy</span>
@@ -62,7 +72,7 @@
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Task Histories</h3>
-            <p class="task-description">Track task action log entries from mock data.</p>
+            <p class="task-description">Track task action log entries from data.</p>
             <span class="data-nav-meta">Timeline events, change trail</span>
         </a>
     </div>

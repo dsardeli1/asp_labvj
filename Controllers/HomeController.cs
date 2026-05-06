@@ -7,6 +7,8 @@ using TaskManageApp.Repositories;
 
 namespace TaskManageApp.Controllers
 {
+    [Route("[controller]")]
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly ITaskRepository _taskRepository;
@@ -16,11 +18,13 @@ namespace TaskManageApp.Controllers
             _taskRepository = taskRepository;
         }
 
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet("tasks")]
         public async Task<IActionResult> Tasks(string prioritySort = "none", string dueDateSort = "none", bool showCompleted = true)
         {
             var tasks = await _taskRepository.GetAllTasksAsync();
@@ -74,6 +78,54 @@ namespace TaskManageApp.Controllers
             ViewBag.ShowCompleted = showCompleted;
 
             return View(orderedTasks.ToList());
+        }
+
+        [HttpGet("incomplete-tasks")]
+        public async Task<IActionResult> IncompleteTasks(string prioritySort = "none", string dueDateSort = "none")
+        {
+            var tasks = await _taskRepository.GetPendingTasksAsync();
+
+            var normalizedPrioritySort = NormalizePrioritySort(prioritySort);
+            var normalizedDueDateSort = NormalizeDueDateSort(dueDateSort);
+
+            IOrderedEnumerable<TaskItem>? orderedTasks = null;
+
+            switch (normalizedPrioritySort)
+            {
+                case "high":
+                    orderedTasks = tasks.OrderByDescending(t => t.PriorityId);
+                    break;
+                case "low":
+                    orderedTasks = tasks.OrderBy(t => t.PriorityId);
+                    break;
+            }
+
+            switch (normalizedDueDateSort)
+            {
+                case "soonest":
+                    orderedTasks = orderedTasks == null
+                        ? tasks.OrderBy(t => t.DueDate)
+                        : orderedTasks.ThenBy(t => t.DueDate);
+                    break;
+                case "latest":
+                    orderedTasks = orderedTasks == null
+                        ? tasks.OrderByDescending(t => t.DueDate)
+                        : orderedTasks.ThenByDescending(t => t.DueDate);
+                    break;
+            }
+
+            if (orderedTasks == null)
+            {
+                orderedTasks = tasks
+                    .OrderBy(t => t.DueDate)
+                    .ThenByDescending(t => t.PriorityId);
+            }
+
+            ViewBag.PrioritySort = normalizedPrioritySort;
+            ViewBag.DueDateSort = normalizedDueDateSort;
+            ViewBag.ShowCompleted = false;
+
+            return View("~/Views/Home/Tasks.cshtml", orderedTasks.ToList());
         }
 
         private static string NormalizePrioritySort(string? prioritySort)

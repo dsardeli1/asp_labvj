@@ -751,6 +751,16 @@ body {
     gap: clamp(0.85rem, 1.5vw, 1.25rem);
 }
 
+.data-browser-page .data-nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.data-browser-page .data-nav-links .btn {
+    white-space: nowrap;
+}
+
 .data-browser-page .data-nav-card {
     text-decoration: none;
     color: inherit;
@@ -825,6 +835,12 @@ body {
 .data-browser-page .data-nav-card:focus-visible {
     outline: 3px solid color-mix(in srgb, var(--color-primary) 65%, white 35%);
     outline-offset: 2px;
+}
+
+@media (max-width: 575.98px) {
+    .data-browser-page .data-nav-links .btn {
+        flex: 1 1 100%;
+    }
 }
 
 [data-theme="dark"] .tasks-dashboard-page::before {

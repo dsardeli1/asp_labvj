@@ -8,6 +8,11 @@
     <header class="data-entity-header">
         <h2>Task Items</h2>
         <p class="text-muted">Read-only detail view of task records.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary btn-sm">All</a>
+            <a asp-controller="DataTasks" asp-action="PendingTasks" class="btn btn-outline-secondary btn-sm">Pending</a>
+            <a asp-controller="DataTasks" asp-action="CompletedTasks" class="btn btn-outline-secondary btn-sm">Completed</a>
+        </div>
     </header>
 
     <div class="table-responsive data-entity-table-wrap">
@@ -32,12 +37,31 @@
                         <td><a asp-controller="DataTasks" asp-action="TaskDetails" asp-route-id="@item.Id">@item.Id</a></td>
                         <td>@item.Title</td>
                         <td>@((Priority)item.PriorityId)</td>
-                        <td>@(item.User?.FirstName) @(item.User?.LastName)</td>
-                        <td>@item.Category?.Name</td>
+                        <td>
+                            @if (item.User != null)
+                            {
+                                <a asp-controller="DataTasks" asp-action="TasksByUser" asp-route-userId="@item.UserId">@(item.User.FirstName) @(item.User.LastName)</a>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Category != null)
+                            {
+                                <a asp-controller="DataTasks" asp-action="TasksByCategory" asp-route-categoryId="@item.CategoryId">@item.Category.Name</a>
+                            }
+                        </td>
                         <td>@(item.Comments?.Count ?? 0)</td>
                         <td>@item.CreatedDate.ToString("yyyy-MM-dd")</td>
                         <td>@item.DueDate.ToString("yyyy-MM-dd")</td>
-                        <td>@(item.IsCompleted ? "Completed" : "Open")</td>
+                        <td>
+                            @if (item.IsCompleted)
+                            {
+                                <a asp-controller="DataTasks" asp-action="CompletedTasks">Completed</a>
+                            }
+                            else
+                            {
+                                <a asp-controller="DataTasks" asp-action="PendingTasks">Open</a>
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>
