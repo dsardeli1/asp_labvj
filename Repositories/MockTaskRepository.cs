@@ -178,6 +178,39 @@ namespace TaskManageApp.Repositories
             return Task.FromResult(_attachments.FirstOrDefault(a => a.Id == id));
         }
 
+        public Task<TaskAttachment> AddTaskAttachmentAsync(TaskAttachment taskAttachment)
+        {
+            taskAttachment.Id = _attachments.Count == 0 ? 1 : _attachments.Max(a => a.Id) + 1;
+            _attachments.Add(taskAttachment);
+            return Task.FromResult(taskAttachment);
+        }
+
+        public Task<bool> UpdateTaskAttachmentAsync(TaskAttachment taskAttachment)
+        {
+            var existingAttachment = _attachments.FirstOrDefault(a => a.Id == taskAttachment.Id);
+            if (existingAttachment == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            existingAttachment.FileName = taskAttachment.FileName;
+            existingAttachment.FilePath = taskAttachment.FilePath;
+            existingAttachment.TaskItemId = taskAttachment.TaskItemId;
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteTaskAttachmentAsync(int id)
+        {
+            var attachment = _attachments.FirstOrDefault(a => a.Id == id);
+            if (attachment == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            _attachments.Remove(attachment);
+            return Task.FromResult(true);
+        }
+
         public Task<List<TaskHistory>> GetAllTaskHistoriesAsync()
         {
             return Task.FromResult(_taskHistories);

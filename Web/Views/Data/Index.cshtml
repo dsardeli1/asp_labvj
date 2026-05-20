@@ -65,15 +65,19 @@
             </div>
             <span class="data-nav-meta">Threaded notes, edits</span>
         </div>
-        <a class="task-card data-nav-card" asp-controller="DataAttachments" asp-action="Attachments">
+        <div class="task-card data-nav-card">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Files</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Task Attachments</h3>
-            <p class="task-description">View placeholder attachment records for tasks.</p>
+            <p class="task-description">Manage task attachment records and linked files.</p>
+            <div class="data-nav-links">
+                <a asp-controller="DataAttachments" asp-action="Attachments" class="btn btn-outline-secondary btn-sm">Browse</a>
+                <a asp-controller="DataAttachments" asp-action="Create" class="btn btn-outline-secondary btn-sm">Create</a>
+            </div>
             <span class="data-nav-meta">Document links, metadata</span>
-        </a>
+        </div>
         <a class="task-card data-nav-card" asp-controller="DataHistories" asp-action="Histories">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Audit</span>

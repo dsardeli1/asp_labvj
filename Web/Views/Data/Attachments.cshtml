@@ -7,7 +7,24 @@
 <section class="data-entity-page data-entity-page-list">
     <header class="data-entity-header">
         <h2>Task Attachments</h2>
-        <p class="text-muted">Read-only detail view of placeholder attachment records.</p>
+        <p class="text-muted">Manage attachment records for tasks.</p>
+        @if (TempData["SuccessMessage"] is string successMessage)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @successMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] is string errorMessage)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @errorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <div class="data-entity-actions">
+            <a asp-controller="DataAttachments" asp-action="Create" class="btn btn-primary btn-sm">Create Attachment</a>
+        </div>
     </header>
 
     <div class="table-responsive data-entity-table-wrap">
@@ -18,6 +35,7 @@
                     <th>File Name</th>
                     <th>File Path</th>
                     <th>Task</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +46,11 @@
                         <td>@attachment.FileName</td>
                         <td>@attachment.FilePath</td>
                         <td>#@attachment.TaskItemId - @attachment.TaskItem?.Title</td>
+                        <td>
+                            <a asp-controller="DataAttachments" asp-action="AttachmentDetails" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-info">View</a>
+                            <a asp-controller="DataAttachments" asp-action="Edit" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                            <a asp-controller="DataAttachments" asp-action="Delete" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>

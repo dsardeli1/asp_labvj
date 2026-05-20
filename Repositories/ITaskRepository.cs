@@ -30,6 +30,9 @@ namespace TaskManageApp.Repositories
         Task<bool> DeleteCommentAsync(int id);
         Task<List<TaskAttachment>> GetAllTaskAttachmentsAsync();
         Task<TaskAttachment> GetTaskAttachmentByIdAsync(int id);
+        Task<TaskAttachment> AddTaskAttachmentAsync(TaskAttachment taskAttachment);
+        Task<bool> UpdateTaskAttachmentAsync(TaskAttachment taskAttachment);
+        Task<bool> DeleteTaskAttachmentAsync(int id);
         Task<List<TaskHistory>> GetAllTaskHistoriesAsync();
         Task<TaskHistory> GetTaskHistoryByIdAsync(int id);
     }
