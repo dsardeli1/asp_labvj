@@ -134,6 +134,40 @@ namespace TaskManageApp.Repositories
             return Task.FromResult(_comments.Where(c => c.TaskItemId == taskItemId).ToList());
         }
 
+        public Task<Comment> AddCommentAsync(Comment comment)
+        {
+            comment.Id = _comments.Count == 0 ? 1 : _comments.Max(c => c.Id) + 1;
+            comment.CreatedDate = DateTime.Now;
+            comment.IsEdited = false;
+            _comments.Add(comment);
+            return Task.FromResult(comment);
+        }
+
+        public Task<bool> UpdateCommentAsync(Comment comment)
+        {
+            var existingComment = _comments.FirstOrDefault(c => c.Id == comment.Id);
+            if (existingComment == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            existingComment.Content = comment.Content;
+            existingComment.IsEdited = true;
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteCommentAsync(int id)
+        {
+            var comment = _comments.FirstOrDefault(c => c.Id == id);
+            if (comment == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            _comments.Remove(comment);
+            return Task.FromResult(true);
+        }
+
         public Task<List<TaskAttachment>> GetAllTaskAttachmentsAsync()
         {
             return Task.FromResult(_attachments);

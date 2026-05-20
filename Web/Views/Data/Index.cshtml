@@ -52,15 +52,19 @@
             </div>
             <span class="data-nav-meta">Labels, grouping, totals</span>
         </div>
-        <a class="task-card data-nav-card" asp-controller="DataComments" asp-action="Comments">
+        <div class="task-card data-nav-card">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Content</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Comments</h3>
-            <p class="task-description">Review task comments with author and edited status.</p>
+            <p class="task-description">Manage task comments with author and edited status.</p>
+            <div class="data-nav-links">
+                <a asp-controller="DataComments" asp-action="Comments" class="btn btn-outline-secondary btn-sm">Browse</a>
+                <a asp-controller="DataComments" asp-action="Create" class="btn btn-outline-secondary btn-sm">Create</a>
+            </div>
             <span class="data-nav-meta">Threaded notes, edits</span>
-        </a>
+        </div>
         <a class="task-card data-nav-card" asp-controller="DataAttachments" asp-action="Attachments">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Files</span>

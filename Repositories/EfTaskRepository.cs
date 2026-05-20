@@ -178,6 +178,40 @@ namespace TaskManageApp.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Comment> AddCommentAsync(Comment comment)
+        {
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+            return comment;
+        }
+
+        public async Task<bool> UpdateCommentAsync(Comment comment)
+        {
+            var existingComment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == comment.Id);
+            if (existingComment == null)
+            {
+                return false;
+            }
+
+            existingComment.Content = comment.Content;
+            existingComment.IsEdited = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteCommentAsync(int id)
+        {
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            if (comment == null)
+            {
+                return false;
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<TaskAttachment>> GetAllTaskAttachmentsAsync()
         {
             return await _context.TaskAttachments

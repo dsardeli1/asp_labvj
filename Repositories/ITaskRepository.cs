@@ -25,6 +25,9 @@ namespace TaskManageApp.Repositories
         Task<List<Comment>> GetAllCommentsAsync();
         Task<Comment> GetCommentByIdAsync(int id);
         Task<List<Comment>> GetCommentsByTaskIdAsync(int taskItemId);
+        Task<Comment> AddCommentAsync(Comment comment);
+        Task<bool> UpdateCommentAsync(Comment comment);
+        Task<bool> DeleteCommentAsync(int id);
         Task<List<TaskAttachment>> GetAllTaskAttachmentsAsync();
         Task<TaskAttachment> GetTaskAttachmentByIdAsync(int id);
         Task<List<TaskHistory>> GetAllTaskHistoriesAsync();

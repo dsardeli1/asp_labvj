@@ -58,8 +58,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcnlFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CommentCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ29tbWVudENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CommentDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ29tbWVudERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CommentDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ29tbWVudERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CommentEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ29tbWVudEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Comments.cshtml]
