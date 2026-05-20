@@ -221,6 +221,39 @@ namespace TaskManageApp.Repositories
             return Task.FromResult(_taskHistories.FirstOrDefault(h => h.Id == id));
         }
 
+        public Task<TaskHistory> AddTaskHistoryAsync(TaskHistory taskHistory)
+        {
+            taskHistory.Id = _taskHistories.Count == 0 ? 1 : _taskHistories.Max(h => h.Id) + 1;
+            _taskHistories.Add(taskHistory);
+            return Task.FromResult(taskHistory);
+        }
+
+        public Task<bool> UpdateTaskHistoryAsync(TaskHistory taskHistory)
+        {
+            var existingHistory = _taskHistories.FirstOrDefault(h => h.Id == taskHistory.Id);
+            if (existingHistory == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            existingHistory.Action = taskHistory.Action;
+            existingHistory.ActionDate = taskHistory.ActionDate;
+            existingHistory.TaskItemId = taskHistory.TaskItemId;
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteTaskHistoryAsync(int id)
+        {
+            var history = _taskHistories.FirstOrDefault(h => h.Id == id);
+            if (history == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            _taskHistories.Remove(history);
+            return Task.FromResult(true);
+        }
+
         private List<User> SeedUsers()
         {
             var now = DateTime.Now;

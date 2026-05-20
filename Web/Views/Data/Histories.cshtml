@@ -7,7 +7,24 @@
 <section class="data-entity-page data-entity-page-list">
     <header class="data-entity-header">
         <h2>Task Histories</h2>
-        <p class="text-muted">Read-only detail view of task history records.</p>
+        <p class="text-muted">Manage task history records.</p>
+        @if (TempData["SuccessMessage"] is string successMessage)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @successMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] is string errorMessage)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @errorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <div class="data-entity-actions">
+            <a asp-controller="DataHistories" asp-action="Create" class="btn btn-primary btn-sm">Create History</a>
+        </div>
     </header>
 
     <div class="table-responsive data-entity-table-wrap">
@@ -18,6 +35,7 @@
                     <th>Task</th>
                     <th>Action</th>
                     <th>Action Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +46,11 @@
                         <td>#@history.TaskItemId - @history.TaskItem?.Title</td>
                         <td>@history.Action</td>
                         <td>@history.ActionDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>
+                            <a asp-controller="DataHistories" asp-action="HistoryDetails" asp-route-id="@history.Id" class="btn btn-sm btn-outline-info">View</a>
+                            <a asp-controller="DataHistories" asp-action="Edit" asp-route-id="@history.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                            <a asp-controller="DataHistories" asp-action="Delete" asp-route-id="@history.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>

@@ -7,6 +7,8 @@ namespace TaskManageApp.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        [StringLength(255)]
         public string Action { get; set; } = string.Empty;
         public DateTime ActionDate { get; set; }
 

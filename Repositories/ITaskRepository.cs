@@ -35,5 +35,8 @@ namespace TaskManageApp.Repositories
         Task<bool> DeleteTaskAttachmentAsync(int id);
         Task<List<TaskHistory>> GetAllTaskHistoriesAsync();
         Task<TaskHistory> GetTaskHistoryByIdAsync(int id);
+        Task<TaskHistory> AddTaskHistoryAsync(TaskHistory taskHistory);
+        Task<bool> UpdateTaskHistoryAsync(TaskHistory taskHistory);
+        Task<bool> DeleteTaskHistoryAsync(int id);
     }
 }

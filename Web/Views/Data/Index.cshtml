@@ -78,15 +78,19 @@
             </div>
             <span class="data-nav-meta">Document links, metadata</span>
         </div>
-        <a class="task-card data-nav-card" asp-controller="DataHistories" asp-action="Histories">
+        <div class="task-card data-nav-card">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Audit</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Task Histories</h3>
-            <p class="task-description">Track task action log entries from data.</p>
+            <p class="task-description">Manage task history log entries from data.</p>
+            <div class="data-nav-links">
+                <a asp-controller="DataHistories" asp-action="Histories" class="btn btn-outline-secondary btn-sm">Browse</a>
+                <a asp-controller="DataHistories" asp-action="Create" class="btn btn-outline-secondary btn-sm">Create</a>
+            </div>
             <span class="data-nav-meta">Timeline events, change trail</span>
-        </a>
+        </div>
     </div>
 </div>
 </section>

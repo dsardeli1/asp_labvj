@@ -94,8 +94,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/HistoryCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yeUNyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/HistoryDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yeURlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/HistoryDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yeURldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/HistoryEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSGlzdG9yeUVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Index.cshtml]

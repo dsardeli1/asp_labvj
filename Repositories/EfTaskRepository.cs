@@ -274,5 +274,40 @@ namespace TaskManageApp.Repositories
                 .Include(h => h.TaskItem)
                 .FirstOrDefaultAsync(h => h.Id == id);
         }
+
+        public async Task<TaskHistory> AddTaskHistoryAsync(TaskHistory taskHistory)
+        {
+            _context.TaskHistories.Add(taskHistory);
+            await _context.SaveChangesAsync();
+            return taskHistory;
+        }
+
+        public async Task<bool> UpdateTaskHistoryAsync(TaskHistory taskHistory)
+        {
+            var existingHistory = await _context.TaskHistories.FirstOrDefaultAsync(h => h.Id == taskHistory.Id);
+            if (existingHistory == null)
+            {
+                return false;
+            }
+
+            existingHistory.Action = taskHistory.Action;
+            existingHistory.ActionDate = taskHistory.ActionDate;
+            existingHistory.TaskItemId = taskHistory.TaskItemId;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteTaskHistoryAsync(int id)
+        {
+            var history = await _context.TaskHistories.FirstOrDefaultAsync(h => h.Id == id);
+            if (history == null)
+            {
+                return false;
+            }
+
+            _context.TaskHistories.Remove(history);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
