@@ -42,8 +42,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcmllcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CategoryCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcnlDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CategoryDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcnlEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CategoryDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcnlEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CategoryEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcQ2F0ZWdvcnlFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/CommentDetails.cshtml]

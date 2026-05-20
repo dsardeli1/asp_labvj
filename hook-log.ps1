@@ -1,8 +1,8 @@
 param($payload)
 
 if ($payload) {
-    Add-Content -Path 'c:\Users\davor\Documents\GitHub\asp_labvj\logs\agent_log3.txt' -Value $payload
+    Add-Content -Path 'c:\Users\davor\Documents\GitHub\asp_labvj\logs\agent_log4.txt' -Value $payload
 }
 elseif ($input) {
-    $input | Out-String | Add-Content -Path 'c:\Users\davor\Documents\GitHub\asp_labvj\logs\agent_log3.txt'
+    $input | Out-String | Add-Content -Path 'c:\Users\davor\Documents\GitHub\asp_labvj\logs\agent_log4.txt'
 }

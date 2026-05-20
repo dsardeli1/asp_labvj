@@ -7,7 +7,12 @@
 <section class="data-entity-page data-entity-page-detail">
     <header class="data-entity-header">
         <h2>Category #@Model.Id</h2>
-        <p class="text-muted">Read-only single-record view.</p>
+        <p class="text-muted">Single category record with management actions.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataCategories" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm">Edit</a>
+            <a asp-controller="DataCategories" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+            <a asp-controller="DataCategories" asp-action="Categories" class="btn btn-outline-secondary btn-sm">Back to Categories</a>
+        </div>
     </header>
 
     <div class="card mb-3 data-detail-card">
@@ -30,5 +35,4 @@
         </div>
     </div>
 
-    <a asp-controller="DataCategories" asp-action="Categories" class="btn btn-outline-secondary data-entity-back-link">Back to Categories</a>
 </section>

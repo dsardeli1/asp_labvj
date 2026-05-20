@@ -1,0 +1,59 @@
+@model TaskManageApp.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<section class="data-entity-page data-entity-page-detail">
+    <header class="data-entity-header">
+        <h2>Edit Category #@Model.Id</h2>
+        <p class="text-muted">Update the category metadata.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataCategories" asp-action="CategoryDetails" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-sm">Back to Details</a>
+            <a asp-controller="DataCategories" asp-action="Categories" class="btn btn-outline-secondary btn-sm">Back to Categories</a>
+        </div>
+    </header>
+
+    <div class="card mb-3 data-detail-card">
+        <div class="card-body data-detail-card-body">
+            <form asp-controller="DataCategories" asp-action="Edit" asp-route-id="@Model.Id" method="post" class="row g-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Id" type="hidden" />
+
+                <div class="col-12">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" maxlength="100" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" maxlength="500"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Color" class="form-label"></label>
+                    <input asp-for="Color" class="form-control" maxlength="7" pattern="^#([A-Fa-f0-9]{6})$" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-end">
+                    <div class="form-check">
+                        <input asp-for="IsActive" class="form-check-input" />
+                        <label asp-for="IsActive" class="form-check-label"></label>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <a asp-controller="DataCategories" asp-action="CategoryDetails" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

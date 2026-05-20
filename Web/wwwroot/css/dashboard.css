@@ -1032,6 +1032,15 @@ body {
     color: color-mix(in srgb, var(--color-text-muted) 88%, var(--color-text) 12%) !important;
 }
 
+.data-entity-page-detail .form-label {
+    color: color-mix(in srgb, var(--color-text-muted) 88%, var(--color-text) 12%);
+}
+
+.data-entity-page-detail .data-detail-card .form-label,
+.data-entity-page-detail .data-detail-card .form-check-label {
+    color: color-mix(in srgb, var(--color-text-muted) 88%, var(--color-text) 12%);
+}
+
 .data-entity-page a {
     color: color-mix(in srgb, var(--color-primary) 72%, var(--color-text) 28%);
     text-underline-offset: 0.12em;
@@ -1158,6 +1167,10 @@ body {
 [data-theme="dark"] .data-entity-header .text-muted,
 [data-theme="dark"] .data-entity-page .text-muted {
     color: color-mix(in srgb, var(--color-text-muted) 92%, var(--color-text) 8%) !important;
+}
+
+[data-theme="dark"] .data-entity-page-detail .form-label {
+    color: color-mix(in srgb, var(--color-text-muted) 92%, var(--color-text) 8%);
 }
 
 [data-theme="dark"] .data-entity-page a {

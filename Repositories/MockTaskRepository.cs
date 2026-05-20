@@ -77,6 +77,48 @@ namespace TaskManageApp.Repositories
             return Task.FromResult(_categories.FirstOrDefault(c => c.Id == id));
         }
 
+        public Task<Category> AddCategoryAsync(Category category)
+        {
+            category.Id = _categories.Count == 0 ? 1 : _categories.Max(c => c.Id) + 1;
+            category.Tasks = category.Tasks ?? new List<TaskItem>();
+            _categories.Add(category);
+            return Task.FromResult(category);
+        }
+
+        public Task<bool> UpdateCategoryAsync(Category category)
+        {
+            var existingCategory = _categories.FirstOrDefault(c => c.Id == category.Id);
+            if (existingCategory == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            existingCategory.Name = category.Name;
+            existingCategory.Description = category.Description;
+            existingCategory.Color = category.Color;
+            existingCategory.IsActive = category.IsActive;
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteCategoryAsync(int id)
+        {
+            var category = _categories.FirstOrDefault(c => c.Id == id);
+            if (category == null || _tasks.Any(t => t.CategoryId == id))
+            {
+                return Task.FromResult(false);
+            }
+
+            _categories.Remove(category);
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> IsCategoryNameUniqueAsync(string name, int? excludingId = null)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return Task.FromResult(false);
+            var exists = _categories.Any(c => c.Name == name && (!excludingId.HasValue || c.Id != excludingId.Value));
+            return Task.FromResult(!exists);
+        }
+
         public Task<List<Comment>> GetAllCommentsAsync()
         {
             return Task.FromResult(_comments);

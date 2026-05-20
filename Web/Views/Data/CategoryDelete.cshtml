@@ -1,0 +1,61 @@
+@model TaskManageApp.Models.Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+    var hasTasks = Model.Tasks?.Any() == true;
+}
+
+<section class="data-entity-page data-entity-page-detail">
+    <header class="data-entity-header">
+        <h2>Delete Category #@Model.Id</h2>
+        <p class="text-muted">Review the record before removing it.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataCategories" asp-action="CategoryDetails" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-sm">Back to Details</a>
+            <a asp-controller="DataCategories" asp-action="Categories" class="btn btn-outline-secondary btn-sm">Back to Categories</a>
+        </div>
+    </header>
+
+    <div class="card mb-3 data-detail-card">
+        <div class="card-body data-detail-card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (hasTasks)
+            {
+                <div class="alert alert-warning" role="alert">
+                    This category still has task records assigned to it, so deletion is disabled.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    This action permanently deletes the category.
+                </div>
+            }
+
+            <dl class="row mb-4 data-detail-grid">
+                <dt class="col-sm-3 data-detail-term">Name</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.Name</dd>
+                <dt class="col-sm-3 data-detail-term">Description</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.Description</dd>
+                <dt class="col-sm-3 data-detail-term">Color</dt>
+                <dd class="col-sm-9 data-detail-desc">@Model.Color</dd>
+                <dt class="col-sm-3 data-detail-term">Active</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.IsActive ? "Yes" : "No")</dd>
+                <dt class="col-sm-3 data-detail-term">Task Count</dt>
+                <dd class="col-sm-9 data-detail-desc">@(Model.Tasks?.Count ?? 0)</dd>
+            </dl>
+
+            <form asp-controller="DataCategories" asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-flex gap-2">
+                @if (hasTasks)
+                {
+                    <button type="submit" class="btn btn-danger" disabled>Delete</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                }
+                <a asp-controller="DataCategories" asp-action="Categories" class="btn btn-outline-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</section>

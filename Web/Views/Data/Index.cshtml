@@ -39,15 +39,19 @@
             </div>
             <span class="data-nav-meta">Profiles, roles, ownership</span>
         </div>
-        <a class="task-card data-nav-card" asp-controller="DataCategories" asp-action="Categories">
+        <div class="task-card data-nav-card">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Taxonomy</span>
                 <span class="data-nav-arrow" aria-hidden="true">-></span>
             </div>
             <h3 class="task-title">Categories</h3>
             <p class="task-description">See category metadata, color tags, and task totals.</p>
+            <div class="data-nav-links">
+                <a asp-controller="DataCategories" asp-action="Categories" class="btn btn-outline-secondary btn-sm">Browse</a>
+                <a asp-controller="DataCategories" asp-action="Create" class="btn btn-outline-secondary btn-sm">Create</a>
+            </div>
             <span class="data-nav-meta">Labels, grouping, totals</span>
-        </a>
+        </div>
         <a class="task-card data-nav-card" asp-controller="DataComments" asp-action="Comments">
             <div class="data-nav-head">
                 <span class="data-nav-badge">Content</span>

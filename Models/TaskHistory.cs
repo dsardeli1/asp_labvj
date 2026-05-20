@@ -7,12 +7,12 @@ namespace TaskManageApp.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Action { get; set; }
+        public string Action { get; set; } = string.Empty;
         public DateTime ActionDate { get; set; }
 
         // Navigation property for TaskItem
         public int TaskItemId { get; set; }
         [ForeignKey(nameof(TaskItemId))]
-        public TaskItem TaskItem { get; set; }
+        public TaskItem? TaskItem { get; set; }
     }
 }

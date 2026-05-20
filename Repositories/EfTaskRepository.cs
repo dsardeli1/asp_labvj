@@ -107,6 +107,53 @@ namespace TaskManageApp.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Category> AddCategoryAsync(Category category)
+        {
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+            return category;
+        }
+
+        public async Task<bool> IsCategoryNameUniqueAsync(string name, int? excludingId = null)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+            return !await _context.Categories
+                .AnyAsync(c => c.Name == name && (!excludingId.HasValue || c.Id != excludingId.Value));
+        }
+
+        public async Task<bool> UpdateCategoryAsync(Category category)
+        {
+            var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+            if (existingCategory == null)
+            {
+                return false;
+            }
+
+            existingCategory.Name = category.Name;
+            existingCategory.Description = category.Description;
+            existingCategory.Color = category.Color;
+            existingCategory.IsActive = category.IsActive;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteCategoryAsync(int id)
+        {
+            var category = await _context.Categories
+                .Include(c => c.Tasks)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null || (category.Tasks != null && category.Tasks.Any()))
+            {
+                return false;
+            }
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<Comment>> GetAllCommentsAsync()
         {
             return await _context.Comments

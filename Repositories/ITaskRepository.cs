@@ -18,6 +18,10 @@ namespace TaskManageApp.Repositories
         Task<User> GetUserByIdAsync(int id);
         Task<List<Category>> GetAllCategoriesAsync();
         Task<Category> GetCategoryByIdAsync(int id);
+        Task<Category> AddCategoryAsync(Category category);
+        Task<bool> UpdateCategoryAsync(Category category);
+        Task<bool> DeleteCategoryAsync(int id);
+        Task<bool> IsCategoryNameUniqueAsync(string name, int? excludingId = null);
         Task<List<Comment>> GetAllCommentsAsync();
         Task<Comment> GetCommentByIdAsync(int id);
         Task<List<Comment>> GetCommentsByTaskIdAsync(int taskItemId);
