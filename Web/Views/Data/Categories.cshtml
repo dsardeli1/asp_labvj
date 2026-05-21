@@ -11,6 +11,20 @@
         <div class="data-entity-actions">
             <a asp-controller="DataCategories" asp-action="Create" class="btn btn-primary btn-sm">Create Category</a>
         </div>
+        <form asp-controller="DataCategories" asp-action="Find" method="get" class="row g-2 mt-2">
+            <div class="col-md-8 col-lg-6">
+                <select name="id" class="form-select" data-autocomplete-url="/data/categories/lookup" data-autocomplete-placeholder="Quick find category by name" data-autocomplete-max-results="12">
+                    <option value="">Quick find category...</option>
+                    @foreach (var category in Model.OrderBy(c => c.Name).ThenBy(c => c.Id))
+                    {
+                        <option value="@category.Id">#@category.Id - @category.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Open</button>
+            </div>
+        </form>
     </header>
 
     @if (TempData["SuccessMessage"] is string successMessage)

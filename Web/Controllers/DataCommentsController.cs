@@ -33,6 +33,44 @@ namespace TaskManageApp.Controllers
             return View("~/Web/Views/Data/CommentDetails.cshtml", comment);
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> Lookup([FromQuery] string? q, [FromQuery] int limit = 10)
+        {
+            var searchTerm = q?.Trim();
+            var maxResults = Math.Clamp(limit, 1, 50);
+            var comments = await _taskRepository.GetAllCommentsAsync();
+
+            var results = comments
+                .Where(comment =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    comment.Id.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    comment.Content.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (comment.User != null && comment.User.Username.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                    (comment.TaskItem != null && comment.TaskItem.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                .OrderByDescending(comment => comment.CreatedDate)
+                .ThenBy(comment => comment.Id)
+                .Take(maxResults)
+                .Select(comment => new
+                {
+                    value = comment.Id,
+                    text = $"#{comment.Id} {comment.Content}",
+                    hint = comment.User != null ? comment.User.Username : null
+                });
+
+            return Json(results);
+        }
+
+        [HttpGet("find")]
+        public IActionResult Find([FromQuery] int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return RedirectToAction(nameof(Comments));
+            }
+
+            return RedirectToAction(nameof(CommentDetails), new { id = id.Value });
+        }
+
         [HttpGet("create")]
         public async Task<IActionResult> Create()
         {

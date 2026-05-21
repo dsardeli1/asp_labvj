@@ -37,12 +37,12 @@
 
                     <div class="col-md-4">
                         <label asp-for="UserId" class="form-label">Assigned User</label>
-                        <select asp-for="UserId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["UsersSelect"]'></select>
+                        <select asp-for="UserId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["UsersSelect"]' data-autocomplete-url="/data/users/lookup" data-autocomplete-placeholder="Search users"></select>
                     </div>
 
                     <div class="col-md-4">
                         <label asp-for="CategoryId" class="form-label">Category</label>
-                        <select asp-for="CategoryId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["CategoriesSelect"]'></select>
+                        <select asp-for="CategoryId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["CategoriesSelect"]' data-autocomplete-url="/data/categories/lookup" data-autocomplete-placeholder="Search categories"></select>
                     </div>
                 </div>
 

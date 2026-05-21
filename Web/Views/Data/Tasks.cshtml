@@ -14,6 +14,20 @@
             <a asp-controller="DataTasks" asp-action="PendingTasks" class="btn btn-outline-secondary btn-sm">Pending</a>
             <a asp-controller="DataTasks" asp-action="CompletedTasks" class="btn btn-outline-secondary btn-sm">Completed</a>
         </div>
+        <form asp-controller="DataTasks" asp-action="Find" method="get" class="row g-2 mt-2">
+            <div class="col-md-8 col-lg-6">
+                <select name="id" class="form-select" data-autocomplete-url="/data/tasks/lookup" data-autocomplete-placeholder="Quick find task by title or id" data-autocomplete-max-results="12">
+                    <option value="">Quick find task...</option>
+                    @foreach (var item in Model.OrderBy(t => t.Title).ThenBy(t => t.Id))
+                    {
+                        <option value="@item.Id">#@item.Id - @item.Title</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Open</button>
+            </div>
+        </form>
     </header>
 
     <div class="table-responsive data-entity-table-wrap" style="overflow-x:auto;">

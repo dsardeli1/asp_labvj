@@ -22,7 +22,7 @@
 
                 <div class="col-md-6">
                     <label asp-for="TaskItemId" class="form-label"></label>
-                    <select asp-for="TaskItemId" class="form-select" asp-items="@(new SelectList(tasks, "Id", "Title"))">
+                    <select asp-for="TaskItemId" class="form-select" asp-items="@(new SelectList(tasks, "Id", "Title"))" data-autocomplete-url="/data/tasks/lookup" data-autocomplete-placeholder="Search tasks">
                         <option value="">-- Select Task --</option>
                     </select>
                     <span asp-validation-for="TaskItemId" class="text-danger"></span>
@@ -30,7 +30,7 @@
 
                 <div class="col-md-6">
                     <label asp-for="UserId" class="form-label"></label>
-                    <select asp-for="UserId" class="form-select" asp-items="@(new SelectList(users, "Id", "Username"))">
+                    <select asp-for="UserId" class="form-select" asp-items="@(new SelectList(users, "Id", "Username"))" data-autocomplete-url="/data/users/lookup" data-autocomplete-placeholder="Search users">
                         <option value="">-- Select User --</option>
                     </select>
                     <span asp-validation-for="UserId" class="text-danger"></span>

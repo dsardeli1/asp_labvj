@@ -33,6 +33,44 @@ namespace TaskManageApp.Controllers
             return View("~/Web/Views/Data/HistoryDetails.cshtml", history);
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> Lookup([FromQuery] string? q, [FromQuery] int limit = 10)
+        {
+            var searchTerm = q?.Trim();
+            var maxResults = Math.Clamp(limit, 1, 50);
+            var histories = await _taskRepository.GetAllTaskHistoriesAsync();
+
+            var results = histories
+                .Where(history =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    history.Id.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    history.Action.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    history.TaskItemId.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (history.TaskItem != null && history.TaskItem.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                .OrderByDescending(history => history.ActionDate)
+                .ThenBy(history => history.Id)
+                .Take(maxResults)
+                .Select(history => new
+                {
+                    value = history.Id,
+                    text = $"#{history.Id} {history.Action}",
+                    hint = history.TaskItem != null ? history.TaskItem.Title : null
+                });
+
+            return Json(results);
+        }
+
+        [HttpGet("find")]
+        public IActionResult Find([FromQuery] int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return RedirectToAction(nameof(Histories));
+            }
+
+            return RedirectToAction(nameof(HistoryDetails), new { id = id.Value });
+        }
+
         [HttpGet("create")]
         public async Task<IActionResult> Create()
         {

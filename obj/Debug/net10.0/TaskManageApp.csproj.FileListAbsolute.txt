@@ -357,3 +357,4 @@ C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\TaskMana.3119C42F.Up
 c:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\scopedcss\Web\Views\Shared\_Layout.cshtml.rz.scp.css
 c:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\isnuaildbe-{0}-6hgyyoe16i-6hgyyoe16i.gz
 c:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\0amqff0opo-{0}-6hgyyoe16i-6hgyyoe16i.gz
+C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -27,7 +27,7 @@
 
                 <div class="col-md-6">
                     <label asp-for="TaskItemId" class="form-label"></label>
-                    <select asp-for="TaskItemId" class="form-select" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tasks, "Id", "Title"))">
+                    <select asp-for="TaskItemId" class="form-select" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tasks, "Id", "Title"))" data-autocomplete-url="/data/tasks/lookup" data-autocomplete-placeholder="Search tasks">
                         <option value="">-- Select Task --</option>
                     </select>
                     <span asp-validation-for="TaskItemId" class="text-danger"></span>

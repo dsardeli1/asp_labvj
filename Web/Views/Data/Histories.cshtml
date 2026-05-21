@@ -25,6 +25,20 @@
         <div class="data-entity-actions">
             <a asp-controller="DataHistories" asp-action="Create" class="btn btn-primary btn-sm">Create History</a>
         </div>
+        <form asp-controller="DataHistories" asp-action="Find" method="get" class="row g-2 mt-2">
+            <div class="col-md-8 col-lg-6">
+                <select name="id" class="form-select" data-autocomplete-url="/data/histories/lookup" data-autocomplete-placeholder="Quick find history by action" data-autocomplete-max-results="12">
+                    <option value="">Quick find history...</option>
+                    @foreach (var history in Model.OrderByDescending(h => h.ActionDate).ThenBy(h => h.Id))
+                    {
+                        <option value="@history.Id">#@history.Id - @history.Action</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Open</button>
+            </div>
+        </form>
     </header>
 
     <div class="table-responsive data-entity-table-wrap">

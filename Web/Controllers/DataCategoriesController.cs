@@ -155,5 +155,42 @@ namespace TaskManageApp.Controllers
             TempData["SuccessMessage"] = $"Category '{category.Name}' was deleted successfully.";
             return RedirectToAction(nameof(Categories));
         }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> Lookup([FromQuery] string? q, [FromQuery] int limit = 10)
+        {
+            var searchTerm = q?.Trim();
+            var maxResults = Math.Clamp(limit, 1, 50);
+            var categories = await _taskRepository.GetAllCategoriesAsync();
+
+            var results = categories
+                .Where(category =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    category.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (!string.IsNullOrWhiteSpace(category.Description) && category.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                    category.Id.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(category => category.Name)
+                .ThenBy(category => category.Id)
+                .Take(maxResults)
+                .Select(category => new
+                {
+                    value = category.Id,
+                    text = category.Name,
+                    hint = category.Description
+                });
+
+            return Json(results);
+        }
+
+        [HttpGet("find")]
+        public IActionResult Find([FromQuery] int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return RedirectToAction(nameof(Categories));
+            }
+
+            return RedirectToAction(nameof(CategoryDetails), new { id = id.Value });
+        }
     }
 }

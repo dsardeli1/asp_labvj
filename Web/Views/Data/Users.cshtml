@@ -14,6 +14,20 @@
             <a asp-controller="DataUsers" asp-action="UsersWithTasks" class="btn btn-outline-secondary btn-sm">With Tasks</a>
             <a asp-controller="DataUsers" asp-action="UsersWithoutTasks" class="btn btn-outline-secondary btn-sm">Without Tasks</a>
         </div>
+        <form asp-controller="DataUsers" asp-action="Find" method="get" class="row g-2 mt-2">
+            <div class="col-md-8 col-lg-6">
+                <select name="id" class="form-select" data-autocomplete-url="/data/users/lookup" data-autocomplete-placeholder="Quick find user by username or email" data-autocomplete-max-results="12">
+                    <option value="">Quick find user...</option>
+                    @foreach (var user in Model.OrderBy(u => u.Username).ThenBy(u => u.Id))
+                    {
+                        <option value="@user.Id">#@user.Id - @user.Username</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Open</button>
+            </div>
+        </form>
     </header>
 
     <div class="table-responsive data-entity-table-wrap" style="overflow-x:auto;">

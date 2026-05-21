@@ -25,6 +25,22 @@
         <div class="data-entity-actions">
             <a asp-controller="DataComments" asp-action="Create" class="btn btn-primary btn-sm">Create Comment</a>
         </div>
+        <form asp-controller="DataComments" asp-action="Find" method="get" class="row g-2 mt-2">
+            <div class="col-md-8 col-lg-6">
+                <select name="id" class="form-select" data-autocomplete-url="/data/comments/lookup" data-autocomplete-placeholder="Quick find comment by id or content" data-autocomplete-max-results="12">
+                    <option value="">Quick find comment...</option>
+                    @foreach (var comment in Model.OrderByDescending(c => c.CreatedDate).ThenBy(c => c.Id))
+                    {
+                        var content = comment.Content ?? string.Empty;
+                        var preview = content.Length > 60 ? content.Substring(0, 60) + "..." : content;
+                        <option value="@comment.Id">#@comment.Id - @preview</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Open</button>
+            </div>
+        </form>
     </header>
 
     <div class="table-responsive data-entity-table-wrap">

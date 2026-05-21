@@ -33,6 +33,44 @@ namespace TaskManageApp.Controllers
             return View("~/Web/Views/Data/AttachmentDetails.cshtml", attachment);
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> Lookup([FromQuery] string? q, [FromQuery] int limit = 10)
+        {
+            var searchTerm = q?.Trim();
+            var maxResults = Math.Clamp(limit, 1, 50);
+            var attachments = await _taskRepository.GetAllTaskAttachmentsAsync();
+
+            var results = attachments
+                .Where(attachment =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    attachment.Id.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    attachment.FileName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    attachment.FilePath.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (attachment.TaskItem != null && attachment.TaskItem.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                .OrderBy(attachment => attachment.FileName)
+                .ThenBy(attachment => attachment.Id)
+                .Take(maxResults)
+                .Select(attachment => new
+                {
+                    value = attachment.Id,
+                    text = $"#{attachment.Id} {attachment.FileName}",
+                    hint = attachment.TaskItem != null ? attachment.TaskItem.Title : null
+                });
+
+            return Json(results);
+        }
+
+        [HttpGet("find")]
+        public IActionResult Find([FromQuery] int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return RedirectToAction(nameof(Attachments));
+            }
+
+            return RedirectToAction(nameof(AttachmentDetails), new { id = id.Value });
+        }
+
         [HttpGet("create")]
         public async Task<IActionResult> Create()
         {

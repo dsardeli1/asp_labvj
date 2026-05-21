@@ -86,6 +86,44 @@ namespace TaskManageApp.Controllers
             return View("~/Web/Views/Data/UserDelete.cshtml", user);
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> Lookup([FromQuery] string? q, [FromQuery] int limit = 10)
+        {
+            var searchTerm = q?.Trim();
+            var maxResults = Math.Clamp(limit, 1, 50);
+            var users = await _repo.GetAllUsersAsync();
+
+            var results = users
+                .Where(user =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    user.Username.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (!string.IsNullOrWhiteSpace(user.Email) && user.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                    (!string.IsNullOrWhiteSpace(user.FirstName) && user.FirstName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                    (!string.IsNullOrWhiteSpace(user.LastName) && user.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                .OrderBy(user => user.Username)
+                .ThenBy(user => user.Id)
+                .Take(maxResults)
+                .Select(user => new
+                {
+                    value = user.Id,
+                    text = user.Username,
+                    hint = user.Email
+                });
+
+            return Json(results);
+        }
+
+        [HttpGet("find")]
+        public IActionResult Find([FromQuery] int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return RedirectToAction(nameof(Users));
+            }
+
+            return RedirectToAction(nameof(UserDetails), new { id = id.Value });
+        }
+
         [HttpPost("{id:int}/delete")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]

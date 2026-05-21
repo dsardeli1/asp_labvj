@@ -176,6 +176,43 @@ namespace TaskManageApp.Controllers
             return View("~/Web/Views/Data/TaskDelete.cshtml", task);
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> Lookup([FromQuery] string? q, [FromQuery] int limit = 10)
+        {
+            var searchTerm = q?.Trim();
+            var maxResults = Math.Clamp(limit, 1, 50);
+            var tasks = await _taskRepository.GetAllTasksAsync();
+
+            var results = tasks
+                .Where(task =>
+                    string.IsNullOrWhiteSpace(searchTerm) ||
+                    task.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (!string.IsNullOrWhiteSpace(task.Description) && task.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                    task.Id.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(task => task.Title)
+                .ThenBy(task => task.Id)
+                .Take(maxResults)
+                .Select(task => new
+                {
+                    value = task.Id,
+                    text = task.Title,
+                    hint = $"#{task.Id}"
+                });
+
+            return Json(results);
+        }
+
+        [HttpGet("find")]
+        public IActionResult Find([FromQuery] int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return RedirectToAction(nameof(Tasks));
+            }
+
+            return RedirectToAction(nameof(TaskDetails), new { id = id.Value });
+        }
+
         [HttpPost("{id:int}/delete")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
