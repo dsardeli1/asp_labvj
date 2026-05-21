@@ -27,9 +27,9 @@
                 <dt class="col-sm-3 data-detail-term">Category</dt>
                 <dd class="col-sm-9 data-detail-desc">@Model.Category?.Name</dd>
                 <dt class="col-sm-3 data-detail-term">Created</dt>
-                <dd class="col-sm-9 data-detail-desc">@Model.CreatedDate.ToString("yyyy-MM-dd")</dd>
+                <dd class="col-sm-9 data-detail-desc">@Model.CreatedDate.ToString("d", CultureInfo.CurrentCulture)</dd>
                 <dt class="col-sm-3 data-detail-term">Due Date</dt>
-                <dd class="col-sm-9 data-detail-desc">@Model.DueDate.ToString("yyyy-MM-dd")</dd>
+                <dd class="col-sm-9 data-detail-desc">@Model.DueDate.ToString("d", CultureInfo.CurrentCulture)</dd>
                 <dt class="col-sm-3 data-detail-term">Status</dt>
                 <dd class="col-sm-9 data-detail-desc">@(Model.IsCompleted ? "Completed" : "Open")</dd>
                 <dt class="col-sm-3 data-detail-term">Comments</dt>

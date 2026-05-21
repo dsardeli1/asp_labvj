@@ -74,7 +74,7 @@ namespace TaskManageApp.Controllers
                 new { Id = (int)Models.Priority.High, Name = "High" }
             }, "Id", "Name");
 
-            return View("~/Web/Views/Data/TaskCreate.cshtml", new Models.TaskItem { CreatedDate = DateTime.Now, DueDate = DateTime.Now.AddDays(7) });
+            return View("~/Web/Views/Data/TaskCreate.cshtml", new Models.TaskItem { CreatedDate = DateTime.Now, DueDate = DateTime.Today.AddDays(7) });
         }
 
         [HttpPost("create")]

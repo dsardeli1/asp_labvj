@@ -116,7 +116,7 @@
                         <div class="meta-item">
                             <span class="meta-label">Due:</span>
                             <span class="meta-value @(isOverdue ? "text-danger" : (isDueSoon ? "text-warning" : ""))">
-                                @task.DueDate.ToString("MMM dd, yyyy")
+                                @task.DueDate.ToString("d", CultureInfo.CurrentCulture)
                                 @if (daysUntilDue >= 0 && Math.Abs(daysUntilDue) < 1)
                                 {
                                     <span class="meta-hint">Today</span>
@@ -133,7 +133,7 @@
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Created:</span>
-                            <span class="meta-value">@task.CreatedDate.ToString("MMM dd")</span>
+                            <span class="meta-value">@task.CreatedDate.ToString("d", CultureInfo.CurrentCulture)</span>
                         </div>
                     </div>
                 </div>

@@ -66,8 +66,8 @@
                             }
                         </td>
                         <td>@(item.Comments?.Count ?? 0)</td>
-                        <td>@item.CreatedDate.ToString("yyyy-MM-dd")</td>
-                        <td>@item.DueDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.CreatedDate.ToString("d", CultureInfo.CurrentCulture)</td>
+                        <td>@item.DueDate.ToString("d", CultureInfo.CurrentCulture)</td>
                         <td>
                             @if (item.IsCompleted)
                             {

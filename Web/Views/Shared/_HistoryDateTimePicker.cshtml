@@ -1,0 +1,25 @@
+@model TaskManageApp.Models.TaskHistory
+
+@{
+    var actionDate = Model.ActionDate == default ? DateTime.Now : Model.ActionDate;
+    var displayDate = actionDate.ToString("d", CultureInfo.CurrentCulture);
+    var displayTime = actionDate.ToString("HH:mm");
+    var hiddenValue = actionDate.ToString("yyyy-MM-ddTHH:mm");
+}
+
+<div class="col-md-6">
+    <div class="datepicker-field" data-datepicker data-culture="@CultureInfo.CurrentCulture.Name">
+        <label asp-for="ActionDate" class="form-label"></label>
+        <div class="datepicker-shell datepicker-shell--with-time">
+            <input asp-for="ActionDate" type="hidden" data-datepicker-value value="@hiddenValue" />
+            <input class="form-control datepicker-input" type="text" autocomplete="off" inputmode="numeric" maxlength="16" placeholder="@CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern" data-datepicker-input value="@displayDate" />
+            <input class="form-control datepicker-time" type="text" inputmode="numeric" step="60" data-datepicker-time-input value="@displayTime" placeholder="HH:mm" />
+            <button type="button" class="btn btn-outline-secondary datepicker-toggle" aria-label="Open calendar" data-datepicker-toggle>
+                <span aria-hidden="true">&#128197;</span>
+            </button>
+            <div class="datepicker-panel" hidden data-datepicker-panel></div>
+        </div>
+        <span asp-validation-for="ActionDate" class="text-danger"></span>
+        <div class="form-text">Date format: @CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern, time format: 24-hour clock</div>
+    </div>
+</div>

@@ -418,3 +418,617 @@
 		initializeAutocompleteSelects();
 	}
 })();
+
+// Culture-aware datepicker with popup calendar and inline validation.
+(function () {
+	function pad(value) {
+		return String(value).padStart(2, "0");
+	}
+
+	function getCultureKey(culture) {
+		return String(culture || "").toLowerCase();
+	}
+
+	function getCultureRules(culture) {
+		var normalizedCulture = getCultureKey(culture);
+		var isCroatian = normalizedCulture.indexOf("hr") === 0;
+
+		return {
+			order: isCroatian ? ["day", "month", "year"] : ["month", "day", "year"],
+			separator: isCroatian ? "." : "/",
+			firstDayOfWeek: isCroatian ? 1 : 0,
+			placeholder: isCroatian ? "dd.MM.yyyy" : "MM/dd/yyyy"
+		};
+	}
+
+	function isValidDateParts(year, month, day) {
+		var candidate = new Date(year, month - 1, day);
+		return candidate.getFullYear() === year && candidate.getMonth() === month - 1 && candidate.getDate() === day;
+	}
+
+	function parseDate(text, culture) {
+		var trimmed = String(text || "").trim().replace(/\.$/, "");
+		if (!trimmed) {
+			return null;
+		}
+
+		if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(trimmed)) {
+			var isoDateTimeParts = trimmed.substring(0, 10).split("-").map(function (part) { return parseInt(part, 10); });
+			return isValidDateParts(isoDateTimeParts[0], isoDateTimeParts[1], isoDateTimeParts[2]) ? new Date(isoDateTimeParts[0], isoDateTimeParts[1] - 1, isoDateTimeParts[2]) : null;
+		}
+
+		if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+			var isoParts = trimmed.split("-").map(function (part) { return parseInt(part, 10); });
+			return isValidDateParts(isoParts[0], isoParts[1], isoParts[2]) ? new Date(isoParts[0], isoParts[1] - 1, isoParts[2]) : null;
+		}
+
+		var rules = getCultureRules(culture);
+		var parts = trimmed.split(/[^0-9]+/).filter(Boolean).map(function (part) { return parseInt(part, 10); });
+		if (parts.length !== 3 || parts.some(function (part) { return Number.isNaN(part); })) {
+			return null;
+		}
+
+		var year;
+		var month;
+		var day;
+
+		switch (rules.order.join("-")) {
+			case "day-month-year":
+				day = parts[0];
+				month = parts[1];
+				year = parts[2];
+				break;
+			default:
+				month = parts[0];
+				day = parts[1];
+				year = parts[2];
+				break;
+		}
+
+		return isValidDateParts(year, month, day) ? new Date(year, month - 1, day) : null;
+	}
+
+	function formatDate(date, culture) {
+		if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+			return "";
+		}
+
+		var rules = getCultureRules(culture);
+		var year = date.getFullYear();
+		var month = pad(date.getMonth() + 1);
+		var day = pad(date.getDate());
+
+		switch (rules.order.join("-")) {
+			case "day-month-year":
+				return day + rules.separator + month + rules.separator + year;
+			default:
+				return month + rules.separator + day + rules.separator + year;
+		}
+	}
+
+	function formatTime(date) {
+		if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+			return "";
+		}
+
+		return pad(date.getHours()) + ":" + pad(date.getMinutes());
+	}
+
+	function parseTime(text) {
+		var trimmed = String(text || "").trim();
+		if (!trimmed) {
+			return null;
+		}
+
+		var match = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+		if (!match) {
+			return null;
+		}
+
+		var hours = parseInt(match[1], 10);
+		var minutes = parseInt(match[2], 10);
+		if (Number.isNaN(hours) || Number.isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+			return null;
+		}
+
+		return { hours: hours, minutes: minutes };
+	}
+
+	function toIsoDate(date) {
+		if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+			return "";
+		}
+
+		return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate());
+	}
+
+	function toIsoDateTime(date, timeText) {
+		if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+			return "";
+		}
+
+		var parsedTime = parseTime(timeText || formatTime(date));
+		if (!parsedTime) {
+			return "";
+		}
+
+		return toIsoDate(date) + "T" + pad(parsedTime.hours) + ":" + pad(parsedTime.minutes);
+	}
+
+	function sameDay(left, right) {
+		return !!left && !!right && left.getFullYear() === right.getFullYear() && left.getMonth() === right.getMonth() && left.getDate() === right.getDate();
+	}
+
+	function clampViewDate(date) {
+		var safeDate = date instanceof Date && !Number.isNaN(date.getTime()) ? date : new Date();
+		return new Date(safeDate.getFullYear(), safeDate.getMonth(), 1);
+	}
+
+	function enhanceDatepicker(wrapper) {
+		if (wrapper.dataset.datepickerEnhanced === "true") {
+			return;
+		}
+
+		var input = wrapper.querySelector("[data-datepicker-input]");
+		var valueField = wrapper.querySelector("[data-datepicker-value]");
+		var timeField = wrapper.querySelector("[data-datepicker-time-input]");
+		var toggle = wrapper.querySelector("[data-datepicker-toggle]");
+		var panel = wrapper.querySelector("[data-datepicker-panel]");
+		if (!input || !valueField || !toggle || !panel) {
+			return;
+		}
+
+		wrapper.dataset.datepickerEnhanced = "true";
+
+		var culture = wrapper.getAttribute("data-culture") || document.documentElement.lang || navigator.language || "en-US";
+		var rules = getCultureRules(culture);
+		var selectedDate = parseDate(valueField.value, culture) || parseDate(input.value, culture);
+		var viewDate = clampViewDate(selectedDate || new Date());
+		var isOpen = false;
+		var uniqueId = "datepicker-panel-" + Math.random().toString(36).slice(2);
+		var form = wrapper.closest("form");
+
+		panel.id = uniqueId;
+		toggle.setAttribute("aria-controls", uniqueId);
+		toggle.setAttribute("aria-expanded", "false");
+		input.setAttribute("aria-haspopup", "dialog");
+		input.setAttribute("placeholder", input.getAttribute("placeholder") || rules.placeholder);
+
+		function setValidity(message) {
+			input.setCustomValidity(message || "");
+			if (timeField) {
+				timeField.setCustomValidity(message || "");
+			}
+			wrapper.classList.toggle("is-invalid", !!message);
+		}
+
+		function syncValue(date) {
+			if (timeField && !parseTime(timeField.value)) {
+				timeField.value = formatTime(date);
+			}
+
+			valueField.value = timeField ? toIsoDateTime(date, timeField.value) : toIsoDate(date);
+			input.value = formatDate(date, culture);
+		}
+
+		function closePanel() {
+			if (!isOpen) {
+				return;
+			}
+
+			isOpen = false;
+			panel.hidden = true;
+			wrapper.classList.remove("is-open");
+			toggle.setAttribute("aria-expanded", "false");
+		}
+
+		function renderCalendar() {
+			var monthLabel = new Intl.DateTimeFormat(culture, {
+				month: "long",
+				year: "numeric"
+			}).format(viewDate);
+
+			var weekdayFormatter = new Intl.DateTimeFormat(culture, { weekday: "short" });
+			var dayFormatter = new Intl.DateTimeFormat(culture, { day: "numeric" });
+			var today = new Date();
+			var firstDay = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
+			var daysInMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0).getDate();
+			var offset = (firstDay.getDay() - rules.firstDayOfWeek + 7) % 7;
+			var gridStart = new Date(firstDay);
+			gridStart.setDate(firstDay.getDate() - offset);
+
+			panel.innerHTML = "";
+
+			var header = document.createElement("div");
+			header.className = "datepicker-header";
+
+			var previousButton = document.createElement("button");
+			previousButton.type = "button";
+			previousButton.className = "datepicker-nav";
+			previousButton.setAttribute("aria-label", "Previous month");
+			previousButton.textContent = "\u2039";
+
+			var title = document.createElement("div");
+			title.className = "datepicker-title";
+			title.textContent = monthLabel;
+
+			var nextButton = document.createElement("button");
+			nextButton.type = "button";
+			nextButton.className = "datepicker-nav";
+			nextButton.setAttribute("aria-label", "Next month");
+			nextButton.textContent = "\u203A";
+
+			previousButton.addEventListener("click", function () {
+				viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
+				renderCalendar();
+			});
+
+			nextButton.addEventListener("click", function () {
+				viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1);
+				renderCalendar();
+			});
+
+			header.appendChild(previousButton);
+			header.appendChild(title);
+			header.appendChild(nextButton);
+
+			var weekdayRow = document.createElement("div");
+			weekdayRow.className = "datepicker-weekdays";
+
+			for (var i = 0; i < 7; i++) {
+				var weekdayIndex = (rules.firstDayOfWeek + i) % 7;
+				var sampleDay = new Date(2026, 5, 7 + weekdayIndex);
+				var weekdayCell = document.createElement("span");
+				weekdayCell.className = "datepicker-weekday";
+				weekdayCell.textContent = weekdayFormatter.format(sampleDay);
+				weekdayRow.appendChild(weekdayCell);
+			}
+
+			var grid = document.createElement("div");
+			grid.className = "datepicker-grid";
+
+			for (var dayIndex = 0; dayIndex < 42; dayIndex++) {
+				var currentDay = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + dayIndex);
+				var inCurrentMonth = currentDay.getMonth() === viewDate.getMonth();
+				var dayButton = document.createElement("button");
+				dayButton.type = "button";
+				dayButton.className = "datepicker-day" + (inCurrentMonth ? "" : " is-muted") + (sameDay(currentDay, selectedDate) ? " is-selected" : "") + (sameDay(currentDay, today) ? " is-today" : "");
+				dayButton.textContent = dayFormatter.format(currentDay);
+				dayButton.setAttribute("aria-label", currentDay.toLocaleDateString(culture, { dateStyle: "full" }));
+				dayButton.setAttribute("data-date", currentDay.getFullYear() + "-" + pad(currentDay.getMonth() + 1) + "-" + pad(currentDay.getDate()));
+				dayButton.disabled = !inCurrentMonth;
+
+				if (inCurrentMonth) {
+					dayButton.addEventListener("click", function (event) {
+						var pickedDate = parseDate(event.currentTarget.getAttribute("data-date"), culture);
+						if (!pickedDate) {
+							return;
+						}
+
+						selectedDate = pickedDate;
+						viewDate = clampViewDate(selectedDate);
+						syncValue(selectedDate);
+						setValidity("");
+						closePanel();
+						input.focus();
+					});
+				}
+
+				grid.appendChild(dayButton);
+			}
+
+			var footer = document.createElement("div");
+			footer.className = "datepicker-footer";
+
+			var todayButton = document.createElement("button");
+			todayButton.type = "button";
+			todayButton.className = "btn btn-sm btn-outline-secondary";
+			todayButton.textContent = "Today";
+			todayButton.addEventListener("click", function () {
+				var now = new Date();
+				selectedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+				viewDate = clampViewDate(selectedDate);
+					syncValue(selectedDate);
+				setValidity("");
+				closePanel();
+				input.focus();
+			});
+
+			footer.appendChild(todayButton);
+
+			panel.appendChild(header);
+			panel.appendChild(weekdayRow);
+			panel.appendChild(grid);
+			panel.appendChild(footer);
+		}
+
+		function openPanel() {
+			if (isOpen) {
+				return;
+			}
+
+			isOpen = true;
+			panel.hidden = false;
+			wrapper.classList.add("is-open");
+			toggle.setAttribute("aria-expanded", "true");
+			renderCalendar();
+		}
+
+		function validateAndCommit() {
+			var trimmedValue = input.value.trim();
+
+			if (!trimmedValue) {
+				selectedDate = null;
+				valueField.value = "";
+				setValidity("Due date is required.");
+				return false;
+			}
+
+			var parsedDate = parseDate(trimmedValue, culture);
+			if (!parsedDate) {
+				valueField.value = "";
+				setValidity("Enter a valid date.");
+				return false;
+			}
+
+			if (timeField && !parseTime(timeField.value)) {
+				valueField.value = "";
+				setValidity("Enter a valid time.");
+				return false;
+			}
+
+			selectedDate = parsedDate;
+			viewDate = clampViewDate(selectedDate);
+			syncValue(selectedDate);
+			setValidity("");
+			return true;
+		}
+
+		input.addEventListener("focus", function () {
+			openPanel();
+		});
+
+		input.addEventListener("input", function () {
+			if (!input.value.trim()) {
+				valueField.value = "";
+			}
+
+			setValidity("");
+		});
+
+		if (timeField) {
+			timeField.addEventListener("input", function () {
+				setValidity("");
+			});
+		}
+
+		input.addEventListener("blur", function () {
+			window.setTimeout(function () {
+				validateAndCommit();
+			}, 150);
+		});
+
+		input.addEventListener("keydown", function (event) {
+			if (event.key === "Escape") {
+				event.preventDefault();
+				closePanel();
+				return;
+			}
+
+			if (event.key === "ArrowDown") {
+				event.preventDefault();
+				openPanel();
+				return;
+			}
+
+			if (event.key === "Enter") {
+				if (!validateAndCommit()) {
+					event.preventDefault();
+					input.reportValidity();
+					return;
+				}
+
+				closePanel();
+			}
+		});
+
+		toggle.addEventListener("click", function () {
+			if (isOpen) {
+				closePanel();
+				return;
+			}
+
+			openPanel();
+			input.focus();
+		});
+
+		panel.addEventListener("mousedown", function (event) {
+			event.preventDefault();
+		});
+
+		panel.addEventListener("click", function (event) {
+			event.stopPropagation();
+		});
+
+		if (form) {
+			form.addEventListener("submit", function (event) {
+				if (!validateAndCommit()) {
+					event.preventDefault();
+					input.reportValidity();
+					input.focus();
+					return;
+				}
+
+				closePanel();
+			});
+		}
+
+		document.addEventListener("click", function (event) {
+			if (!isOpen) {
+				return;
+			}
+
+			if (wrapper.contains(event.target)) {
+				return;
+			}
+
+			closePanel();
+		});
+
+		if (input.value.trim()) {
+			var initialDate = parseDate(input.value, culture);
+			if (initialDate) {
+				selectedDate = initialDate;
+				syncValue(selectedDate);
+				setValidity("");
+			} else {
+				setValidity("Enter a valid date.");
+			}
+		}
+	}
+
+	function enhanceTimeInput(input) {
+		if (!input || input.dataset.timepickerEnhanced === "true") return;
+
+		var stepAttr = input.getAttribute("step");
+		var minuteStep = 15;
+		if (stepAttr) {
+			var stepSeconds = parseInt(stepAttr, 10);
+			if (!Number.isNaN(stepSeconds) && stepSeconds % 60 === 0) {
+				minuteStep = Math.max(1, stepSeconds / 60);
+			}
+		}
+
+		input.dataset.timepickerEnhanced = "true";
+
+		// Prevent native browser time picker from appearing for inputs of type="time"
+		var originalType = input.getAttribute('type') || '';
+		if (originalType.toLowerCase() === 'time') {
+			input.setAttribute('data-original-type', 'time');
+			try { input.type = 'text'; } catch (err) { /* some browsers may restrict changing type */ }
+			input.setAttribute('inputmode', 'numeric');
+			if (!input.getAttribute('placeholder')) input.setAttribute('placeholder', 'HH:mm');
+		}
+
+		var panel = document.createElement("div");
+		panel.className = "datepicker-panel timepicker-panel";
+		panel.hidden = true;
+		panel.setAttribute("role", "dialog");
+		panel.setAttribute("aria-hidden", "true");
+
+		function pad(v) { return String(v).padStart(2, "0"); }
+
+		function render() {
+			var hoursHtml = "";
+			for (var h = 0; h < 24; h++) {
+				hoursHtml += '<button type="button" class="timepicker-hour btn">' + pad(h) + '</button>';
+			}
+
+			var minutesHtml = "";
+			for (var m = 0; m < 60; m += minuteStep) {
+				minutesHtml += '<button type="button" class="timepicker-minute btn">' + pad(m) + '</button>';
+			}
+
+			panel.innerHTML = '' +
+				'<div class="timepicker-header">Select time</div>' +
+				'<div class="timepicker-body">' +
+				'<div class="timepicker-column timepicker-hours">' + hoursHtml + '</div>' +
+				'<div class="timepicker-column timepicker-minutes">' + minutesHtml + '</div>' +
+				'</div>';
+		}
+
+		render();
+
+		var currentHour = null;
+
+		panel.addEventListener("mousedown", function (e) { e.preventDefault(); });
+
+		panel.addEventListener("click", function (e) {
+			e.stopPropagation();
+			var btn = e.target.closest("button");
+			if (!btn) return;
+			if (btn.classList.contains("timepicker-hour")) {
+				currentHour = parseInt(btn.textContent, 10);
+				var hourBtns = panel.querySelectorAll('.timepicker-hour');
+				hourBtns.forEach(function (b) { b.classList.remove('is-selected'); });
+				btn.classList.add('is-selected');
+				return;
+			}
+			if (btn.classList.contains("timepicker-minute")) {
+				var minute = parseInt(btn.textContent, 10);
+				if (currentHour === null) {
+					var parsed = (function (txt) { var t = String(txt || '').trim(); var m = t.match(/^(\d{1,2}):(\d{2})$/); if (!m) return null; return { hours: parseInt(m[1],10), minutes: parseInt(m[2],10) }; })(input.value || input.getAttribute('value') || '00:00');
+					currentHour = parsed ? parsed.hours : 0;
+				}
+				input.value = pad(currentHour) + ":" + pad(minute);
+				input.dispatchEvent(new Event('input', { bubbles: true }));
+				close();
+			}
+		});
+
+		function open() {
+			panel.hidden = false;
+			panel.setAttribute('aria-hidden', 'false');
+			document.body.appendChild(panel);
+			positionPanel();
+			setTimeout(function () { document.addEventListener('click', onDocClick); }, 0);
+		}
+
+		function close() {
+			panel.hidden = true;
+			panel.setAttribute('aria-hidden', 'true');
+			if (panel.parentNode === document.body) document.body.removeChild(panel);
+			document.removeEventListener('click', onDocClick);
+		}
+
+		function onDocClick(e) {
+			if (e.target === input || panel.contains(e.target)) return;
+			close();
+		}
+
+		function positionPanel() {
+			var rect = input.getBoundingClientRect();
+			panel.style.position = 'absolute';
+			panel.style.zIndex = 9999;
+			panel.style.minWidth = '220px';
+			panel.style.left = Math.max(4, rect.left + window.scrollX) + 'px';
+			panel.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+		}
+
+		input.addEventListener('focus', function () { open(); });
+		input.addEventListener('click', function (e) { e.stopPropagation(); if (panel.hidden) open(); });
+
+		input.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape') { close(); input.blur(); }
+		});
+
+		input.addEventListener('blur', function () {
+			setTimeout(function () { if (!panel.contains(document.activeElement)) close(); }, 150);
+		});
+
+		var existing = (function (txt) { var t = String(txt||'').trim(); var m = t.match(/^(\d{1,2}):(\d{2})$/); if(!m) return null; return { hours: parseInt(m[1],10), minutes: parseInt(m[2],10)}; })(input.value || input.getAttribute('value') || '');
+		if (existing) currentHour = existing.hours;
+
+		input._timepickerPanel = panel;
+		input._closeTimepicker = close;
+		input._openTimepicker = open;
+		}
+
+		function initializeTimepickers() {
+			var timeInputs = document.querySelectorAll("input.datepicker-time");
+			timeInputs.forEach(function (input) { enhanceTimeInput(input); });
+		}
+
+		function initializeDatepickers() {
+			var datepickers = document.querySelectorAll("[data-datepicker]");
+			datepickers.forEach(function (wrapper) {
+				enhanceDatepicker(wrapper);
+			});
+		}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", function () { initializeDatepickers(); initializeTimepickers(); });
+	} else {
+		initializeDatepickers(); initializeTimepickers();
+	}
+})();

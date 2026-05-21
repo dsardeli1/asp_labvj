@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using TaskManageApp.DAL;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -25,6 +27,28 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         b => b.MigrationsAssembly("TaskManageApp")));
 
 var app = builder.Build();
+
+var supportedCultures = new[]
+{
+    new CultureInfo("hr-HR"),
+    new CultureInfo("hr"),
+    new CultureInfo("en-US")
+    ,
+    new CultureInfo("en")
+};
+
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("hr-HR"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+
+localizationOptions.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
+localizationOptions.RequestCultureProviders.Insert(1, new QueryStringRequestCultureProvider());
+localizationOptions.RequestCultureProviders.Add(new AcceptLanguageHeaderRequestCultureProvider());
+
+app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

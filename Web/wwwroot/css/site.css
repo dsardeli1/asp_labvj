@@ -277,3 +277,193 @@ a:focus-visible {
 .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.datepicker-field {
+  position: relative;
+}
+
+.datepicker-shell {
+  align-items: stretch;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.datepicker-input {
+  min-width: 0;
+}
+
+.datepicker-toggle {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  min-width: 3rem;
+  padding-inline: 0.85rem;
+}
+
+.datepicker-panel {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 1rem;
+  box-shadow: var(--app-shell-shadow);
+  color: var(--app-text);
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  width: min(21rem, 100%);
+  z-index: 40;
+}
+
+.datepicker-header {
+  align-items: center;
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: auto 1fr auto;
+  margin-bottom: var(--space-2);
+}
+
+.datepicker-nav {
+  background: transparent;
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  color: var(--app-text);
+  font-size: 1.15rem;
+  height: 2rem;
+  line-height: 1;
+  width: 2rem;
+}
+
+.datepicker-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.datepicker-weekdays,
+.datepicker-grid {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.datepicker-weekdays {
+  margin-bottom: 0.35rem;
+}
+
+.datepicker-weekday {
+  color: var(--app-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.datepicker-day {
+  align-items: center;
+  aspect-ratio: 1;
+  background: color-mix(in srgb, var(--app-surface-strong) 84%, transparent 16%);
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  color: var(--app-text);
+  display: inline-flex;
+  justify-content: center;
+  font-weight: 600;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.datepicker-day:hover:not(:disabled),
+.datepicker-day:focus-visible:not(:disabled) {
+  background: color-mix(in srgb, var(--app-link) 14%, var(--app-surface-strong) 86%);
+  border-color: color-mix(in srgb, var(--app-link) 25%, var(--app-border) 75%);
+  transform: translateY(-1px);
+}
+
+.datepicker-day.is-muted {
+  color: color-mix(in srgb, var(--app-text) 42%, transparent 58%);
+}
+
+.datepicker-day.is-today {
+  border-color: color-mix(in srgb, var(--app-link) 45%, var(--app-border) 55%);
+}
+
+.datepicker-day.is-selected {
+  background: var(--app-link);
+  color: #ffffff;
+}
+
+.datepicker-day:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.datepicker-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-3);
+}
+
+.datepicker-field.is-invalid .datepicker-input {
+  border-color: #dc3545;
+}
+
+@media (max-width: 575.98px) {
+  .datepicker-shell {
+    flex-direction: column;
+  }
+
+  .datepicker-toggle {
+    min-height: 2.5rem;
+    width: 100%;
+  }
+
+  .datepicker-panel {
+    width: 100%;
+  }
+}
+
+/* Timepicker styling to match datepicker */
+.timepicker-panel {
+  display: block;
+  padding: var(--space-3);
+}
+.timepicker-body {
+  display: flex;
+  gap: var(--space-3);
+}
+.timepicker-column {
+  display: grid;
+  gap: 0.35rem;
+  grid-auto-rows: 2.2rem;
+  overflow-y: auto;
+  max-height: 12rem;
+}
+.timepicker-column.timepicker-hours {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.timepicker-column.timepicker-minutes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.timepicker-hour,
+.timepicker-minute {
+  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--app-surface-strong) 84%, transparent 16%);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}
+.timepicker-hour:hover,
+.timepicker-minute:hover,
+.timepicker-hour:focus,
+.timepicker-minute:focus {
+  background: color-mix(in srgb, var(--app-link) 14%, var(--app-surface-strong) 86%);
+  border-color: color-mix(in srgb, var(--app-link) 25%, var(--app-border) 75%);
+  outline: none;
+}
+.timepicker-hour.is-selected,
+.timepicker-minute.is-selected {
+  background: var(--app-link);
+  color: #fff;
+}

@@ -170,6 +170,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Shared/_HistoryDateTimePicker.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxfSGlzdG9yeURhdGVUaW1lUGlja2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Shared/_TaskDatePicker.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxfVGFza0RhdGVQaWNrZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXFNoYXJlZFxfVmFsaWRhdGlvblNjcmlwdHNQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

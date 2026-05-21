@@ -9,7 +9,12 @@ namespace TaskManageApp.Models
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
+        [Required(ErrorMessage = "Due date is required.")]
+        [Display(Name = "Due Date")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [Range(typeof(DateTime), "2000-01-01", "2100-12-31", ErrorMessage = "Enter a valid due date.")]
         public DateTime DueDate { get; set; }
         public bool IsCompleted { get; set; }
 
