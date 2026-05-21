@@ -74,7 +74,15 @@ namespace TaskManageApp.Controllers
             if (id != user.Id) return BadRequest();
             if (!ModelState.IsValid) return View("~/Web/Views/Data/UserEdit.cshtml", user);
             var updated = await _repo.UpdateUserAsync(user);
-            if (!updated) TempData["ErrorMessage"] = "Could not update user.";
+            if (!updated)
+            {
+                TempData["ErrorMessage"] = "Could not update user.";
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "User updated.";
+            }
+
             return RedirectToAction(nameof(Users));
         }
 
@@ -132,7 +140,15 @@ namespace TaskManageApp.Controllers
             var user = await _repo.GetUserByIdAsync(id);
             if (user == null) return NotFound();
             var deleted = await _repo.DeleteUserAsync(id);
-            if (!deleted) TempData["ErrorMessage"] = "Could not delete user (might have tasks).";
+            if (!deleted)
+            {
+                TempData["ErrorMessage"] = "Could not delete user (might have tasks).";
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "User deleted.";
+            }
+
             return RedirectToAction(nameof(Users));
         }
     }

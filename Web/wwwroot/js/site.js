@@ -865,10 +865,113 @@
 		});
 	}
 
+	// Remove jQuery Validate from all forms to prevent validation interference
+	function removeJQueryValidateFromForms() {
+		if (!window.jQuery) return;
+
+		// Diagnostic flag so tests can assert the function executed
+		try {
+			window.__removeJQueryValidateRan = true;
+		} catch (e) {
+			// ignore
+		}
+
+		var forms = document.querySelectorAll("form");
+		forms.forEach(function (form, idx) {
+			// Remove jQuery Validate handlers immediately
+			window.setTimeout(function () {
+				try {
+					var $form = window.jQuery(form);
+					var validator = $form.data('validator');
+
+					if (validator) {
+						// Preserve validator so client-side message rendering still works,
+						// but override the submitHandler so it unbinds validation and
+						// performs a native submit when the form is valid.
+						validator.settings = validator.settings || {};
+						(function (orig) {
+							validator.settings.submitHandler = function (f) {
+								try {
+									$form.off('submit.validate');
+								} catch (e) { }
+								if (typeof orig === 'function') {
+									return orig(f);
+								}
+								f.submit();
+							};
+						})(validator.settings.submitHandler);
+
+						// record that we preserved and patched the validator
+						window.__formValidationData = window.__formValidationData || [];
+						window.__formValidationData.push({ index: idx, preservedValidator: true });
+					} else {
+						// No validator attached; fall back to removing any handlers
+						try { $form.off(); } catch (e) { }
+						try { $form.removeData('validator'); } catch (e) { }
+						try { $form.removeData('unobtrusiveValidation'); } catch (e) { }
+						window.__formValidationData = window.__formValidationData || [];
+						window.__formValidationData.push({ index: idx, preservedValidator: false });
+					}
+				} catch (error) {
+					// Ignore validator teardown failures
+				}
+			}, 0);
+
+			// Also remove click handlers from submit buttons inside the form
+			window.setTimeout(function () {
+				try {
+					var submitButtons = Array.prototype.slice.call(form.querySelectorAll('button[type="submit"], input[type="submit"]'));
+					submitButtons.forEach(function (btn) {
+						try {
+							var $btn = window.jQuery(btn);
+							if ($btn && $btn.off) $btn.off('click');
+						} catch (err) {
+							// ignore
+						}
+						try { btn.removeAttribute('onclick'); } catch (e) { }
+					});
+				} catch (err) {
+					// ignore
+				}
+			}, 20);
+
+			// Add form submit listener to override jQuery Validate and use HTML5 validation
+			form.addEventListener("submit", function (e) {
+				// Check HTML5 form validity
+				if (!form.checkValidity()) {
+					e.preventDefault();
+					form.reportValidity();
+					return false;
+				}
+				// Form is valid - don't prevent default, let it submit
+				// but remove jQuery Validate one more time to be sure
+				try {
+					var $form = window.jQuery(form);
+					$form.off();
+				} catch (error) {
+					// Ignore
+				}
+
+				try {
+					window.__formSubmitListenerAdded = window.__formSubmitListenerAdded || 0;
+					window.__formSubmitListenerAdded++;
+				} catch (err) {
+					// ignore
+				}
+
+				return true;
+			}, true); // Use capture phase to ensure this listener runs first
+		});
+	}
+
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", initializeAutocompleteSelects);
+		document.addEventListener("DOMContentLoaded", function () {
+			initializeAutocompleteSelects();
+			removeJQueryValidateFromForms();
+		});
 	} else {
 		initializeAutocompleteSelects();
+		removeJQueryValidateFromForms();
 	}
 })();
 
