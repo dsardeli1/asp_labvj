@@ -88,6 +88,7 @@
 (function () {
 	var canvasId = "background-shapes-canvas";
 	var shapeCount = 22;
+	var stateStorageKey = "background-shapes-state";
 	var paletteByTheme = {
 		light: ["rgba(31, 111, 222, 0.32)", "rgba(26, 164, 143, 0.28)", "rgba(207, 113, 57, 0.26)", "rgba(116, 90, 206, 0.24)", "rgba(212, 76, 112, 0.22)", "rgba(54, 141, 180, 0.26)"],
 		dark: ["rgba(60, 89, 130, 0.42)", "rgba(62, 102, 95, 0.38)", "rgba(109, 78, 132, 0.34)", "rgba(126, 93, 72, 0.32)", "rgba(74, 88, 124, 0.4)", "rgba(91, 110, 154, 0.34)"]
@@ -95,6 +96,22 @@
 
 	function randomBetween(min, max) {
 		return min + Math.random() * (max - min);
+	}
+
+	function safeSessionGet(key) {
+		try {
+			return window.sessionStorage.getItem(key);
+		} catch (error) {
+			return null;
+		}
+	}
+
+	function safeSessionSet(key, value) {
+		try {
+			window.sessionStorage.setItem(key, value);
+		} catch (error) {
+			// Ignore storage failures and keep the animation ephemeral.
+		}
 	}
 
 	function getTheme() {
@@ -184,6 +201,48 @@
 		ctx.restore();
 	}
 
+	function serializeShape(shape) {
+		return {
+			type: shape.type,
+			size: shape.size,
+			x: shape.x,
+			y: shape.y,
+			baseY: shape.baseY,
+			direction: shape.direction,
+			speed: shape.speed,
+			rotation: shape.rotation,
+			rotationSpeed: shape.rotationSpeed,
+			waveAmplitude: shape.waveAmplitude,
+			waveFrequency: shape.waveFrequency,
+			wavePhase: shape.wavePhase,
+			opacity: shape.opacity,
+			colorIndex: shape.colorIndex
+		};
+	}
+
+	function restoreShape(rawShape, width, height) {
+		if (!rawShape || typeof rawShape !== "object") {
+			return null;
+		}
+
+		var shape = createShape(width, height);
+		shape.type = rawShape.type === "square" || rawShape.type === "triangle" ? rawShape.type : "circle";
+		shape.size = Number(rawShape.size) > 0 ? Number(rawShape.size) : shape.size;
+		shape.x = Number.isFinite(Number(rawShape.x)) ? Number(rawShape.x) : shape.x;
+		shape.y = Number.isFinite(Number(rawShape.y)) ? Number(rawShape.y) : shape.y;
+		shape.baseY = Number.isFinite(Number(rawShape.baseY)) ? Number(rawShape.baseY) : shape.y;
+		shape.direction = Number(rawShape.direction) < 0 ? -1 : 1;
+		shape.speed = Number.isFinite(Number(rawShape.speed)) ? Number(rawShape.speed) : shape.speed;
+		shape.rotation = Number.isFinite(Number(rawShape.rotation)) ? Number(rawShape.rotation) : shape.rotation;
+		shape.rotationSpeed = Number.isFinite(Number(rawShape.rotationSpeed)) ? Number(rawShape.rotationSpeed) : shape.rotationSpeed;
+		shape.waveAmplitude = Number.isFinite(Number(rawShape.waveAmplitude)) ? Number(rawShape.waveAmplitude) : shape.waveAmplitude;
+		shape.waveFrequency = Number.isFinite(Number(rawShape.waveFrequency)) ? Number(rawShape.waveFrequency) : shape.waveFrequency;
+		shape.wavePhase = Number.isFinite(Number(rawShape.wavePhase)) ? Number(rawShape.wavePhase) : shape.wavePhase;
+		shape.opacity = Number.isFinite(Number(rawShape.opacity)) ? Number(rawShape.opacity) : shape.opacity;
+		shape.colorIndex = Number.isFinite(Number(rawShape.colorIndex)) ? Number(rawShape.colorIndex) : shape.colorIndex;
+		return shape;
+	}
+
 	function initializeBackgroundShapes() {
 		var canvas = document.getElementById(canvasId);
 		if (!canvas || !canvas.getContext) {
@@ -197,6 +256,44 @@
 		var width = 0;
 		var height = 0;
 		var devicePixelRatio = Math.max(1, window.devicePixelRatio || 1);
+		var saveThrottle = null;
+
+		function saveState() {
+			safeSessionSet(stateStorageKey, JSON.stringify({
+				shapes: shapes.map(serializeShape)
+			}));
+		}
+
+		function scheduleSaveState() {
+			if (saveThrottle) {
+				window.clearTimeout(saveThrottle);
+			}
+
+			saveThrottle = window.setTimeout(function () {
+				saveThrottle = null;
+				saveState();
+			}, 200);
+		}
+
+		function loadSavedShapes(nextWidth, nextHeight) {
+			var rawState = safeSessionGet(stateStorageKey);
+			if (!rawState) {
+				return [];
+			}
+
+			try {
+				var parsedState = JSON.parse(rawState);
+				if (!parsedState || !Array.isArray(parsedState.shapes)) {
+					return [];
+				}
+
+				return parsedState.shapes.slice(0, shapeCount).map(function (rawShape) {
+					return restoreShape(rawShape, nextWidth, nextHeight);
+				}).filter(Boolean);
+			} catch (error) {
+				return [];
+			}
+		}
 
 		function resizeCanvas() {
 			var viewport = getViewportSize(canvas);
@@ -210,7 +307,12 @@
 			ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
 
 			if (!shapes.length) {
-				for (var index = 0; index < shapeCount; index++) {
+				var restoredShapes = loadSavedShapes(width, height);
+				if (restoredShapes.length) {
+					shapes = restoredShapes;
+				}
+
+				while (shapes.length < shapeCount) {
 					shapes.push(createShape(width, height));
 				}
 			}
@@ -243,11 +345,19 @@
 				drawShape(ctx, shape, theme);
 			});
 
+			scheduleSaveState();
+
 			window.requestAnimationFrame(animate);
 		}
 
 		resizeCanvas();
 		window.addEventListener("resize", resizeCanvas);
+		window.addEventListener("pagehide", saveState);
+		document.addEventListener("visibilitychange", function () {
+			if (document.visibilityState === "hidden") {
+				saveState();
+			}
+		});
 		window.requestAnimationFrame(animate);
 	}
 
@@ -255,6 +365,106 @@
 		document.addEventListener("DOMContentLoaded", initializeBackgroundShapes);
 	} else {
 		initializeBackgroundShapes();
+	}
+})();
+
+// Button click burst particles that inherit the clicked button's color.
+(function () {
+	var particleLayerSelector = ".button-bursts-layer";
+	var particleClassName = "button-burst-particle";
+	var particleAnimationName = "button-burst-particle-flight";
+
+	function randomBetween(min, max) {
+		return min + Math.random() * (max - min);
+	}
+
+	function getButtonColor(button) {
+		var computedStyle = window.getComputedStyle(button);
+		var backgroundColor = computedStyle.backgroundColor;
+		var borderColor = computedStyle.borderTopColor || computedStyle.borderColor;
+		var textColor = computedStyle.color;
+
+		if (backgroundColor && backgroundColor !== "transparent" && backgroundColor !== "rgba(0, 0, 0, 0)") {
+			return backgroundColor;
+		}
+
+		if (borderColor && borderColor !== "transparent" && borderColor !== "rgba(0, 0, 0, 0)") {
+			return borderColor;
+		}
+
+		return textColor || "rgba(120, 140, 170, 0.85)";
+	}
+
+	function getParticleLayer() {
+		return document.querySelector(particleLayerSelector);
+	}
+
+	function emitButtonBurst(button) {
+		var layer = getParticleLayer();
+		if (!layer) {
+			return;
+		}
+
+		var bounds = button.getBoundingClientRect();
+		if (!bounds.width || !bounds.height) {
+			return;
+		}
+
+		var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		var particleTotal = reducedMotion ? 3 : Math.floor(randomBetween(5, 9));
+		var color = getButtonColor(button);
+		var centerX = bounds.left + (bounds.width / 2);
+		var centerY = bounds.top + (bounds.height / 2);
+
+		for (var index = 0; index < particleTotal; index++) {
+			var particle = document.createElement("span");
+			var angle = randomBetween(0, Math.PI * 2);
+			var travel = randomBetween(32, reducedMotion ? 48 : 64);
+			var burstX = Math.cos(angle) * travel;
+			var burstY = Math.sin(angle) * travel - randomBetween(4, 10);
+			var size = randomBetween(11, 18);
+			var duration = reducedMotion ? randomBetween(260, 380) : randomBetween(420, 760);
+
+			particle.className = particleClassName;
+			particle.style.left = centerX + randomBetween(-6, 6) + "px";
+			particle.style.top = centerY + randomBetween(-6, 6) + "px";
+			particle.style.width = size + "px";
+			particle.style.height = size + "px";
+			particle.style.backgroundColor = color;
+			particle.style.boxShadow = "0 0 12px color-mix(in srgb, " + color + " 45%, transparent 55%)";
+			particle.style.setProperty("--burst-dx", burstX.toFixed(2) + "px");
+			particle.style.setProperty("--burst-dy", burstY.toFixed(2) + "px");
+			particle.style.animation = particleAnimationName + " " + duration.toFixed(0) + "ms cubic-bezier(0.16, 0.84, 0.36, 1) forwards";
+
+			particle.addEventListener("animationend", function () {
+				particle.remove();
+			});
+
+			layer.appendChild(particle);
+
+			window.setTimeout(function () {
+				if (particle.isConnected) {
+					particle.remove();
+				}
+			}, duration + 120);
+		}
+	}
+
+	function handlePointerActivation(event) {
+		var target = event.target instanceof Element ? event.target.closest("button, .btn") : null;
+		if (!target || target.disabled) {
+			return;
+		}
+
+		emitButtonBurst(target);
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", function () {
+			document.addEventListener("click", handlePointerActivation, true);
+		});
+	} else {
+		document.addEventListener("click", handlePointerActivation, true);
 	}
 })();
 

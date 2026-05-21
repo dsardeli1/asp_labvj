@@ -77,6 +77,36 @@ body {
   width: 100%;
 }
 
+.button-bursts-layer {
+  position: fixed;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.button-burst-particle {
+  border-radius: 999px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+}
+
+@keyframes button-burst-particle-flight {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--burst-dx), var(--burst-dy)) scale(0);
+  }
+}
+
 .app-shell {
   display: flex;
   flex-direction: column;
