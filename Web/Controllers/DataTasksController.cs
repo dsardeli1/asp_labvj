@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskManageApp.Repositories;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TaskManageApp.Controllers
 {
@@ -58,6 +59,140 @@ namespace TaskManageApp.Controllers
         {
             var tasks = await _taskRepository.GetTasksByUserAsync(userId);
             return View("~/Web/Views/Data/Tasks.cshtml", tasks.OrderBy(t => t.Id).ToList());
+        }
+
+        [HttpGet("create")]
+        public async Task<IActionResult> Create()
+        {
+            var users = await _taskRepository.GetAllUsersAsync();
+            var categories = await _taskRepository.GetAllCategoriesAsync();
+            ViewData["UsersSelect"] = new SelectList(users, "Id", "Username");
+            ViewData["CategoriesSelect"] = new SelectList(categories, "Id", "Name");
+            ViewData["PrioritiesSelect"] = new SelectList(new[] {
+                new { Id = (int)Models.Priority.Low, Name = "Low" },
+                new { Id = (int)Models.Priority.Medium, Name = "Medium" },
+                new { Id = (int)Models.Priority.High, Name = "High" }
+            }, "Id", "Name");
+
+            return View("~/Web/Views/Data/TaskCreate.cshtml", new Models.TaskItem { CreatedDate = DateTime.Now, DueDate = DateTime.Now.AddDays(7) });
+        }
+
+        [HttpPost("create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title,Description,DueDate,IsCompleted,PriorityId,UserId,CategoryId")] Models.TaskItem task)
+        {
+            if (!ModelState.IsValid)
+            {
+                var users = await _taskRepository.GetAllUsersAsync();
+                var categories = await _taskRepository.GetAllCategoriesAsync();
+                ViewData["UsersSelect"] = new SelectList(users, "Id", "Username", task.UserId);
+                ViewData["CategoriesSelect"] = new SelectList(categories, "Id", "Name", task.CategoryId);
+                ViewData["PrioritiesSelect"] = new SelectList(new[] {
+                    new { Id = (int)Models.Priority.Low, Name = "Low" },
+                    new { Id = (int)Models.Priority.Medium, Name = "Medium" },
+                    new { Id = (int)Models.Priority.High, Name = "High" }
+                }, "Id", "Name", task.PriorityId);
+                return View("~/Web/Views/Data/TaskCreate.cshtml", task);
+            }
+
+            try
+            {
+                task.CreatedDate = DateTime.UtcNow;
+                var created = await _taskRepository.AddTaskAsync(task);
+                TempData["SuccessMessage"] = "Task was created successfully.";
+                return RedirectToAction(nameof(Tasks));
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "The task could not be created. Please try again.";
+                var users = await _taskRepository.GetAllUsersAsync();
+                var categories = await _taskRepository.GetAllCategoriesAsync();
+                ViewData["UsersSelect"] = new SelectList(users, "Id", "Username", task.UserId);
+                ViewData["CategoriesSelect"] = new SelectList(categories, "Id", "Name", task.CategoryId);
+                ViewData["PrioritiesSelect"] = new SelectList(new[] {
+                    new { Id = (int)Models.Priority.Low, Name = "Low" },
+                    new { Id = (int)Models.Priority.Medium, Name = "Medium" },
+                    new { Id = (int)Models.Priority.High, Name = "High" }
+                }, "Id", "Name", task.PriorityId);
+                return View("~/Web/Views/Data/TaskCreate.cshtml", task);
+            }
+        }
+
+        [HttpGet("{id:int}/edit")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var task = await _taskRepository.GetTaskByIdAsync(id);
+            if (task == null) return NotFound();
+            var users = await _taskRepository.GetAllUsersAsync();
+            var categories = await _taskRepository.GetAllCategoriesAsync();
+            ViewData["UsersSelect"] = new SelectList(users, "Id", "Username", task.UserId);
+            ViewData["CategoriesSelect"] = new SelectList(categories, "Id", "Name", task.CategoryId);
+            ViewData["PrioritiesSelect"] = new SelectList(new[] {
+                new { Id = (int)Models.Priority.Low, Name = "Low" },
+                new { Id = (int)Models.Priority.Medium, Name = "Medium" },
+                new { Id = (int)Models.Priority.High, Name = "High" }
+            }, "Id", "Name", task.PriorityId);
+            return View("~/Web/Views/Data/TaskEdit.cshtml", task);
+        }
+
+        [HttpPost("{id:int}/edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,IsCompleted,PriorityId,UserId,CategoryId")] Models.TaskItem task)
+        {
+            if (id != task.Id) return BadRequest();
+            if (!ModelState.IsValid)
+            {
+                var users = await _taskRepository.GetAllUsersAsync();
+                var categories = await _taskRepository.GetAllCategoriesAsync();
+                ViewData["UsersSelect"] = new SelectList(users, "Id", "Username", task.UserId);
+                ViewData["CategoriesSelect"] = new SelectList(categories, "Id", "Name", task.CategoryId);
+                ViewData["PrioritiesSelect"] = new SelectList(new[] {
+                    new { Id = (int)Models.Priority.Low, Name = "Low" },
+                    new { Id = (int)Models.Priority.Medium, Name = "Medium" },
+                    new { Id = (int)Models.Priority.High, Name = "High" }
+                }, "Id", "Name", task.PriorityId);
+                return View("~/Web/Views/Data/TaskEdit.cshtml", task);
+            }
+
+            var existing = await _taskRepository.GetTaskByIdAsync(id);
+            if (existing == null) return NotFound();
+
+            var updated = await _taskRepository.UpdateTaskAsync(task);
+            if (!updated)
+            {
+                TempData["ErrorMessage"] = "The task could not be updated. Please try again.";
+                return RedirectToAction(nameof(Tasks));
+            }
+
+            TempData["SuccessMessage"] = "Task was updated successfully.";
+            return RedirectToAction(nameof(Tasks));
+        }
+
+        [HttpGet("{id:int}/delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var task = await _taskRepository.GetTaskByIdAsync(id);
+            if (task == null) return NotFound();
+            return View("~/Web/Views/Data/TaskDelete.cshtml", task);
+        }
+
+        [HttpPost("{id:int}/delete")]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var task = await _taskRepository.GetTaskByIdAsync(id);
+            if (task == null) return NotFound();
+
+            var deleted = await _taskRepository.DeleteTaskAsync(id);
+            if (!deleted)
+            {
+                TempData["ErrorMessage"] = "The task could not be deleted. Please try again.";
+                return RedirectToAction(nameof(Tasks));
+            }
+
+            TempData["SuccessMessage"] = "Task was deleted successfully.";
+            return RedirectToAction(nameof(Tasks));
         }
     }
 }

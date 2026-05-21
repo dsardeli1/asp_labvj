@@ -1,0 +1,26 @@
+@model TaskManageApp.Models.User
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<section class="data-entity-page data-entity-page-form">
+    <header class="data-entity-header">
+        <h2>Delete User</h2>
+        <p class="text-muted">Confirm deletion of this user.</p>
+    </header>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4>@Model.FirstName @Model.LastName</h4>
+            <p>@Model.Username — @Model.Email</p>
+            <p>Tasks: @(Model.Tasks?.Count ?? 0)</p>
+        </div>
+    </div>
+
+    <form asp-controller="DataUsers" asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-controller="DataUsers" asp-action="Users" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</section>

@@ -1,0 +1,36 @@
+@model TaskManageApp.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Delete Task";
+}
+
+<section class="data-entity-page data-entity-page-form">
+    <header class="data-entity-header">
+        <h2>Delete Task</h2>
+        <p class="text-muted">Confirm deletion of the task.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary btn-sm">Back to Tasks</a>
+        </div>
+    </header>
+
+    <div class="card">
+        <div class="card-body">
+            <h4>@Model.Title</h4>
+            <p class="text-muted">@Model.Description</p>
+            <dl class="row">
+                <dt class="col-sm-3">Assigned</dt>
+                <dd class="col-sm-9">@(Model.User?.FirstName) @(Model.User?.LastName)</dd>
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Category?.Name</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

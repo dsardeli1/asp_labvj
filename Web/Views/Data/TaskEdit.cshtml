@@ -1,0 +1,70 @@
+@model TaskManageApp.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<section class="data-entity-page data-entity-page-form">
+    <header class="data-entity-header">
+        <h2>Edit Task</h2>
+        <p class="text-muted">Edit task details.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary btn-sm">Back to Tasks</a>
+        </div>
+    </header>
+
+    <div class="card data-form-card">
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label asp-for="PriorityId" class="form-label">Priority</label>
+                        <select asp-for="PriorityId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["PrioritiesSelect"]'></select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="UserId" class="form-label">Assigned User</label>
+                        <select asp-for="UserId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["UsersSelect"]'></select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="CategoryId" class="form-label">Category</label>
+                        <select asp-for="CategoryId" class="form-select" asp-items='(IEnumerable<SelectListItem>)ViewData["CategoriesSelect"]'></select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="DueDate" class="form-label">Due Date</label>
+                        <input asp-for="DueDate" class="form-control" type="date" />
+                    </div>
+
+                    <div class="col-md-6 d-flex align-items-end">
+                        <div class="form-check">
+                            <input asp-for="IsCompleted" class="form-check-input" />
+                            <label asp-for="IsCompleted" class="form-check-label">Completed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

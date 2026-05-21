@@ -114,16 +114,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/TaskCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/TaskDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/TaskDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/TaskEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza0VkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Tasks.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVGFza3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/UserCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVXNlckNyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/UserDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVXNlckRlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/UserDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVXNlckRldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/UserEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = V2ViXFZpZXdzXERhdGFcVXNlckVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/davor/Documents/GitHub/asp_labvj/Web/Views/Data/Users.cshtml]

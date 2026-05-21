@@ -57,6 +57,78 @@ namespace TaskManageApp.Repositories
             return Task.FromResult(_tasks.Where(t => !t.IsCompleted).ToList());
         }
 
+        public Task<TaskItem> AddTaskAsync(TaskItem task)
+        {
+            task.Id = _tasks.Count == 0 ? 1 : _tasks.Max(t => t.Id) + 1;
+            task.CreatedDate = task.CreatedDate == default ? DateTime.Now : task.CreatedDate;
+            task.Comments = task.Comments ?? new List<Comment>();
+            task.TaskHistories = task.TaskHistories ?? new List<TaskHistory>();
+            _tasks.Add(task);
+
+            // wire relations
+            task.User = _users.FirstOrDefault(u => u.Id == task.UserId);
+            task.Category = _categories.FirstOrDefault(c => c.Id == task.CategoryId);
+            if (task.User != null) task.User.Tasks.Add(task);
+            if (task.Category != null) task.Category.Tasks.Add(task);
+
+            return Task.FromResult(task);
+        }
+
+        public Task<bool> UpdateTaskAsync(TaskItem task)
+        {
+            var existing = _tasks.FirstOrDefault(t => t.Id == task.Id);
+            if (existing == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            existing.Title = task.Title;
+            existing.Description = task.Description;
+            existing.DueDate = task.DueDate;
+            existing.IsCompleted = task.IsCompleted;
+            existing.PriorityId = task.PriorityId;
+
+            if (existing.UserId != task.UserId)
+            {
+                var oldUser = _users.FirstOrDefault(u => u.Id == existing.UserId);
+                var newUser = _users.FirstOrDefault(u => u.Id == task.UserId);
+                if (oldUser != null) oldUser.Tasks.Remove(existing);
+                if (newUser != null) newUser.Tasks.Add(existing);
+                existing.UserId = task.UserId;
+                existing.User = newUser;
+            }
+
+            if (existing.CategoryId != task.CategoryId)
+            {
+                var oldCat = _categories.FirstOrDefault(c => c.Id == existing.CategoryId);
+                var newCat = _categories.FirstOrDefault(c => c.Id == task.CategoryId);
+                if (oldCat != null) oldCat.Tasks.Remove(existing);
+                if (newCat != null) newCat.Tasks.Add(existing);
+                existing.CategoryId = task.CategoryId;
+                existing.Category = newCat;
+            }
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteTaskAsync(int id)
+        {
+            var task = _tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            // remove relations
+            var user = _users.FirstOrDefault(u => u.Id == task.UserId);
+            var cat = _categories.FirstOrDefault(c => c.Id == task.CategoryId);
+            if (user != null) user.Tasks.Remove(task);
+            if (cat != null) cat.Tasks.Remove(task);
+
+            _tasks.Remove(task);
+            return Task.FromResult(true);
+        }
+
         public Task<List<User>> GetAllUsersAsync()
         {
             return Task.FromResult(_users);
@@ -65,6 +137,46 @@ namespace TaskManageApp.Repositories
         public Task<User> GetUserByIdAsync(int id)
         {
             return Task.FromResult(_users.FirstOrDefault(u => u.Id == id));
+        }
+
+        public Task<User> AddUserAsync(User user)
+        {
+            user.Id = _users.Count == 0 ? 1 : _users.Max(u => u.Id) + 1;
+            user.CreatedAt = user.CreatedAt == default ? DateTime.Now : user.CreatedAt;
+            user.Tasks = user.Tasks ?? new List<TaskItem>();
+            user.Comments = user.Comments ?? new List<Comment>();
+            _users.Add(user);
+            return Task.FromResult(user);
+        }
+
+        public Task<bool> UpdateUserAsync(User user)
+        {
+            var existing = _users.FirstOrDefault(u => u.Id == user.Id);
+            if (existing == null) return Task.FromResult(false);
+            existing.Username = user.Username;
+            existing.Email = user.Email;
+            existing.FirstName = user.FirstName;
+            existing.LastName = user.LastName;
+            existing.PasswordHash = user.PasswordHash;
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteUserAsync(int id)
+        {
+            var user = _users.FirstOrDefault(u => u.Id == id);
+            if (user == null || _tasks.Any(t => t.UserId == id)) return Task.FromResult(false);
+            _users.Remove(user);
+            return Task.FromResult(true);
+        }
+
+        public Task<List<User>> GetUsersWithTasksAsync()
+        {
+            return Task.FromResult(_users.Where(u => (_tasks.Any(t => t.UserId == u.Id))).ToList());
+        }
+
+        public Task<List<User>> GetUsersWithoutTasksAsync()
+        {
+            return Task.FromResult(_users.Where(u => !_tasks.Any(t => t.UserId == u.Id)).ToList());
         }
 
         public Task<List<Category>> GetAllCategoriesAsync()

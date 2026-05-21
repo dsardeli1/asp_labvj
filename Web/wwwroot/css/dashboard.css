@@ -1158,6 +1158,34 @@ body {
     color: var(--color-primary-dark);
 }
 
+.data-entity-page-form .data-form-card {
+    border: 1px solid color-mix(in srgb, var(--color-border) 74%, var(--color-primary) 26%);
+    border-radius: 0.95rem;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.88));
+    box-shadow: 0 12px 28px -24px rgba(15, 23, 42, 0.95);
+    color: var(--color-text);
+}
+
+.data-entity-page-form .data-form-card .card-body {
+    padding: clamp(1rem, 1.8vw, 1.4rem);
+}
+
+.data-entity-page-form .form-label,
+.data-entity-page-form .form-check-label {
+    color: color-mix(in srgb, var(--color-text-muted) 88%, var(--color-text) 12%);
+}
+
+.data-entity-page-form .form-control,
+.data-entity-page-form .form-select {
+    border-color: color-mix(in srgb, var(--color-border) 82%, var(--color-primary) 18%);
+    background-color: color-mix(in srgb, var(--color-surface) 94%, white 6%);
+    color: var(--color-text);
+}
+
+.data-entity-page-form .form-control::placeholder {
+    color: color-mix(in srgb, var(--color-text-muted) 86%, var(--color-text) 14%);
+}
+
 [data-theme="dark"] .data-entity-page::before {
     background:
         linear-gradient(165deg, rgba(12, 21, 35, 0.95), rgba(13, 24, 40, 0.88)),
@@ -1243,6 +1271,29 @@ body {
     border-color: color-mix(in srgb, var(--color-border) 56%, var(--color-primary) 44%);
     background-color: color-mix(in srgb, var(--color-surface) 64%, var(--color-primary) 36%);
     color: #dbeafe;
+}
+
+[data-theme="dark"] .data-entity-page-form .data-form-card {
+    border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-primary) 20%);
+    background: linear-gradient(165deg, rgba(15, 23, 42, 0.96), rgba(18, 33, 52, 0.9));
+    box-shadow: 0 14px 32px -24px rgba(2, 8, 20, 0.98);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .data-entity-page-form .form-label,
+[data-theme="dark"] .data-entity-page-form .form-check-label {
+    color: color-mix(in srgb, var(--color-text-muted) 92%, var(--color-text) 8%);
+}
+
+[data-theme="dark"] .data-entity-page-form .form-control,
+[data-theme="dark"] .data-entity-page-form .form-select {
+    border-color: color-mix(in srgb, var(--color-border) 82%, var(--color-primary) 18%);
+    background-color: color-mix(in srgb, var(--color-surface) 92%, #0b1322 8%);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .data-entity-page-form .form-control::placeholder {
+    color: color-mix(in srgb, var(--color-text-muted) 90%, var(--color-text) 10%);
 }
 
 /* Responsive Design */

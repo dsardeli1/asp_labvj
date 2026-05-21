@@ -85,6 +85,63 @@ namespace TaskManageApp.Repositories
                 .ToListAsync();
         }
 
+        public async Task<User> AddUserAsync(User user)
+        {
+            user.CreatedAt = user.CreatedAt == default ? DateTime.UtcNow : user.CreatedAt;
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<bool> UpdateUserAsync(User user)
+        {
+            var existing = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            if (existing == null) return false;
+
+            existing.Username = user.Username;
+            existing.Email = user.Email;
+            existing.FirstName = user.FirstName;
+            existing.LastName = user.LastName;
+            existing.PasswordHash = user.PasswordHash;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteUserAsync(int id)
+        {
+            var user = await _context.Users
+                .Include(u => u.Tasks)
+                .Include(u => u.Comments)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null || (user.Tasks != null && user.Tasks.Any()))
+            {
+                return false;
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<User>> GetUsersWithTasksAsync()
+        {
+            return await _context.Users
+                .Where(u => u.Tasks.Any())
+                .Include(u => u.Tasks)
+                .Include(u => u.Comments)
+                .ToListAsync();
+        }
+
+        public async Task<List<User>> GetUsersWithoutTasksAsync()
+        {
+            return await _context.Users
+                .Where(u => !u.Tasks.Any())
+                .Include(u => u.Tasks)
+                .Include(u => u.Comments)
+                .ToListAsync();
+        }
+
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _context.Users
@@ -306,6 +363,46 @@ namespace TaskManageApp.Repositories
             }
 
             _context.TaskHistories.Remove(history);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<TaskItem> AddTaskAsync(TaskItem task)
+        {
+            task.CreatedDate = task.CreatedDate == default ? DateTime.Now : task.CreatedDate;
+            _context.Tasks.Add(task);
+            await _context.SaveChangesAsync();
+            return task;
+        }
+
+        public async Task<bool> UpdateTaskAsync(TaskItem task)
+        {
+            var existing = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == task.Id);
+            if (existing == null)
+            {
+                return false;
+            }
+
+            existing.Title = task.Title;
+            existing.Description = task.Description;
+            existing.DueDate = task.DueDate;
+            existing.IsCompleted = task.IsCompleted;
+            existing.PriorityId = task.PriorityId;
+            existing.UserId = task.UserId;
+            existing.CategoryId = task.CategoryId;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteTaskAsync(int id)
+        {
+            var task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+            if (task == null)
+            {
+                return false;
+            }
+
+            _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -14,8 +14,16 @@ namespace TaskManageApp.Repositories
         Task<List<TaskItem>> GetTasksByUserAsync(int userId);
         Task<List<TaskItem>> GetCompletedTasksAsync();
         Task<List<TaskItem>> GetPendingTasksAsync();
+        Task<TaskItem> AddTaskAsync(TaskItem task);
+        Task<bool> UpdateTaskAsync(TaskItem task);
+        Task<bool> DeleteTaskAsync(int id);
         Task<List<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(int id);
+        Task<User> AddUserAsync(User user);
+        Task<bool> UpdateUserAsync(User user);
+        Task<bool> DeleteUserAsync(int id);
+        Task<List<User>> GetUsersWithTasksAsync();
+        Task<List<User>> GetUsersWithoutTasksAsync();
         Task<List<Category>> GetAllCategoriesAsync();
         Task<Category> GetCategoryByIdAsync(int id);
         Task<Category> AddCategoryAsync(Category category);
