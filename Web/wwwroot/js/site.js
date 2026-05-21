@@ -84,6 +84,180 @@
 	}
 })();
 
+// Decorative background animation with theme-aware shapes.
+(function () {
+	var canvasId = "background-shapes-canvas";
+	var shapeCount = 22;
+	var paletteByTheme = {
+		light: ["rgba(31, 111, 222, 0.32)", "rgba(26, 164, 143, 0.28)", "rgba(207, 113, 57, 0.26)", "rgba(116, 90, 206, 0.24)", "rgba(212, 76, 112, 0.22)", "rgba(54, 141, 180, 0.26)"],
+		dark: ["rgba(60, 89, 130, 0.42)", "rgba(62, 102, 95, 0.38)", "rgba(109, 78, 132, 0.34)", "rgba(126, 93, 72, 0.32)", "rgba(74, 88, 124, 0.4)", "rgba(91, 110, 154, 0.34)"]
+	};
+
+	function randomBetween(min, max) {
+		return min + Math.random() * (max - min);
+	}
+
+	function getTheme() {
+		return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+	}
+
+	function getViewportSize(canvas) {
+		var rect = canvas.getBoundingClientRect();
+		return {
+			width: Math.max(1, rect.width || window.innerWidth || 1),
+			height: Math.max(1, rect.height || window.innerHeight || 1)
+		};
+	}
+
+	function createShape(width, height) {
+		var size = randomBetween(18, 88);
+		var direction = Math.random() < 0.5 ? 1 : -1;
+		var theme = getTheme();
+		var palette = paletteByTheme[theme];
+
+		return {
+			type: ["circle", "square", "triangle"][Math.floor(Math.random() * 3)],
+			size: size,
+			x: direction > 0 ? -randomBetween(size, size * 2.2) : width + randomBetween(size, size * 2.2),
+			y: randomBetween(size, Math.max(size, height - size)),
+			baseY: 0,
+			direction: direction,
+			speed: randomBetween(16, 58),
+			rotation: randomBetween(0, Math.PI * 2),
+			rotationSpeed: randomBetween(-0.7, 0.7),
+			waveAmplitude: randomBetween(10, 34),
+			waveFrequency: randomBetween(0.003, 0.014),
+			wavePhase: randomBetween(0, Math.PI * 2),
+			opacity: theme === "dark" ? randomBetween(0.12, 0.24) : randomBetween(0.16, 0.34),
+			colorIndex: Math.floor(Math.random() * palette.length)
+		};
+	}
+
+	function respawnShape(shape, width, height) {
+		var direction = Math.random() < 0.5 ? 1 : -1;
+		var size = randomBetween(18, 88);
+		var theme = getTheme();
+		var palette = paletteByTheme[theme];
+
+		shape.type = ["circle", "square", "triangle"][Math.floor(Math.random() * 3)];
+		shape.size = size;
+		shape.direction = direction;
+		shape.x = direction > 0 ? -randomBetween(size, size * 2.5) : width + randomBetween(size, size * 2.5);
+		shape.y = randomBetween(size, Math.max(size, height - size));
+		shape.baseY = shape.y;
+		shape.speed = randomBetween(16, 58);
+		shape.rotation = randomBetween(0, Math.PI * 2);
+		shape.rotationSpeed = randomBetween(-0.7, 0.7);
+		shape.waveAmplitude = randomBetween(10, 34);
+		shape.waveFrequency = randomBetween(0.003, 0.014);
+		shape.wavePhase = randomBetween(0, Math.PI * 2);
+		shape.opacity = theme === "dark" ? randomBetween(0.12, 0.24) : randomBetween(0.16, 0.34);
+		shape.colorIndex = Math.floor(Math.random() * palette.length);
+	}
+
+	function drawShape(ctx, shape, theme) {
+		var palette = paletteByTheme[theme];
+		var color = palette[shape.colorIndex % palette.length];
+		var half = shape.size / 2;
+
+		ctx.save();
+		ctx.translate(shape.x, shape.y);
+		ctx.rotate(shape.rotation);
+		ctx.globalAlpha = shape.opacity;
+		ctx.fillStyle = color;
+
+		if (shape.type === "square") {
+			ctx.fillRect(-half, -half, shape.size, shape.size);
+		} else if (shape.type === "triangle") {
+			ctx.beginPath();
+			ctx.moveTo(0, -half);
+			ctx.lineTo(half, half);
+			ctx.lineTo(-half, half);
+			ctx.closePath();
+			ctx.fill();
+		} else {
+			ctx.beginPath();
+			ctx.arc(0, 0, half, 0, Math.PI * 2);
+			ctx.fill();
+		}
+
+		ctx.restore();
+	}
+
+	function initializeBackgroundShapes() {
+		var canvas = document.getElementById(canvasId);
+		if (!canvas || !canvas.getContext) {
+			return;
+		}
+
+		var ctx = canvas.getContext("2d");
+		var shapes = [];
+		var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		var lastFrameTime = null;
+		var width = 0;
+		var height = 0;
+		var devicePixelRatio = Math.max(1, window.devicePixelRatio || 1);
+
+		function resizeCanvas() {
+			var viewport = getViewportSize(canvas);
+			width = viewport.width;
+			height = viewport.height;
+			devicePixelRatio = Math.max(1, window.devicePixelRatio || 1);
+			canvas.width = Math.round(width * devicePixelRatio);
+			canvas.height = Math.round(height * devicePixelRatio);
+			canvas.style.width = width + "px";
+			canvas.style.height = height + "px";
+			ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+
+			if (!shapes.length) {
+				for (var index = 0; index < shapeCount; index++) {
+					shapes.push(createShape(width, height));
+				}
+			}
+
+			shapes.forEach(function (shape) {
+				shape.y = Math.min(Math.max(shape.y, shape.size), Math.max(shape.size, height - shape.size));
+				shape.baseY = shape.y;
+			});
+		}
+
+		function animate(frameTime) {
+			var theme = getTheme();
+			var deltaSeconds = lastFrameTime == null ? 0 : Math.min(0.05, (frameTime - lastFrameTime) / 1000);
+			var motionScale = reducedMotion ? 0.35 : 1;
+
+			lastFrameTime = frameTime;
+			ctx.clearRect(0, 0, width, height);
+
+			shapes.forEach(function (shape) {
+				shape.x += shape.speed * shape.direction * deltaSeconds * motionScale;
+				shape.rotation += shape.rotationSpeed * deltaSeconds * motionScale;
+				shape.y = shape.baseY + Math.sin((shape.x * shape.waveFrequency) + shape.wavePhase) * shape.waveAmplitude;
+
+				if (shape.direction > 0 && shape.x - shape.size > width + 80) {
+					respawnShape(shape, width, height);
+				} else if (shape.direction < 0 && shape.x + shape.size < -80) {
+					respawnShape(shape, width, height);
+				}
+
+				drawShape(ctx, shape, theme);
+			});
+
+			window.requestAnimationFrame(animate);
+		}
+
+		resizeCanvas();
+		window.addEventListener("resize", resizeCanvas);
+		window.requestAnimationFrame(animate);
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initializeBackgroundShapes);
+	} else {
+		initializeBackgroundShapes();
+	}
+})();
+
 // Lightweight AJAX autocomplete for select fields that need searchable lookups.
 (function () {
 	function getPlaceholder(select) {
