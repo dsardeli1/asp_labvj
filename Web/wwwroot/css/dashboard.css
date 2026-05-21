@@ -458,10 +458,12 @@ body {
     box-shadow: 0 12px 30px -20px rgba(15, 23, 42, 0.5);
 }
 
+    pointer-events: none;
 .tasks-dashboard-page .tasks-hero-kicker {
     margin: 0 0 0.4rem 0;
     text-transform: uppercase;
     letter-spacing: 0.11em;
+    pointer-events: auto;
     font-size: 0.72rem;
     font-weight: var(--font-weight-bold);
     color: color-mix(in srgb, var(--color-primary) 75%, var(--color-text) 25%);

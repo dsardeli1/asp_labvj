@@ -15,6 +15,7 @@ namespace TaskManageApp.Models
         public string FilePath { get; set; } = string.Empty;
         
         // Navigation property for TaskItem
+        [Range(1, int.MaxValue, ErrorMessage = "Task is required.")]
         public int TaskItemId { get; set; }
         [ForeignKey(nameof(TaskItemId))]
         public TaskItem? TaskItem { get; set; }

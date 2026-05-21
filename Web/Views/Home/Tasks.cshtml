@@ -49,6 +49,29 @@
         </div>
     </form>
 
+    <form asp-controller="DataTasks" asp-action="Find" method="get" class="tasks-filter-form" aria-label="Quick find task">
+        <div class="tasks-filter-grid" style="grid-template-columns:minmax(0, 1fr) auto;">
+            <div class="tasks-filter-field">
+                <label for="quickFindTaskId">Quick Find Task</label>
+                <select id="quickFindTaskId"
+                        name="id"
+                        data-autocomplete-url="/data/tasks/lookup"
+                        data-autocomplete-placeholder="Search task title or id"
+                        data-autocomplete-max-results="12">
+                    <option value="">Quick find task...</option>
+                    @foreach (var task in Model.OrderBy(t => t.Title).ThenBy(t => t.Id))
+                    {
+                        <option value="@task.Id">#@task.Id - @task.Title</option>
+                    }
+                </select>
+            </div>
+
+            <div class="tasks-filter-toggle" style="align-items:end; padding-top: 0;">
+                <button type="submit" class="tasks-filter-apply">Open</button>
+            </div>
+        </div>
+    </form>
+
     <!-- Filter and Stats Bar -->
     <div class="dashboard-stats">
         <div class="stat-card tone-total">

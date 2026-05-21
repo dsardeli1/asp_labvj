@@ -11,29 +11,39 @@
     </header>
 
     <form asp-controller="DataUsers" asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
         <input type="hidden" asp-for="Id" />
         <div class="mb-3">
             <label class="form-label">Username</label>
             <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Email</label>
             <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">First Name</label>
             <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Last Name</label>
             <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Password Hash</label>
             <input asp-for="PasswordHash" class="form-control" />
+            <span asp-validation-for="PasswordHash" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>
         <a asp-controller="DataUsers" asp-action="Users" class="btn btn-outline-secondary">Cancel</a>
     </form>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

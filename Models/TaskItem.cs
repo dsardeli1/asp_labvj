@@ -7,7 +7,11 @@ namespace TaskManageApp.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required(ErrorMessage = "Title is required.")]
+        [StringLength(200, ErrorMessage = "The Title must be at most {1} characters long.")]
         public string Title { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Description is required.")]
+        [StringLength(2000, ErrorMessage = "The Description must be at most {1} characters long.")]
         public string Description { get; set; } = string.Empty;
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
@@ -19,16 +23,19 @@ namespace TaskManageApp.Models
         public bool IsCompleted { get; set; }
 
         // Navigation properties
+        [Range(0, 2, ErrorMessage = "Priority is required.")]
         public int PriorityId { get; set; } // Enum...? use (int)
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         // Navigation properties for User
+        [Range(1, int.MaxValue, ErrorMessage = "Assigned user is required.")]
         public int UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public User? User { get; set; }
 
         // Navigation properties for Category
+        [Range(1, int.MaxValue, ErrorMessage = "Category is required.")]
         public int CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]
         public Category? Category { get; set; }

@@ -574,6 +574,28 @@
 		wrapper.appendChild(valueField);
 		wrapper.appendChild(select);
 
+		if (select.form && window.jQuery && window.jQuery.fn) {
+			window.setTimeout(function () {
+				try {
+					var form = window.jQuery(select.form);
+					form.off();
+					form.removeData("validator");
+					form.removeData("unobtrusiveValidation");
+				} catch (error) {
+					// Ignore validator teardown failures and fall back to submit-time checks.
+				}
+			}, 0);
+		}
+
+		if (window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.rules === "function") {
+			try {
+				window.jQuery(input).rules("remove");
+				window.jQuery(select).rules("remove");
+			} catch (error) {
+				// Ignore validation cleanup failures; the submit-time guard still runs.
+			}
+		}
+
 		function closeMenu() {
 			menu.hidden = true;
 			input.setAttribute("aria-expanded", "false");
@@ -588,11 +610,39 @@
 			valueField.value = committedValue;
 			select.value = committedValue;
 			input.value = committedText;
+			input.setCustomValidity("");
+			input.removeAttribute("aria-invalid");
 		}
 
 		function applySelection(item) {
 			setCommittedSelection(item.value, item.text);
 			closeMenu();
+		}
+
+		function commitForSubmit() {
+			var enteredText = input.value.trim();
+
+			if (!enteredText) {
+				setCommittedSelection(committedValue, committedText);
+				closeMenu();
+				return true;
+			}
+
+			var exactMatch = findExactMatch(select, enteredText, currentResults);
+			if (exactMatch) {
+				applySelection(exactMatch);
+				return true;
+			}
+
+			if (committedValue && committedText && committedText.trim().toLowerCase() === enteredText.toLowerCase()) {
+				setCommittedSelection(committedValue, committedText);
+				closeMenu();
+				return true;
+			}
+
+			input.setCustomValidity("Please select a valid option from the list.");
+			input.setAttribute("aria-invalid", "true");
+			return false;
 		}
 
 		function renderMenu(items, searchTerm) {
@@ -692,6 +742,8 @@
 			clearTimeout(debounceHandle);
 			valueField.value = "";
 			select.value = "";
+			input.setCustomValidity("");
+			input.removeAttribute("aria-invalid");
 
 			var searchTerm = input.value.trim();
 			if (!searchTerm && committedValue) {
@@ -780,8 +832,25 @@
 			}, 150);
 		});
 
+		if (select.form) {
+			select.form.addEventListener("submit", function (event) {
+				if (!commitForSubmit()) {
+					event.preventDefault();
+					input.reportValidity();
+				}
+			});
+		}
+
 		menu.addEventListener("mousedown", function (event) {
 			event.preventDefault();
+		});
+
+		document.addEventListener("pointerdown", function (event) {
+			if (wrapper.contains(event.target)) {
+				return;
+			}
+
+			closeMenu();
 		});
 
 		if (!committedText) {
@@ -1168,6 +1237,31 @@
 			return true;
 		}
 
+		function commitForSubmit() {
+			var trimmedValue = input.value.trim();
+
+			if (!trimmedValue) {
+				selectedDate = null;
+				valueField.value = "";
+				setValidity("");
+				return false;
+			}
+
+			var parsedDate = parseDate(trimmedValue, culture);
+			if (!parsedDate) {
+				selectedDate = null;
+				valueField.value = "";
+				setValidity("");
+				return false;
+			}
+
+			selectedDate = parsedDate;
+			viewDate = clampViewDate(selectedDate);
+			syncValue(selectedDate);
+			setValidity("");
+			return true;
+		}
+
 		input.addEventListener("focus", function () {
 			openPanel();
 		});
@@ -1236,12 +1330,7 @@
 
 		if (form) {
 			form.addEventListener("submit", function (event) {
-				if (!validateAndCommit()) {
-					event.preventDefault();
-					input.reportValidity();
-					input.focus();
-					return;
-				}
+				commitForSubmit();
 
 				closePanel();
 			});
