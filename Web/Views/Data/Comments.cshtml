@@ -28,7 +28,7 @@
         <form asp-controller="DataComments" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
                 <select name="id" class="form-select" data-autocomplete-url="/data/comments/lookup" data-autocomplete-placeholder="Quick find comment by id or content" data-autocomplete-max-results="12">
-                    <option value="">Quick find comment...</option>
+                    <option value=""></option>
                     @foreach (var comment in Model.OrderByDescending(c => c.CreatedDate).ThenBy(c => c.Id))
                     {
                         var content = comment.Content ?? string.Empty;

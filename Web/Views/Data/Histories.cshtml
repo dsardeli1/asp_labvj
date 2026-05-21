@@ -28,7 +28,7 @@
         <form asp-controller="DataHistories" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
                 <select name="id" class="form-select" data-autocomplete-url="/data/histories/lookup" data-autocomplete-placeholder="Quick find history by action" data-autocomplete-max-results="12">
-                    <option value="">Quick find history...</option>
+                    <option value=""></option>
                     @foreach (var history in Model.OrderByDescending(h => h.ActionDate).ThenBy(h => h.Id))
                     {
                         <option value="@history.Id">#@history.Id - @history.Action</option>

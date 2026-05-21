@@ -28,7 +28,7 @@
         <form asp-controller="DataAttachments" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
                 <select name="id" class="form-select" data-autocomplete-url="/data/attachments/lookup" data-autocomplete-placeholder="Quick find attachment by file name" data-autocomplete-max-results="12">
-                    <option value="">Quick find attachment...</option>
+                    <option value=""></option>
                     @foreach (var attachment in Model.OrderBy(a => a.FileName).ThenBy(a => a.Id))
                     {
                         <option value="@attachment.Id">#@attachment.Id - @attachment.FileName</option>

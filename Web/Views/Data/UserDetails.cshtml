@@ -7,7 +7,12 @@
 <section class="data-entity-page data-entity-page-detail">
     <header class="data-entity-header">
         <h2>User #@Model.Id</h2>
-        <p class="text-muted">Read-only single-record view.</p>
+        <p class="text-muted">Single-record view.</p>
+        <div class="data-entity-actions">
+            <a asp-controller="DataUsers" asp-action="Users" class="btn btn-outline-secondary btn-sm">Back to Users</a>
+            <a asp-controller="DataUsers" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+            <a asp-controller="DataUsers" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+        </div>
     </header>
 
     <div class="card mb-3 data-detail-card">
@@ -27,6 +32,4 @@
             </dl>
         </div>
     </div>
-
-    <a asp-controller="DataUsers" asp-action="Users" class="btn btn-outline-secondary data-entity-back-link">Back to Users</a>
 </section>

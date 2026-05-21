@@ -14,7 +14,7 @@
         <form asp-controller="DataCategories" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
                 <select name="id" class="form-select" data-autocomplete-url="/data/categories/lookup" data-autocomplete-placeholder="Quick find category by name" data-autocomplete-max-results="12">
-                    <option value="">Quick find category...</option>
+                    <option value=""></option>
                     @foreach (var category in Model.OrderBy(c => c.Name).ThenBy(c => c.Id))
                     {
                         <option value="@category.Id">#@category.Id - @category.Name</option>
@@ -67,8 +67,8 @@
                         <td>@(category.Tasks?.Count ?? 0)</td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group" aria-label="Category actions">
-                                <a asp-controller="DataCategories" asp-action="CategoryDetails" asp-route-id="@category.Id" class="btn btn-outline-secondary">View</a>
-                                <a asp-controller="DataCategories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-outline-secondary">Edit</a>
+                                <a asp-controller="DataCategories" asp-action="CategoryDetails" asp-route-id="@category.Id" class="btn btn-sm btn-outline-info">View</a>
+                                <a asp-controller="DataCategories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-outline-warning">Edit</a>
                                 <a asp-controller="DataCategories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-outline-danger">Delete</a>
                             </div>
                         </td>
