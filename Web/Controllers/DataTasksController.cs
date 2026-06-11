@@ -64,6 +64,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("create")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             var users = await _taskRepository.GetAllUsersAsync();
@@ -80,6 +81,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Description,DueDate,IsCompleted,PriorityId,UserId,CategoryId")] Models.TaskItem task)
         {
@@ -121,6 +123,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             var task = await _taskRepository.GetTaskByIdAsync(id);
@@ -138,6 +141,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,IsCompleted,PriorityId,UserId,CategoryId")] Models.TaskItem task)
         {
@@ -171,6 +175,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var task = await _taskRepository.GetTaskByIdAsync(id);
@@ -216,6 +221,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

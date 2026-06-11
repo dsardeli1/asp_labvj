@@ -23,7 +23,10 @@
             </div>
         }
         <div class="data-entity-actions">
-            <a asp-controller="DataUsers" asp-action="Create" class="btn btn-primary btn-sm">Create User</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="DataUsers" asp-action="Create" class="btn btn-primary btn-sm">Create User</a>
+            }
             <a asp-controller="DataUsers" asp-action="Users" class="btn btn-outline-secondary btn-sm">All</a>
             <a asp-controller="DataUsers" asp-action="UsersWithTasks" class="btn btn-outline-secondary btn-sm">With Tasks</a>
             <a asp-controller="DataUsers" asp-action="UsersWithoutTasks" class="btn btn-outline-secondary btn-sm">Without Tasks</a>
@@ -74,8 +77,14 @@
                         <td class="text-end">
                             <div class="d-inline-flex gap-2">
                                 <a asp-controller="DataUsers" asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info">View</a>
-                                <a asp-controller="DataUsers" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                                <a asp-controller="DataUsers" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                {
+                                    <a asp-controller="DataUsers" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                                }
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="DataUsers" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                }
                             </div>
                         </td>
                     </tr>

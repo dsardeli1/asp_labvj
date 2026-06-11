@@ -23,7 +23,10 @@
             </div>
         }
         <div class="data-entity-actions">
-            <a asp-controller="DataTasks" asp-action="Create" class="btn btn-primary btn-sm">Create Task</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="DataTasks" asp-action="Create" class="btn btn-primary btn-sm">Create Task</a>
+            }
             <a asp-controller="DataTasks" asp-action="Tasks" class="btn btn-outline-secondary btn-sm">All</a>
             <a asp-controller="DataTasks" asp-action="PendingTasks" class="btn btn-outline-secondary btn-sm">Pending</a>
             <a asp-controller="DataTasks" asp-action="CompletedTasks" class="btn btn-outline-secondary btn-sm">Completed</a>
@@ -95,8 +98,14 @@
                         <td class="text-end">
                             <div class="d-inline-flex gap-2">
                                 <a asp-controller="DataTasks" asp-action="TaskDetails" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">View</a>
-                                <a asp-controller="DataTasks" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                                <a asp-controller="DataTasks" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                {
+                                    <a asp-controller="DataTasks" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                                }
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="DataTasks" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                }
                             </div>
                         </td>
                     </tr>

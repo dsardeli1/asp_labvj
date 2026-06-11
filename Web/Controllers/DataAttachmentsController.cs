@@ -74,6 +74,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("create")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             ViewData["Tasks"] = await _taskRepository.GetAllTasksAsync();
@@ -81,6 +82,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FileName,FilePath,TaskItemId")] TaskAttachment taskAttachment)
         {
@@ -96,6 +98,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             var attachment = await _taskRepository.GetTaskAttachmentByIdAsync(id);
@@ -109,6 +112,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FileName,FilePath,TaskItemId")] TaskAttachment taskAttachment)
         {
@@ -135,6 +139,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var attachment = await _taskRepository.GetTaskAttachmentByIdAsync(id);
@@ -147,6 +152,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

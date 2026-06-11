@@ -52,6 +52,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 
 await NormalizeLegacyIdentityUsersAsync(app);
+await EnsureSeededRolesAsync(app);
 
 var supportedCultures = new[]
 {
@@ -122,6 +123,56 @@ static async Task NormalizeLegacyIdentityUsersAsync(WebApplication app)
             user.NormalizedUserName = user.UserName?.ToUpperInvariant();
             user.NormalizedEmail = user.Email?.ToUpperInvariant();
             await userManager.UpdateAsync(user);
+        }
+    }
+}
+
+static async Task EnsureSeededRolesAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await context.Database.MigrateAsync();
+
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+    var roleNames = new[] { "Admin", "Manager" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole<int>(roleName));
+        }
+    }
+
+    var adminUser = await userManager.FindByIdAsync("1");
+    var managerUser = await userManager.FindByIdAsync("2");
+
+    if (adminUser != null)
+    {
+        var currentRoles = await userManager.GetRolesAsync(adminUser);
+        if (currentRoles.Any(role => role != "Admin"))
+        {
+            await userManager.RemoveFromRolesAsync(adminUser, currentRoles.Where(role => role != "Admin").ToArray());
+        }
+
+        if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+    }
+
+    if (managerUser != null)
+    {
+        var currentRoles = await userManager.GetRolesAsync(managerUser);
+        if (currentRoles.Any(role => role != "Manager"))
+        {
+            await userManager.RemoveFromRolesAsync(managerUser, currentRoles.Where(role => role != "Manager").ToArray());
+        }
+
+        if (!await userManager.IsInRoleAsync(managerUser, "Manager"))
+        {
+            await userManager.AddToRoleAsync(managerUser, "Manager");
         }
     }
 }

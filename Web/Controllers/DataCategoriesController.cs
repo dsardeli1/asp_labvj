@@ -36,12 +36,14 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View("~/Web/Views/Data/CategoryCreate.cshtml", new Category { IsActive = true });
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Description,Color,IsActive")] Category category)
         {
@@ -73,6 +75,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _taskRepository.GetCategoryByIdAsync(id);
@@ -85,6 +88,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Color,IsActive,CreatedDate")] Category category)
         {
@@ -125,6 +129,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _taskRepository.GetCategoryByIdAsync(id);
@@ -137,6 +142,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

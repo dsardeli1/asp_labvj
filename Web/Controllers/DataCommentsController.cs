@@ -74,6 +74,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("create")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             var tasks = await _taskRepository.GetAllTasksAsync();
@@ -84,6 +85,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Content,TaskItemId,UserId")] Comment comment)
         {
@@ -116,6 +118,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             var comment = await _taskRepository.GetCommentByIdAsync(id);
@@ -132,6 +135,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Content,TaskItemId,UserId")] Comment comment)
         {
@@ -167,6 +171,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var comment = await _taskRepository.GetCommentByIdAsync(id);
@@ -179,6 +184,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

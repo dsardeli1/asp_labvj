@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManageApp.Models;
 using TaskManageApp.Repositories;
@@ -5,6 +6,7 @@ using TaskManageApp.Repositories;
 namespace TaskManageApp.Controllers
 {
     [Route("data/histories")]
+    [Authorize]
     public class DataHistoriesController : Controller
     {
         private readonly ITaskRepository _taskRepository;
@@ -72,6 +74,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("create")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             ViewData["Tasks"] = await _taskRepository.GetAllTasksAsync();
@@ -79,6 +82,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Action,ActionDate,TaskItemId")] TaskHistory taskHistory)
         {
@@ -94,6 +98,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             var history = await _taskRepository.GetTaskHistoryByIdAsync(id);
@@ -107,6 +112,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/edit")]
+        [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Action,ActionDate,TaskItemId")] TaskHistory taskHistory)
         {
@@ -133,6 +139,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpGet("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var history = await _taskRepository.GetTaskHistoryByIdAsync(id);
@@ -145,6 +152,7 @@ namespace TaskManageApp.Controllers
         }
 
         [HttpPost("{id:int}/delete")]
+        [Authorize(Roles = "Admin")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

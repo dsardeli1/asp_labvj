@@ -23,7 +23,10 @@
             </div>
         }
         <div class="data-entity-actions">
-            <a asp-controller="DataHistories" asp-action="Create" class="btn btn-primary btn-sm">Create History</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="DataHistories" asp-action="Create" class="btn btn-primary btn-sm">Create History</a>
+            }
         </div>
         <form asp-controller="DataHistories" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
@@ -62,8 +65,14 @@
                         <td>@history.ActionDate.ToString("yyyy-MM-dd HH:mm")</td>
                         <td>
                             <a asp-controller="DataHistories" asp-action="HistoryDetails" asp-route-id="@history.Id" class="btn btn-sm btn-outline-info">View</a>
-                            <a asp-controller="DataHistories" asp-action="Edit" asp-route-id="@history.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                            <a asp-controller="DataHistories" asp-action="Delete" asp-route-id="@history.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <a asp-controller="DataHistories" asp-action="Edit" asp-route-id="@history.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="DataHistories" asp-action="Delete" asp-route-id="@history.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            }
                         </td>
                     </tr>
                 }

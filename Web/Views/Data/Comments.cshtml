@@ -23,7 +23,10 @@
             </div>
         }
         <div class="data-entity-actions">
-            <a asp-controller="DataComments" asp-action="Create" class="btn btn-primary btn-sm">Create Comment</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="DataComments" asp-action="Create" class="btn btn-primary btn-sm">Create Comment</a>
+            }
         </div>
         <form asp-controller="DataComments" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
@@ -68,8 +71,14 @@
                         <td>@(comment.IsEdited ? "Yes" : "No")</td>
                         <td>
                             <a asp-controller="DataComments" asp-action="CommentDetails" asp-route-id="@comment.Id" class="btn btn-sm btn-outline-info">View</a>
-                            <a asp-controller="DataComments" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                            <a asp-controller="DataComments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <a asp-controller="DataComments" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="DataComments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            }
                         </td>
                     </tr>
                 }

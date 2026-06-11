@@ -23,7 +23,10 @@
             </div>
         }
         <div class="data-entity-actions">
-            <a asp-controller="DataAttachments" asp-action="Create" class="btn btn-primary btn-sm">Create Attachment</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="DataAttachments" asp-action="Create" class="btn btn-primary btn-sm">Create Attachment</a>
+            }
         </div>
         <form asp-controller="DataAttachments" asp-action="Find" method="get" class="row g-2 mt-2">
             <div class="col-md-8 col-lg-6">
@@ -62,8 +65,14 @@
                         <td>#@attachment.TaskItemId - @attachment.TaskItem?.Title</td>
                         <td>
                             <a asp-controller="DataAttachments" asp-action="AttachmentDetails" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-info">View</a>
-                            <a asp-controller="DataAttachments" asp-action="Edit" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                            <a asp-controller="DataAttachments" asp-action="Delete" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <a asp-controller="DataAttachments" asp-action="Edit" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="DataAttachments" asp-action="Delete" asp-route-id="@attachment.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            }
                         </td>
                     </tr>
                 }
