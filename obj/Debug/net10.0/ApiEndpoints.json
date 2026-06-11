@@ -19,6 +19,30 @@
   },
   {
     "ContainingType": "TaskManageApp.Controllers.Api.AttachmentsApiController",
+    "Method": "Create",
+    "RelativePath": "api/attachments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.TaskAttachmentWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.TaskAttachmentDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.AttachmentsApiController",
     "Method": "GetById",
     "RelativePath": "api/attachments/{id}",
     "HttpMethod": "GET",
@@ -42,6 +66,51 @@
     ]
   },
   {
+    "ContainingType": "TaskManageApp.Controllers.Api.AttachmentsApiController",
+    "Method": "Update",
+    "RelativePath": "api/attachments/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.TaskAttachmentWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.TaskAttachmentDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.AttachmentsApiController",
+    "Method": "Delete",
+    "RelativePath": "api/attachments/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "TaskManageApp.Controllers.Api.CategoriesApiController",
     "Method": "GetAll",
     "RelativePath": "api/categories",
@@ -52,6 +121,30 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[TaskManageApp.DTOs.CategoryDto, TaskManageApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.CategoriesApiController",
+    "Method": "Create",
+    "RelativePath": "api/categories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.CategoryWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.CategoryDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -84,6 +177,51 @@
     ]
   },
   {
+    "ContainingType": "TaskManageApp.Controllers.Api.CategoriesApiController",
+    "Method": "Update",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.CategoryWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.CategoryDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.CategoriesApiController",
+    "Method": "Delete",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "TaskManageApp.Controllers.Api.CommentsApiController",
     "Method": "GetAll",
     "RelativePath": "api/comments",
@@ -94,6 +232,30 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[TaskManageApp.DTOs.CommentDto, TaskManageApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.CommentsApiController",
+    "Method": "Create",
+    "RelativePath": "api/comments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.CommentWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.CommentDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -124,6 +286,51 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.CommentsApiController",
+    "Method": "Update",
+    "RelativePath": "api/comments/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.CommentWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.CommentDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.CommentsApiController",
+    "Method": "Delete",
+    "RelativePath": "api/comments/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "TaskManageApp.Controllers.Api.CommentsApiController",
@@ -169,6 +376,30 @@
   },
   {
     "ContainingType": "TaskManageApp.Controllers.Api.HistoriesApiController",
+    "Method": "Create",
+    "RelativePath": "api/histories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.TaskHistoryWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.TaskHistoryDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.HistoriesApiController",
     "Method": "GetById",
     "RelativePath": "api/histories/{id}",
     "HttpMethod": "GET",
@@ -192,6 +423,51 @@
     ]
   },
   {
+    "ContainingType": "TaskManageApp.Controllers.Api.HistoriesApiController",
+    "Method": "Update",
+    "RelativePath": "api/histories/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.TaskHistoryWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.TaskHistoryDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.HistoriesApiController",
+    "Method": "Delete",
+    "RelativePath": "api/histories/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "TaskManageApp.Controllers.Api.TasksApiController",
     "Method": "GetAll",
     "RelativePath": "api/tasks",
@@ -202,6 +478,30 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[TaskManageApp.DTOs.TaskItemDto, TaskManageApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.TasksApiController",
+    "Method": "Create",
+    "RelativePath": "api/tasks",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.TaskItemWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.TaskItemDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -232,6 +532,51 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.TasksApiController",
+    "Method": "Update",
+    "RelativePath": "api/tasks/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.TaskItemWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.TaskItemDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.TasksApiController",
+    "Method": "Delete",
+    "RelativePath": "api/tasks/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "TaskManageApp.Controllers.Api.TasksApiController",
@@ -337,6 +682,30 @@
   },
   {
     "ContainingType": "TaskManageApp.Controllers.Api.UsersApiController",
+    "Method": "Create",
+    "RelativePath": "api/users",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.UserWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.UserDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.UsersApiController",
     "Method": "GetById",
     "RelativePath": "api/users/{id}",
     "HttpMethod": "GET",
@@ -358,6 +727,51 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.UsersApiController",
+    "Method": "Update",
+    "RelativePath": "api/users/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "TaskManageApp.DTOs.UserWriteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TaskManageApp.DTOs.UserDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaskManageApp.Controllers.Api.UsersApiController",
+    "Method": "Delete",
+    "RelativePath": "api/users/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "TaskManageApp.Controllers.Api.UsersApiController",

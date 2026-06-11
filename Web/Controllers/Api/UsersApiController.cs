@@ -35,6 +35,53 @@ namespace TaskManageApp.Controllers.Api
             return Ok(user.ToDTO());
         }
 
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> Create([FromBody] UserWriteDto request)
+        {
+            var created = await _taskRepository.AddUserAsync(request.ToEntity());
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDTO());
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<UserDto>> Update(int id, [FromBody] UserWriteDto request)
+        {
+            var existing = await _taskRepository.GetUserByIdAsync(id);
+            if (existing is null)
+            {
+                return NotFound();
+            }
+
+            var user = request.ToEntity();
+            user.Id = id;
+
+            var updated = await _taskRepository.UpdateUserAsync(user);
+            if (!updated)
+            {
+                return NotFound();
+            }
+
+            var result = await _taskRepository.GetUserByIdAsync(id);
+            return Ok((result ?? user).ToDTO());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var existing = await _taskRepository.GetUserByIdAsync(id);
+            if (existing is null)
+            {
+                return NotFound();
+            }
+
+            var deleted = await _taskRepository.DeleteUserAsync(id);
+            if (!deleted)
+            {
+                return Conflict("The user cannot be deleted while tasks are still assigned to them.");
+            }
+
+            return NoContent();
+        }
+
         [HttpGet("with-tasks")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetWithTasks()
         {

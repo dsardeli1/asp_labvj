@@ -35,6 +35,78 @@ namespace TaskManageApp.Controllers.Api
             return Ok(task.ToDTO());
         }
 
+        [HttpPost]
+        public async Task<ActionResult<TaskItemDto>> Create([FromBody] TaskItemWriteDto request)
+        {
+            var user = await _taskRepository.GetUserByIdAsync(request.UserId);
+            if (user is null)
+            {
+                return BadRequest($"User {request.UserId} was not found.");
+            }
+
+            var category = await _taskRepository.GetCategoryByIdAsync(request.CategoryId);
+            if (category is null)
+            {
+                return BadRequest($"Category {request.CategoryId} was not found.");
+            }
+
+            var created = await _taskRepository.AddTaskAsync(request.ToEntity());
+            var response = (await _taskRepository.GetTaskByIdAsync(created.Id)) ?? created;
+            return CreatedAtAction(nameof(GetById), new { id = response.Id }, response.ToDTO());
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<TaskItemDto>> Update(int id, [FromBody] TaskItemWriteDto request)
+        {
+            var existing = await _taskRepository.GetTaskByIdAsync(id);
+            if (existing is null)
+            {
+                return NotFound();
+            }
+
+            var user = await _taskRepository.GetUserByIdAsync(request.UserId);
+            if (user is null)
+            {
+                return BadRequest($"User {request.UserId} was not found.");
+            }
+
+            var category = await _taskRepository.GetCategoryByIdAsync(request.CategoryId);
+            if (category is null)
+            {
+                return BadRequest($"Category {request.CategoryId} was not found.");
+            }
+
+            var updatedTask = request.ToEntity();
+            updatedTask.Id = id;
+
+            var updated = await _taskRepository.UpdateTaskAsync(updatedTask);
+            if (!updated)
+            {
+                return NotFound();
+            }
+
+            var result = (await _taskRepository.GetTaskByIdAsync(id)) ?? updatedTask;
+            return Ok(result.ToDTO());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var existing = await _taskRepository.GetTaskByIdAsync(id);
+            if (existing is null)
+            {
+                return NotFound();
+            }
+
+            var deleted = await _taskRepository.DeleteTaskAsync(id);
+            if (!deleted)
+            {
+                return Conflict("The task could not be deleted.");
+            }
+
+            return NoContent();
+        }
+
         [HttpGet("completed")]
         public async Task<ActionResult<IEnumerable<TaskItemDto>>> GetCompleted()
         {
