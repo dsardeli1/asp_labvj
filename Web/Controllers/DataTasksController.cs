@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManageApp.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace TaskManageApp.Controllers
 {
     [Route("data/tasks")]
+    [Authorize]
     public class DataTasksController : Controller
     {
         private readonly ITaskRepository _taskRepository;

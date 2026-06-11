@@ -1,16 +1,17 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskManageApp.Models;
 
 namespace TaskManageApp.DAL
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
         public DbSet<TaskItem> Tasks { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<TaskAttachment> TaskAttachments { get; set; }
@@ -18,6 +19,17 @@ namespace TaskManageApp.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("Users");
+                entity.Property(user => user.UserName).HasColumnName("Username");
+                entity.Property(user => user.FirstName).HasMaxLength(100).IsRequired();
+                entity.Property(user => user.LastName).HasMaxLength(100).IsRequired();
+                entity.Property(user => user.CreatedAt).IsRequired();
+            });
+
             modelBuilder.Entity<TaskItem>()
                 .HasMany(t => t.Comments)
                 .WithOne(c => c.TaskItem)
@@ -35,9 +47,63 @@ namespace TaskManageApp.DAL
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "ana.kovacic", Email = "ana.kovacic@example.com", PasswordHash = "mock-hash-1", FirstName = "Ana", LastName = "Kovacic", CreatedAt = seedDate.AddMonths(-6) },
-                new User { Id = 2, Username = "marko.horvat", Email = "marko.horvat@example.com", PasswordHash = "mock-hash-2", FirstName = "Marko", LastName = "Horvat", CreatedAt = seedDate.AddMonths(-4) },
-                new User { Id = 3, Username = "petra.babic", Email = "petra.babic@example.com", PasswordHash = "mock-hash-3", FirstName = "Petra", LastName = "Babic", CreatedAt = seedDate.AddMonths(-2) }
+                new User
+                {
+                    Id = 1,
+                    UserName = "ana.kovacic",
+                    NormalizedUserName = "ANA.KOVACIC",
+                    Email = "ana.kovacic@example.com",
+                    NormalizedEmail = "ANA.KOVACIC@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = "mock-hash-1",
+                    SecurityStamp = "d0e2b7f4-6fbe-4b7f-8f1e-5f8d1e0d1111",
+                    ConcurrencyStamp = "e8aaf9b1-0f6e-4f4f-b1f4-7b1e11111111",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0,
+                    FirstName = "Ana",
+                    LastName = "Kovacic",
+                    CreatedAt = seedDate.AddMonths(-6)
+                },
+                new User
+                {
+                    Id = 2,
+                    UserName = "marko.horvat",
+                    NormalizedUserName = "MARKO.HORVAT",
+                    Email = "marko.horvat@example.com",
+                    NormalizedEmail = "MARKO.HORVAT@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = "mock-hash-2",
+                    SecurityStamp = "d8a5c7d3-1d2a-4b0f-8c5a-2f8d1e0d2222",
+                    ConcurrencyStamp = "6f2fd0de-1db2-4c3c-b3f4-7b1e22222222",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0,
+                    FirstName = "Marko",
+                    LastName = "Horvat",
+                    CreatedAt = seedDate.AddMonths(-4)
+                },
+                new User
+                {
+                    Id = 3,
+                    UserName = "petra.babic",
+                    NormalizedUserName = "PETRA.BABIC",
+                    Email = "petra.babic@example.com",
+                    NormalizedEmail = "PETRA.BABIC@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = "mock-hash-3",
+                    SecurityStamp = "6d1c0e2f-0f0f-4d0a-8b5d-3f8d1e0d3333",
+                    ConcurrencyStamp = "8f0d2d7d-7d44-4f4a-a3f4-7b1e33333333",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0,
+                    FirstName = "Petra",
+                    LastName = "Babic",
+                    CreatedAt = seedDate.AddMonths(-2)
+                }
             );
 
             // Seed Categories
@@ -82,8 +148,6 @@ namespace TaskManageApp.DAL
                 new TaskHistory { Id = 4, Action = "Status changed to Completed", ActionDate = seedDate.AddDays(-1), TaskItemId = 3 },
                 new TaskHistory { Id = 5, Action = "Description updated", ActionDate = seedDate.AddHours(-12), TaskItemId = 7 }
             );
-
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

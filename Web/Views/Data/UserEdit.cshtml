@@ -34,8 +34,8 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label class="form-label">Password Hash</label>
-            <input asp-for="PasswordHash" class="form-control" />
+            <label class="form-label">Password</label>
+            <input asp-for="PasswordHash" class="form-control" type="password" autocomplete="new-password" />
             <span asp-validation-for="PasswordHash" class="text-danger"></span>
         </div>
 

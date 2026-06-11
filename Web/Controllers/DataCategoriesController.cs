@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManageApp.Models;
 using TaskManageApp.Repositories;
@@ -5,6 +6,7 @@ using TaskManageApp.Repositories;
 namespace TaskManageApp.Controllers
 {
     [Route("data/categories")]
+    [Authorize]
     public class DataCategoriesController : Controller
     {
         private readonly ITaskRepository _taskRepository;

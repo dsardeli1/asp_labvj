@@ -1,16 +1,21 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManageApp.Repositories;
 
 namespace TaskManageApp.Controllers
 {
     [Route("data/users")]
+    [Authorize]
     public class DataUsersController : Controller
     {
         private readonly ITaskRepository _repo;
+        private readonly IPasswordHasher<Models.User> _passwordHasher;
 
-        public DataUsersController(ITaskRepository repo)
+        public DataUsersController(ITaskRepository repo, IPasswordHasher<Models.User> passwordHasher)
         {
             _repo = repo;
+            _passwordHasher = passwordHasher;
         }
 
         [HttpGet("")]
@@ -52,7 +57,14 @@ namespace TaskManageApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Username,Email,FirstName,LastName,PasswordHash")] Models.User user)
         {
+            if (string.IsNullOrWhiteSpace(user.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(user.PasswordHash), "Password is required.");
+            }
+
             if (!ModelState.IsValid) return View("~/Web/Views/Data/UserCreate.cshtml", user);
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, user.PasswordHash ?? string.Empty);
             user.CreatedAt = DateTime.UtcNow;
             var created = await _repo.AddUserAsync(user);
             TempData["SuccessMessage"] = "User created.";
@@ -72,6 +84,19 @@ namespace TaskManageApp.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Email,FirstName,LastName,PasswordHash")] Models.User user)
         {
             if (id != user.Id) return BadRequest();
+            if (string.IsNullOrWhiteSpace(user.PasswordHash))
+            {
+                var existing = await _repo.GetUserByIdAsync(id);
+                if (existing != null)
+                {
+                    user.PasswordHash = existing.PasswordHash;
+                }
+            }
+            else
+            {
+                user.PasswordHash = _passwordHasher.HashPassword(user, user.PasswordHash ?? string.Empty);
+            }
+
             if (!ModelState.IsValid) return View("~/Web/Views/Data/UserEdit.cshtml", user);
             var updated = await _repo.UpdateUserAsync(user);
             if (!updated)

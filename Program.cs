@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using TaskManageApp.DAL;
+using TaskManageApp.Models;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -26,7 +28,30 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("TaskManageApp")));
 
+builder.Services
+    .AddIdentity<User, IdentityRole<int>>(options =>
+    {
+        options.Password.RequiredLength = 8;
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.SignIn.RequireConfirmedAccount = false;
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/account/login";
+    options.LogoutPath = "/account/logout";
+    options.AccessDeniedPath = "/account/access-denied";
+    options.SlidingExpiration = true;
+});
+
 var app = builder.Build();
+
+await NormalizeLegacyIdentityUsersAsync(app);
 
 var supportedCultures = new[]
 {
@@ -61,6 +86,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -74,3 +100,28 @@ app.MapControllerRoute(
 
 
 app.Run();
+
+static async Task NormalizeLegacyIdentityUsersAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await context.Database.MigrateAsync();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var seededUserIds = new[] { 1, 2, 3 };
+    var seededUsers = await userManager.Users
+        .Where(user => seededUserIds.Contains(user.Id))
+        .ToListAsync();
+
+    foreach (var user in seededUsers)
+    {
+        if (string.IsNullOrWhiteSpace(user.PasswordHash) || !user.PasswordHash.StartsWith("AQAAAA", StringComparison.Ordinal))
+        {
+            user.PasswordHash = userManager.PasswordHasher.HashPassword(user, "Password123!");
+            user.EmailConfirmed = true;
+            user.NormalizedUserName = user.UserName?.ToUpperInvariant();
+            user.NormalizedEmail = user.Email?.ToUpperInvariant();
+            await userManager.UpdateAsync(user);
+        }
+    }
+}
