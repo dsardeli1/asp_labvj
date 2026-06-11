@@ -44,6 +44,7 @@ namespace TaskManageApp.Repositories
                 .Include(t => t.User)
                 .Include(t => t.Category)
                 .Include(t => t.Comments)
+                .Include(t => t.TaskHistories)
                 .ToListAsync();
         }
 
@@ -54,6 +55,7 @@ namespace TaskManageApp.Repositories
                 .Include(t => t.User)
                 .Include(t => t.Category)
                 .Include(t => t.Comments)
+                .Include(t => t.TaskHistories)
                 .ToListAsync();
         }
 
@@ -64,6 +66,7 @@ namespace TaskManageApp.Repositories
                 .Include(t => t.User)
                 .Include(t => t.Category)
                 .Include(t => t.Comments)
+                .Include(t => t.TaskHistories)
                 .ToListAsync();
         }
 
@@ -74,6 +77,7 @@ namespace TaskManageApp.Repositories
                 .Include(t => t.User)
                 .Include(t => t.Category)
                 .Include(t => t.Comments)
+                .Include(t => t.TaskHistories)
                 .ToListAsync();
         }
 
