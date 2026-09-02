@@ -1,0 +1,23 @@
+{
+  "name": "asp_labvj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsardeli1/asp_labvj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dsardeli1/asp_labvj/issues"
+  },
+  "homepage": "https://github.com/dsardeli1/asp_labvj#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.4.1"
+  }
+}
