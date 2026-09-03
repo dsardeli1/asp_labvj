@@ -360,4 +360,3 @@ c:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\compressed\0amqff0op
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\package-lock.json
 C:\Users\davor\Documents\GitHub\asp_labvj\bin\Debug\net10.0\package.json
-C:\Users\davor\Documents\GitHub\asp_labvj\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
