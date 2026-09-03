@@ -25,8 +25,9 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    /* Base URL for API requests against the local ASP.NET app. */
+    baseURL: 'https://localhost:7233',
+    ignoreHTTPSErrors: true,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -71,9 +72,11 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: {
+    command: 'dotnet run --launch-profile https --project TaskManageApp.csproj',
+    url: 'https://localhost:7233',
+    reuseExistingServer: !process.env.CI,
+    ignoreHTTPSErrors: true,
+    timeout: 120000,
+  },
 });

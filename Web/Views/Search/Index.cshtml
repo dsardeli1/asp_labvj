@@ -1,0 +1,44 @@
+@model TaskManageApp.ViewModels.SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<section class="search-page">
+    <div class="search-page-header">
+        <p class="search-kicker">Workspace index</p>
+        <h1>Search</h1>
+        @if (string.IsNullOrWhiteSpace(Model.Query))
+        {
+            <p class="search-summary">Search the navigation and, when signed in, your workspace data.</p>
+        }
+        else
+        {
+            <p class="search-summary">@Model.Results.Count result(s) for <strong>@Model.Query</strong>.</p>
+        }
+    </div>
+
+    @if (Model.Results.Count == 0 && !string.IsNullOrWhiteSpace(Model.Query))
+    {
+        <div class="search-empty">
+            <h2>No matches found</h2>
+            <p>Try a task title, category, user, or page name.</p>
+        </div>
+    }
+    else
+    {
+        <div class="search-results" aria-live="polite">
+            @foreach (var result in Model.Results)
+            {
+                <a class="search-result" href="@result.Url">
+                    <span class="search-result-type">@result.Type</span>
+                    <span class="search-result-content">
+                        <strong>@result.Title</strong>
+                        <span>@result.Description</span>
+                    </span>
+                    <span class="search-result-arrow" aria-hidden="true">-></span>
+                </a>
+            }
+        </div>
+    }
+</section>
