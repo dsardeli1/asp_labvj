@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TaskManageApp.DTOs;
 using TaskManageApp.Repositories;
 
@@ -11,10 +12,13 @@ namespace TaskManageApp.Controllers.Api
     {
         private readonly ITaskRepository _taskRepository;
 
-        public UsersApiController(ITaskRepository taskRepository)
+        public UsersApiController(ITaskRepository taskRepository, ILogger<UsersApiController> logger)
         {
             _taskRepository = taskRepository;
+            _logger = logger;
         }
+
+        private readonly ILogger<UsersApiController> _logger;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
@@ -39,6 +43,7 @@ namespace TaskManageApp.Controllers.Api
         public async Task<ActionResult<UserDto>> Create([FromBody] UserWriteDto request)
         {
             var created = await _taskRepository.AddUserAsync(request.ToEntity());
+            _logger.LogInformation("User {UserId} created through the API.", created.Id);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDTO());
         }
 
@@ -48,6 +53,7 @@ namespace TaskManageApp.Controllers.Api
             var existing = await _taskRepository.GetUserByIdAsync(id);
             if (existing is null)
             {
+                _logger.LogWarning("User update rejected because user {UserId} was not found.", id);
                 return NotFound();
             }
 
@@ -57,10 +63,12 @@ namespace TaskManageApp.Controllers.Api
             var updated = await _taskRepository.UpdateUserAsync(user);
             if (!updated)
             {
+                _logger.LogWarning("User update failed for user {UserId}.", id);
                 return NotFound();
             }
 
             var result = await _taskRepository.GetUserByIdAsync(id);
+            _logger.LogInformation("User {UserId} updated through the API.", id);
             return Ok((result ?? user).ToDTO());
         }
 
@@ -70,15 +78,18 @@ namespace TaskManageApp.Controllers.Api
             var existing = await _taskRepository.GetUserByIdAsync(id);
             if (existing is null)
             {
+                _logger.LogWarning("User deletion rejected because user {UserId} was not found.", id);
                 return NotFound();
             }
 
             var deleted = await _taskRepository.DeleteUserAsync(id);
             if (!deleted)
             {
+                _logger.LogWarning("User deletion conflict for user {UserId}.", id);
                 return Conflict("The user cannot be deleted while tasks are still assigned to them.");
             }
 
+            _logger.LogInformation("User {UserId} deleted through the API.", id);
             return NoContent();
         }
 

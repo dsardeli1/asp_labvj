@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TaskManageApp.DTOs;
 using TaskManageApp.Repositories;
 
@@ -11,10 +12,13 @@ namespace TaskManageApp.Controllers.Api
     {
         private readonly ITaskRepository _taskRepository;
 
-        public TasksApiController(ITaskRepository taskRepository)
+        public TasksApiController(ITaskRepository taskRepository, ILogger<TasksApiController> logger)
         {
             _taskRepository = taskRepository;
+            _logger = logger;
         }
+
+        private readonly ILogger<TasksApiController> _logger;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskItemDto>>> GetAll()
@@ -41,17 +45,20 @@ namespace TaskManageApp.Controllers.Api
             var user = await _taskRepository.GetUserByIdAsync(request.UserId);
             if (user is null)
             {
+                _logger.LogWarning("Task creation rejected because user {UserId} was not found.", request.UserId);
                 return BadRequest($"User {request.UserId} was not found.");
             }
 
             var category = await _taskRepository.GetCategoryByIdAsync(request.CategoryId);
             if (category is null)
             {
+                _logger.LogWarning("Task creation rejected because category {CategoryId} was not found.", request.CategoryId);
                 return BadRequest($"Category {request.CategoryId} was not found.");
             }
 
             var created = await _taskRepository.AddTaskAsync(request.ToEntity());
             var response = (await _taskRepository.GetTaskByIdAsync(created.Id)) ?? created;
+            _logger.LogInformation("Task {TaskId} created through the API.", response.Id);
             return CreatedAtAction(nameof(GetById), new { id = response.Id }, response.ToDTO());
         }
 
@@ -61,6 +68,7 @@ namespace TaskManageApp.Controllers.Api
             var existing = await _taskRepository.GetTaskByIdAsync(id);
             if (existing is null)
             {
+                _logger.LogWarning("Task update rejected because task {TaskId} was not found.", id);
                 return NotFound();
             }
 
@@ -82,10 +90,12 @@ namespace TaskManageApp.Controllers.Api
             var updated = await _taskRepository.UpdateTaskAsync(updatedTask);
             if (!updated)
             {
+                _logger.LogWarning("Task update failed for task {TaskId}.", id);
                 return NotFound();
             }
 
             var result = (await _taskRepository.GetTaskByIdAsync(id)) ?? updatedTask;
+            _logger.LogInformation("Task {TaskId} updated through the API.", id);
             return Ok(result.ToDTO());
         }
 
@@ -95,15 +105,18 @@ namespace TaskManageApp.Controllers.Api
             var existing = await _taskRepository.GetTaskByIdAsync(id);
             if (existing is null)
             {
+                _logger.LogWarning("Task deletion rejected because task {TaskId} was not found.", id);
                 return NotFound();
             }
 
             var deleted = await _taskRepository.DeleteTaskAsync(id);
             if (!deleted)
             {
+                _logger.LogWarning("Task deletion failed for task {TaskId}.", id);
                 return Conflict("The task could not be deleted.");
             }
 
+            _logger.LogInformation("Task {TaskId} deleted through the API.", id);
             return NoContent();
         }
 

@@ -4,12 +4,35 @@ using Microsoft.EntityFrameworkCore;
 using TaskManageApp.DAL;
 using TaskManageApp.Models;
 using System.Globalization;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: "logs/app-.log",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 14,
+        shared: true,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}")
+    .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
     WebRootPath = "Web/wwwroot"
 });
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: "logs/app-.log",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 14,
+        shared: true,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}"));
 
 // Add services to the container.
 builder.Services
@@ -87,6 +110,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

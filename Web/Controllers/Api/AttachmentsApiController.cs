@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TaskManageApp.DTOs;
 using TaskManageApp.Repositories;
 
@@ -11,10 +12,13 @@ namespace TaskManageApp.Controllers.Api
     {
         private readonly ITaskRepository _taskRepository;
 
-        public AttachmentsApiController(ITaskRepository taskRepository)
+        public AttachmentsApiController(ITaskRepository taskRepository, ILogger<AttachmentsApiController> logger)
         {
             _taskRepository = taskRepository;
+            _logger = logger;
         }
+
+        private readonly ILogger<AttachmentsApiController> _logger;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskAttachmentDto>>> GetAll()
@@ -41,12 +45,14 @@ namespace TaskManageApp.Controllers.Api
             var task = await _taskRepository.GetTaskByIdAsync(request.TaskItemId);
             if (task is null)
             {
+                _logger.LogWarning("Attachment creation rejected because task {TaskId} was not found.", request.TaskItemId);
                 return BadRequest($"Task {request.TaskItemId} was not found.");
             }
 
             var attachment = request.ToEntity();
             var created = await _taskRepository.AddTaskAttachmentAsync(attachment);
             var result = (await _taskRepository.GetTaskAttachmentByIdAsync(created.Id)) ?? created;
+            _logger.LogInformation("Attachment {AttachmentId} created through the API.", result.Id);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result.ToDTO());
         }
 
@@ -56,12 +62,14 @@ namespace TaskManageApp.Controllers.Api
             var existing = await _taskRepository.GetTaskAttachmentByIdAsync(id);
             if (existing is null)
             {
+                _logger.LogWarning("Attachment update rejected because attachment {AttachmentId} was not found.", id);
                 return NotFound();
             }
 
             var task = await _taskRepository.GetTaskByIdAsync(request.TaskItemId);
             if (task is null)
             {
+                _logger.LogWarning("Attachment update rejected because task {TaskId} was not found.", request.TaskItemId);
                 return BadRequest($"Task {request.TaskItemId} was not found.");
             }
 
@@ -71,10 +79,12 @@ namespace TaskManageApp.Controllers.Api
             var updated = await _taskRepository.UpdateTaskAttachmentAsync(attachment);
             if (!updated)
             {
+                _logger.LogWarning("Attachment update failed for attachment {AttachmentId}.", id);
                 return NotFound();
             }
 
             var result = await _taskRepository.GetTaskAttachmentByIdAsync(id);
+            _logger.LogInformation("Attachment {AttachmentId} updated through the API.", id);
             return Ok((result ?? attachment).ToDTO());
         }
 
@@ -84,15 +94,18 @@ namespace TaskManageApp.Controllers.Api
             var existing = await _taskRepository.GetTaskAttachmentByIdAsync(id);
             if (existing is null)
             {
+                _logger.LogWarning("Attachment deletion rejected because attachment {AttachmentId} was not found.", id);
                 return NotFound();
             }
 
             var deleted = await _taskRepository.DeleteTaskAttachmentAsync(id);
             if (!deleted)
             {
+                _logger.LogWarning("Attachment deletion failed for attachment {AttachmentId}.", id);
                 return Conflict("The task attachment could not be deleted.");
             }
 
+            _logger.LogInformation("Attachment {AttachmentId} deleted through the API.", id);
             return NoContent();
         }
     }

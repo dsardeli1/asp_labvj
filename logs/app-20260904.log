@@ -1,0 +1,88 @@
+2026-09-04 02:16:35.461 +02:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5245
+2026-09-04 02:16:35.482 +02:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-09-04 02:16:35.482 +02:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-09-04 02:16:35.483 +02:00 [INF] Microsoft.Hosting.Lifetime Content root path: C:\Users\davor\Documents\GitHub\asp_labvj
+2026-09-04 02:16:55.991 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 200 in 67.7266 ms
+2026-09-04 02:17:04.303 +02:00 [INF] Microsoft.Hosting.Lifetime Application is shutting down...
+2026-09-04 02:21:12.459 +02:00 [INF] Microsoft.Hosting.Lifetime Now listening on: https://localhost:7233
+2026-09-04 02:21:12.480 +02:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5245
+2026-09-04 02:21:12.504 +02:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-09-04 02:21:12.505 +02:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-09-04 02:21:12.506 +02:00 [INF] Microsoft.Hosting.Lifetime Content root path: C:\Users\davor\Documents\GitHub\asp_labvj
+2026-09-04 02:21:12.772 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 200 in 66.5368 ms
+2026-09-04 02:21:12.785 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 5.6139 ms
+2026-09-04 02:21:42.622 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /account/login responded 200 in 45.0571 ms
+2026-09-04 02:21:42.725 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 1.0299 ms
+2026-09-04 02:21:49.824 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /account/login responded 302 in 134.5922 ms
+2026-09-04 02:21:49.834 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /Home responded 200 in 4.6631 ms
+2026-09-04 02:21:49.842 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 2.4295 ms
+2026-09-04 02:21:57.250 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /Data responded 200 in 16.9925 ms
+2026-09-04 02:21:57.256 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.8913 ms
+2026-09-04 02:22:00.098 +02:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-04 02:22:00.180 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/tasks responded 200 in 118.1763 ms
+2026-09-04 02:22:00.184 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.9444 ms
+2026-09-04 02:22:07.525 +02:00 [INF] Microsoft.Hosting.Lifetime Application is shutting down...
+2026-09-04 02:23:15.706 +02:00 [INF] Microsoft.Hosting.Lifetime Now listening on: https://localhost:7233
+2026-09-04 02:23:15.722 +02:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5245
+2026-09-04 02:23:15.723 +02:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-09-04 02:23:15.724 +02:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-09-04 02:23:15.724 +02:00 [INF] Microsoft.Hosting.Lifetime Content root path: C:\Users\davor\Documents\GitHub\asp_labvj
+2026-09-04 02:23:16.271 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 200 in 57.5833 ms
+2026-09-04 02:23:17.286 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/attachments responded 200 in 102.4914 ms
+2026-09-04 02:23:17.318 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/attachments/1 responded 200 in 20.7916 ms
+2026-09-04 02:23:17.358 +02:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-04 02:23:17.477 +02:00 [INF] TaskManageApp.Controllers.Api.AttachmentsApiController Attachment 1026 created through the API.
+2026-09-04 02:23:17.479 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/attachments responded 201 in 156.8364 ms
+2026-09-04 02:23:17.485 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/attachments/1026 responded 200 in 2.3705 ms
+2026-09-04 02:23:17.506 +02:00 [INF] TaskManageApp.Controllers.Api.AttachmentsApiController Attachment 1026 updated through the API.
+2026-09-04 02:23:17.506 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP PUT /api/attachments/1026 responded 200 in 17.7655 ms
+2026-09-04 02:23:17.512 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/attachments/1026 responded 200 in 1.9410 ms
+2026-09-04 02:23:17.517 +02:00 [WRN] TaskManageApp.Controllers.Api.AttachmentsApiController Attachment creation rejected because task 9999 was not found.
+2026-09-04 02:23:17.517 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/attachments responded 400 in 2.3367 ms
+2026-09-04 02:23:17.531 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/attachments/9999 responded 404 in 10.8258 ms
+2026-09-04 02:23:17.536 +02:00 [WRN] TaskManageApp.Controllers.Api.AttachmentsApiController Attachment update rejected because attachment 9999 was not found.
+2026-09-04 02:23:17.537 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP PUT /api/attachments/9999 responded 404 in 2.3468 ms
+2026-09-04 02:23:17.555 +02:00 [INF] TaskManageApp.Controllers.Api.AttachmentsApiController Attachment 1026 deleted through the API.
+2026-09-04 02:23:17.556 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP DELETE /api/attachments/1026 responded 204 in 16.6541 ms
+2026-09-04 02:23:17.561 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/attachments/1026 responded 404 in 2.1359 ms
+2026-09-04 02:25:02.902 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /account/login responded 200 in 52.7284 ms
+2026-09-04 02:25:02.909 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/lib/jquery/dist/jquery.min.js' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.910 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/lib/bootstrap/dist/js/bootstrap.bundle.min.js' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.910 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/lib/jquery-validation/dist/jquery.validate.min.js' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.910 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.910 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/lib/bootstrap/dist/css/bootstrap.min.css' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.911 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/js/site.js' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.911 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/css/dashboard.css' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.911 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/css/site.css' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:02.917 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 5.3027 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 8.1365 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 8.1158 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /css/dashboard.css responded 200 in 6.8970 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 8.1181 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /css/site.css responded 200 in 6.9155 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /js/site.js responded 200 in 6.9055 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 8.8240 ms
+2026-09-04 02:25:02.918 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 8.5624 ms
+2026-09-04 02:25:03.019 +02:00 [WRN] Microsoft.AspNetCore.Builder.StaticAssetDevelopmentRuntimeHandler The static asset '/favicon.ico' was not found in the built time manifest. This file will not be available at runtime if it is not available at compile time during the publish process. If the file was not added to the project during development, and is created at runtime, use the StaticFiles middleware to serve it instead.
+2026-09-04 02:25:03.020 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /favicon.ico responded 200 in 1.1981 ms
+2026-09-04 02:25:06.202 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /account/login responded 302 in 96.6520 ms
+2026-09-04 02:25:06.209 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /Home responded 200 in 4.2006 ms
+2026-09-04 02:25:06.216 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 2.0200 ms
+2026-09-04 02:25:07.280 +02:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-04 02:25:07.327 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/attachments/create responded 200 in 68.0740 ms
+2026-09-04 02:25:07.333 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.8932 ms
+2026-09-04 02:25:10.412 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/tasks/lookup responded 200 in 11.9158 ms
+2026-09-04 02:25:10.587 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/tasks/lookup responded 200 in 3.9114 ms
+2026-09-04 02:25:12.502 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /data/attachments/create responded 302 in 22.8741 ms
+2026-09-04 02:25:12.519 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/attachments responded 200 in 14.9448 ms
+2026-09-04 02:25:12.525 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.9122 ms
+2026-09-04 02:25:13.609 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/attachments/1027/edit responded 200 in 20.2155 ms
+2026-09-04 02:25:13.615 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.9368 ms
+2026-09-04 02:25:16.722 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /data/attachments/1027/edit responded 302 in 9.8850 ms
+2026-09-04 02:25:16.726 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/attachments responded 200 in 2.3934 ms
+2026-09-04 02:25:16.733 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.8314 ms
+2026-09-04 02:25:17.802 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/attachments/1027/delete responded 200 in 13.6919 ms
+2026-09-04 02:25:17.812 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 1.2166 ms
+2026-09-04 02:25:18.883 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /data/attachments/1027/delete responded 302 in 15.5854 ms
+2026-09-04 02:25:18.887 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /data/attachments responded 200 in 2.7772 ms
+2026-09-04 02:25:18.895 +02:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /TaskManageApp.styles.css responded 200 in 0.9716 ms
