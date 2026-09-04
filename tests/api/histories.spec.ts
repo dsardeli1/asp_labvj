@@ -13,7 +13,7 @@ test.describe('Histories API', () => {
             expect(response.status()).toBe(200);
             expect((await readJson<Array<unknown>>(response)).length).toBeGreaterThan(0);
         });
-        await test.step('Fetch a seeded history', async () => {
+        await test.step('Fetch a history', async () => {
             const response = await request.get('/api/histories/1');
             expect(response.status()).toBe(200);
             expect((await readJson<{ id: number }>(response)).id).toBe(1);

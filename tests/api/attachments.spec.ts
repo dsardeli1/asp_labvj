@@ -12,7 +12,7 @@ test.describe('Attachments API', () => {
             expect(response.status()).toBe(200);
             expect((await readJson<Array<unknown>>(response)).length).toBeGreaterThan(0);
         });
-        await test.step('Fetch a seeded attachment', async () => {
+        await test.step('Fetch an attachment', async () => {
             const response = await request.get('/api/attachments/1');
             expect(response.status()).toBe(200);
             expect((await readJson<{ id: number }>(response)).id).toBe(1);

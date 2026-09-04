@@ -13,7 +13,7 @@ test.describe('Categories API', () => {
             const categories = await readJson<Array<{ id: number }>>(response);
             expect(categories.length).toBeGreaterThan(0);
         });
-        await test.step('Fetch a seeded category', async () => {
+        await test.step('Fetch a category', async () => {
             const response = await request.get('/api/categories/1');
             expect(response.status()).toBe(200);
             const category = await readJson<{ id: number; name: string }>(response);

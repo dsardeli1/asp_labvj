@@ -14,7 +14,7 @@ test.describe('Tasks API', () => {
             const tasks = await readJson<Array<{ id: number }>>(response);
             expect(tasks.length).toBeGreaterThan(0);
         });
-        await test.step('Fetch a seeded task', async () => {
+        await test.step('Fetch a task', async () => {
             const response = await request.get('/api/tasks/1');
             expect(response.status()).toBe(200);
             const task = await readJson<{ id: number; userId: number; categoryId: number }>(response);

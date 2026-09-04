@@ -13,7 +13,7 @@ test.describe('Users API', () => {
             const users = await readJson<Array<{ id: number }>>(response);
             expect(users.length).toBeGreaterThan(0);
         });
-        await test.step('Fetch a seeded user', async () => {
+        await test.step('Fetch a user', async () => {
             const response = await request.get('/api/users/1');
             expect(response.status()).toBe(200);
             const user = await readJson<{ id: number; username: string }>(response);
